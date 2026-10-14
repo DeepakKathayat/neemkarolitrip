@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found | Neem Karoli Trip</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1F3B2D">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Yatra+One&display=swap" rel="stylesheet">
+<style>
+:root{--pine:#1F3B2D;--marigold:#E8A317;--gold:#F4C766}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;min-height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,#10211A 0%,var(--pine) 60%,#2C5240 100%);color:#F1F5F1;font-family:"Mukta",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.6}
+html[data-lang="en"] body [lang="hi"],html[data-lang="hi"] body [lang="en"]{display:none !important}
+a{color:var(--gold)}
+:focus-visible{outline:3px solid var(--marigold);outline-offset:2px;border-radius:6px}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px;width:100%}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:700}
+.lang{display:flex;background:rgba(255,255,255,.12);border-radius:999px;padding:3px}
+.lang button{border:0;background:transparent;color:#fff;font:inherit;font-weight:600;padding:4px 12px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--marigold);color:#1B1505}
+main{flex:1;display:flex;align-items:center}
+.big{font-family:"Yatra One",serif;font-size:clamp(4rem,22vw,7rem);line-height:1;color:var(--gold);margin:24px 0 0}
+h1{font-family:"Yatra One","Mukta",serif;font-weight:400;font-size:clamp(1.7rem,6vw,2.3rem);line-height:1.2;margin:8px 0 10px;color:#fff}
+p{color:#DCE8E0;margin:0 0 22px}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:40px}
+.links a{display:flex;align-items:center;justify-content:center;text-align:center;min-height:48px;padding:6px 12px;border:2px solid var(--gold);border-radius:999px;font-weight:700;text-decoration:none}
+.links a.main{grid-column:1/-1;background:var(--marigold);border-color:var(--marigold);color:#1B1505}
+.links a:hover{background:var(--gold);color:#1B1505}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#2C5240"/><path d="M14 50 C30 50 34 40 22 36 C10 32 24 22 40 26 C54 30 50 16 34 14" stroke="#E8A317" stroke-width="6" fill="none" stroke-linecap="round"/></svg>
+      <span lang="en">Neem Karoli Trip</span><span lang="hi">नीम करोली ट्रिप</span>
+    </a>
+    <div class="lang" role="group" aria-label="Language / भाषा">
+      <button type="button" data-set-lang="hi" aria-pressed="false">हिंदी</button>
+      <button type="button" data-set-lang="en" aria-pressed="true">English</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="big" aria-hidden="true">404</p>
+    <h1><span lang="en">This road doesn't lead anywhere</span><span lang="hi">यह रास्ता कहीं नहीं जाता</span></h1>
+    <p><span lang="en">The page you opened doesn't exist or has moved. Pick where you want to go:</span><span lang="hi">आपने जो पेज खोला वह मौजूद नहीं है या हट गया है। आप कहाँ जाना चाहते हैं, चुनें:</span></p>
+    <nav class="links" aria-label="Main sections">
+      <a class="main" href="/"><span lang="en">Go to the Kainchi Dham guide</span><span lang="hi">कैंची धाम गाइड पर जाएँ</span></a>
+      <a href="/#status"><span lang="en">Latest rules</span><span lang="hi">ताज़ा नियम</span></a>
+      <a href="/#planner"><span lang="en">Trip planner</span><span lang="hi">यात्रा प्लानर</span></a>
+      <a href="/#reach"><span lang="en">How to reach</span><span lang="hi">कैसे पहुँचें</span></a>
+      <a href="/#ask"><span lang="en">Ask a question</span><span lang="hi">सवाल पूछें</span></a>
+    </nav>
+  </div>
+</main>
+
+<script>
+(function(){
+  function setLang(l){
+    document.documentElement.setAttribute("data-lang", l);
+    document.documentElement.setAttribute("lang", l === "hi" ? "hi" : "en");
+    document.querySelectorAll("[data-set-lang]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-set-lang") === l)); });
+    try { localStorage.setItem("nkt-lang", l); } catch(e){}
+  }
+  document.querySelectorAll("[data-set-lang]").forEach(function(b){ b.addEventListener("click", function(){ setLang(b.getAttribute("data-set-lang")); }); });
+  var saved = null;
+  try { saved = localStorage.getItem("nkt-lang"); } catch(e){}
+  if (!saved && (navigator.language || "").toLowerCase().indexOf("hi") === 0) saved = "hi";
+  setLang(saved === "hi" ? "hi" : "en");
+})();
+</script>
+</body>
+</html>
