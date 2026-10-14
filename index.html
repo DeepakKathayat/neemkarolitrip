@@ -437,6 +437,28 @@ footer ul.social a:hover{background:#F4C766;color:#1B1505}
   .road{stroke-dashoffset:0}
 }
 
+/* micro-interactions: tap ripple, planner feedback, link toast, language fade */
+.rp-host{position:relative;overflow:hidden;isolation:isolate}
+.ripple{position:absolute;border-radius:50%;pointer-events:none;background:currentColor;opacity:.22;transform:scale(0);animation:ripple .6s var(--ease) forwards;z-index:-1}
+@keyframes ripple{to{transform:scale(1);opacity:0}}
+.stepper output.bump{animation:bump .35s var(--ease)}
+@keyframes bump{40%{transform:scale(1.35);color:var(--hl)}}
+.stepper button.nudge{animation:nudge .3s}
+@keyframes nudge{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.stepper button{transition:transform .15s,border-color .2s,color .2s}
+.stepper button:hover{border-color:var(--accent);color:var(--accent)}
+.stepper button:active{transform:scale(.9)}
+.total{font-variant-numeric:tabular-nums;transition:color .3s}
+.total.rolling{color:var(--hl)}
+.result .breakdown,.result .days{animation:softin .45s var(--ease)}
+@keyframes softin{from{opacity:.35;transform:translateY(4px)}to{opacity:1;transform:none}}
+.toast{position:fixed;left:50%;bottom:20px;z-index:70;transform:translate(-50%,24px);opacity:0;pointer-events:none;display:flex;align-items:center;gap:10px;width:max-content;max-width:calc(100vw - 32px);padding:12px 18px;border-radius:999px;background:var(--pine);color:#fff;font-weight:600;font-size:.95rem;box-shadow:0 14px 34px -12px rgba(16,33,26,.6);transition:transform .35s var(--ease),opacity .35s}
+.toast.show{transform:translate(-50%,0);opacity:1}
+.toast .spin{flex:none;width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(244,199,102,.35);border-top-color:#F4C766;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:ease}
+@media (prefers-reduced-motion: reduce){.ripple,.toast .spin,.result .breakdown,.result .days{animation:none}.toast{transition:none}}
+
 /* analytics consent banner */
 .consent{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;max-width:560px;margin:0 auto;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:0 18px 40px -16px rgba(16,33,26,.45);font-size:.95rem;line-height:1.5;animation:rise .5s var(--ease) both}
 .consent[hidden]{display:none}
@@ -1239,6 +1261,26 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
 
   function esc(t){ return String(t).replace(/[&<>"]/g, function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
 
+  var lastTotal = null;
+  var calm = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  /* Roll the trip cost from the old number to the new one instead of jumping. */
+  function rollTotal(to){
+    var el = $("#result .total"), from = lastTotal;
+    lastTotal = to;
+    if (!el || from === null || from === to || calm) return;
+    var t0 = performance.now(), dur = 650;
+    el.classList.add("rolling");
+    (function step(now){
+      var p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(from + (to - from) * e);
+      if (p < 1) requestAnimationFrame(step); else el.classList.remove("rolling");
+    })(t0);
+  }
+  function bump(el){
+    if (!el || calm) return;
+    el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump");
+  }
+
   function render(){
     var o = readForm(), r = calc(o), it = itinerary(o), t = T[lang];
     var html = '<div class="total">' + fmt(r.total) + '</div>' +
@@ -1255,6 +1297,7 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
     if (o.mode === "cab") html += '<a data-link="plan-cabs" class="btn btn-line" href="' + LINKS.cabs + '" target="_blank" rel="noopener sponsored">' + t.bookCab + '</a>';
     html += '<a class="btn btn-line" id="shareBtn" href="#" target="_blank" rel="noopener">' + t.share + '</a></div>';
     $("#result").innerHTML = html;
+    rollTotal(r.total);
 
     var msg = t.shareHead + " (" + FROM[o.from][lang] + ", " + t.people(o.people) + ")\n" +
       t.est + ": " + fmt(r.total) + " (" + fmt(r.low) + " – " + fmt(r.high) + ")\n\n" +
@@ -1279,11 +1322,19 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
   }
 
   document.querySelectorAll("[data-link]").forEach(function(a){ var k = a.getAttribute("data-link"); if (LINKS[k]) a.href = LINKS[k]; });
-  document.querySelectorAll("[data-set-lang]").forEach(function(b){ b.addEventListener("click", function(){ setLang(b.getAttribute("data-set-lang")); }); });
+  document.querySelectorAll("[data-set-lang]").forEach(function(b){ b.addEventListener("click", function(){
+    var l = b.getAttribute("data-set-lang");
+    if (l === lang) return;
+    if (document.startViewTransition && !calm) document.startViewTransition(function(){ setLang(l); });
+    else setLang(l);
+  }); });
   document.querySelectorAll("[data-step]").forEach(function(b){
     b.addEventListener("click", function(){
+      var before = people;
       people = Math.min(12, Math.max(1, people + (+b.getAttribute("data-step"))));
-      $("#peopleOut").textContent = people; render();
+      $("#peopleOut").textContent = people;
+      if (people === before) { b.classList.remove("nudge"); void b.offsetWidth; b.classList.add("nudge"); return; }
+      bump($("#peopleOut")); render();
     });
   });
   $("#planForm").addEventListener("change", function(e){ if (e.target.id === "from") syncModes(); render(); });
@@ -1560,6 +1611,57 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
   }
   new MutationObserver(onLang).observe(root, {attributes:true, attributeFilter:["data-lang"]});
   onLang();
+})();
+</script>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span class="spin" aria-hidden="true"></span><span id="toastText"></span></div>
+
+<script>
+/* ================================================================
+   MICRO-INTERACTIONS: tap ripple + "Opening …" toast for outside links
+   ================================================================ */
+(function(){
+  var calm = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+  /* Tap ripple: a soft circle spreads from the exact point you tap. */
+  var HOSTS = ".btn, .stepper button, .ask-chips button, .chips a, .lang button, footer ul.social a, .consent button, .seg label > span";
+  document.addEventListener("pointerdown", function(e){
+    if (calm || (e.pointerType === "mouse" && e.button !== 0)) return;
+    var t = e.target;
+    if (t.matches && t.matches(".seg input")) t = t.nextElementSibling;
+    var host = t && t.closest ? t.closest(HOSTS) : null;
+    if (!host) return;
+    host.classList.add("rp-host");
+    var r = host.getBoundingClientRect(), size = Math.max(r.width, r.height) * 2.2;
+    var dot = document.createElement("span");
+    dot.className = "ripple";
+    dot.style.width = dot.style.height = size + "px";
+    dot.style.left = (e.clientX - r.left - size / 2) + "px";
+    dot.style.top = (e.clientY - r.top - size / 2) + "px";
+    host.appendChild(dot);
+    setTimeout(function(){ dot.remove(); }, 650);
+  }, {passive:true});
+
+  /* "Opening Booking.com…" toast when a link opens in a new tab. */
+  var NAMES = {"booking.com":"Booking.com","agoda.com":"Agoda","irctc.co.in":"IRCTC","redbus.in":"redBus","makemytrip.com":"MakeMyTrip",
+               "wa.me":"WhatsApp","whatsapp.com":"WhatsApp","instagram.com":"Instagram","youtube.com":"YouTube","facebook.com":"Facebook"};
+  var box = document.getElementById("toast"), txt = document.getElementById("toastText"), timer;
+  function siteName(host){
+    host = host.replace(/^www\./, "");
+    for (var k in NAMES) if (host === k || host.slice(-k.length - 1) === "." + k) return NAMES[k];
+    return host;
+  }
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest('a[target="_blank"][href^="http"]');
+    if (!a || !box) return;
+    var name = siteName(a.hostname);
+    var hi = document.documentElement.getAttribute("data-lang") === "hi";
+    txt.textContent = hi ? name + " नए टैब में खुल रहा है…" : "Opening " + name + " in a new tab…";
+    box.classList.add("show");
+    clearTimeout(timer);
+    timer = setTimeout(function(){ box.classList.remove("show"); }, 2600);
+  });
+  document.addEventListener("visibilitychange", function(){ if (!document.hidden && box) { clearTimeout(timer); timer = setTimeout(function(){ box.classList.remove("show"); }, 600); } });
 })();
 </script>
 
