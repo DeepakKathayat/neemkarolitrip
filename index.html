@@ -8,6 +8,10 @@
 <link rel="canonical" href="https://neemkarolitrip.com/">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#1F3B2D">
+<script>
+/* Apply the visitor's saved light/dark choice before the page paints (no flash). */
+(function(){ try { var t = localStorage.getItem("nkt-theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch(e){} })();
+</script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Kainchi Dham Trip Guide: rules, timings, routes and trip cost">
 <meta property="og:description" content="Independent guide to visiting Neem Karoli Baba's Kainchi Dham. Latest parking and shuttle rules, how to reach, where to stay and a free cost planner.">
@@ -560,6 +564,103 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
   .gauge .needle{transition:none}
   .tilt,.tilt.active{transform:none;transition:none}
 }
+/* ================================================================
+   PREMIUM DESIGN: theme button, glass, dark-mode glow, cinematic hero, wide layouts
+   ================================================================ */
+:root{--glass:rgba(255,255,255,.70);--glass-strong:rgba(255,255,255,.86);--glass-line:rgba(255,255,255,.55);--bg-glass:rgba(241,245,241,.82)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--glass:rgba(22,35,29,.62);--glass-strong:rgba(22,35,29,.80);--glass-line:rgba(127,183,154,.16);--bg-glass:rgba(15,25,21,.78)}}
+:root[data-theme="dark"]{--glass:rgba(22,35,29,.62);--glass-strong:rgba(22,35,29,.80);--glass-line:rgba(127,183,154,.16);--bg-glass:rgba(15,25,21,.78)}
+
+/* theme button (sits next to the language switch) */
+.bar-tools{display:flex;align-items:center;gap:8px}
+.theme-btn{flex:none;width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;transition:background .25s,transform .2s}
+.theme-btn:hover{background:rgba(255,255,255,.22)}
+.theme-btn:active{transform:scale(.92)}
+.theme-btn svg{width:20px;height:20px;transition:transform .5s var(--ease),opacity .3s}
+.theme-btn .moon-i{position:absolute;opacity:0;transform:rotate(-90deg) scale(.6)}
+.theme-btn{position:relative}
+.brand{white-space:nowrap}
+@media (max-width:380px){.bar .wrap{gap:8px}.brand{gap:7px;font-size:.98rem}.brand svg{width:26px;height:26px}.theme-btn{width:34px;height:34px}.bar-tools{gap:6px}.lang button{padding:4px 9px}}
+.theme-dark .theme-btn .sun-i{opacity:0;transform:rotate(90deg) scale(.6)}
+.theme-dark .theme-btn .moon-i{opacity:1;transform:none}
+html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-color .45s ease,color .45s ease,fill .45s ease !important}
+
+/* glass: frosted top bar, chips, sticky titles, Ask box */
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  .bar{background:rgba(31,59,45,.92);-webkit-backdrop-filter:saturate(160%) blur(14px);backdrop-filter:saturate(160%) blur(14px)}
+  .chips{background:var(--glass);border-bottom-color:var(--glass-line);-webkit-backdrop-filter:saturate(160%) blur(14px);backdrop-filter:saturate(160%) blur(14px)}
+  .sec-head h2{background:var(--bg-glass);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .ask-card{background:var(--glass-strong);border-color:var(--glass-line);-webkit-backdrop-filter:saturate(150%) blur(18px);backdrop-filter:saturate(150%) blur(18px)}
+  .toast{background:rgba(31,59,45,.86);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(900px 520px at 8% -6%,rgba(127,183,154,.13),transparent 62%),radial-gradient(760px 480px at 108% 38%,rgba(240,183,58,.08),transparent 62%),radial-gradient(700px 520px at 40% 115%,rgba(63,102,112,.16),transparent 64%),radial-gradient(rgba(127,183,154,.07) 1px,transparent 1.4px) 0 0/22px 22px}
+  :root:not([data-theme="light"]) .route,.stay,.stat,.dos li,.status,.planner,.crowd,.routemap,.ask-card,details.faq{border-color:rgba(127,183,154,.18)}
+  :root:not([data-theme="light"]) .route,.stay,.stat,.dos li,.status,.planner,.crowd,.routemap{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012)),var(--surface);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 18px 40px -28px rgba(0,0,0,.85);transition:border-color .35s,box-shadow .35s}
+  :root:not([data-theme="light"]) .route:hover,.stay:hover,.stat:hover,.dos li:hover,.crowd:hover,.routemap:hover{border-color:rgba(127,183,154,.42);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 0 1px rgba(127,183,154,.12),0 0 34px -8px rgba(127,183,154,.30)}
+  :root:not([data-theme="light"]) main h2{text-shadow:0 0 26px rgba(127,183,154,.28)}
+  :root:not([data-theme="light"]) .stat .big,.total,.rm-km{text-shadow:0 0 18px rgba(127,183,154,.35)}
+  :root:not([data-theme="light"]) .chips a[aria-current="true"]{box-shadow:0 0 18px -2px rgba(127,183,154,.55)}
+  :root:not([data-theme="light"]) .btn-solid{box-shadow:0 0 22px -6px rgba(127,183,154,.7)}
+  :root:not([data-theme="light"]) .progress span{box-shadow:0 0 14px rgba(240,183,58,.8)}
+}
+:root[data-theme="dark"] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(900px 520px at 8% -6%,rgba(127,183,154,.13),transparent 62%),radial-gradient(760px 480px at 108% 38%,rgba(240,183,58,.08),transparent 62%),radial-gradient(700px 520px at 40% 115%,rgba(63,102,112,.16),transparent 64%),radial-gradient(rgba(127,183,154,.07) 1px,transparent 1.4px) 0 0/22px 22px}
+:root[data-theme="dark"] .route,.stay,.stat,.dos li,.status,.planner,.crowd,.routemap,.ask-card,details.faq{border-color:rgba(127,183,154,.18)}
+:root[data-theme="dark"] .route,.stay,.stat,.dos li,.status,.planner,.crowd,.routemap{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012)),var(--surface);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 18px 40px -28px rgba(0,0,0,.85);transition:border-color .35s,box-shadow .35s}
+:root[data-theme="dark"] .route:hover,.stay:hover,.stat:hover,.dos li:hover,.crowd:hover,.routemap:hover{border-color:rgba(127,183,154,.42);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 0 1px rgba(127,183,154,.12),0 0 34px -8px rgba(127,183,154,.30)}
+:root[data-theme="dark"] main h2{text-shadow:0 0 26px rgba(127,183,154,.28)}
+:root[data-theme="dark"] .stat .big,.total,.rm-km{text-shadow:0 0 18px rgba(127,183,154,.35)}
+:root[data-theme="dark"] .chips a[aria-current="true"]{box-shadow:0 0 18px -2px rgba(127,183,154,.55)}
+:root[data-theme="dark"] .btn-solid{box-shadow:0 0 22px -6px rgba(127,183,154,.7)}
+:root[data-theme="dark"] .progress span{box-shadow:0 0 14px rgba(240,183,58,.8)}
+
+/* cinematic hero on tablet and desktop */
+@media (min-width:760px){
+  .hero{min-height:calc(100svh - var(--stick,108px));display:flex;flex-direction:column}
+  .hero-copy{flex:1 0 auto;display:flex;flex-direction:column;justify-content:center;padding-top:clamp(24px,5vh,64px) !important}
+  .hero h1{font-size:clamp(2.6rem,5.4vw,4.6rem);max-width:15ch;letter-spacing:.005em;text-shadow:0 6px 36px rgba(0,0,0,.35)}
+  .hero .lede{font-size:clamp(1.1rem,1.6vw,1.3rem);max-width:42ch}
+  .scene{margin-top:-10vw}
+  .sky-now{top:auto;bottom:14px;left:max(12px,calc((100% - var(--wrapw,860px)) / 2 + 16px))}
+  .sun::before{content:"";position:absolute;left:50%;top:50%;width:1100%;aspect-ratio:1;margin:-550% 0 0 -550%;pointer-events:none;
+    background:repeating-conic-gradient(from 0deg,rgba(255,236,190,0) 0deg 7deg,rgba(255,236,190,.10) 9deg 11deg,rgba(255,236,190,0) 13deg 19deg);
+    -webkit-mask:radial-gradient(circle,#000 0 10%,transparent 58%);mask:radial-gradient(circle,#000 0 10%,transparent 58%);animation:rays 160s linear infinite}
+  .hero[data-sky="day"] .sun::before{opacity:.7}
+  .scene .layer[data-depth]{transform-origin:50% 100%;animation:kenburns 34s ease-in-out infinite alternate}
+  .scene .layer[data-depth="0.42"]{animation-duration:46s}
+  .scene .layer[data-depth="0.30"]{animation-duration:40s;animation-delay:-8s}
+  .scene .layer[data-depth="0.18"]{animation-duration:32s;animation-delay:-14s}
+  .scene .layer[data-depth="0.08"]{animation-duration:28s;animation-delay:-4s}
+}
+@keyframes rays{to{rotate:360deg}}
+@keyframes kenburns{from{scale:1}to{scale:1.045}}
+
+/* wider, modern layouts: tablet and desktop */
+@media (min-width:700px){
+  .places{grid-template-columns:1fr 1fr;column-gap:28px}
+  .dos{grid-template-columns:1fr 1fr}
+}
+@media (min-width:900px){
+  .status ul{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
+  .status li:nth-child(2){border-top:0;padding-top:4px}
+}
+@media (min-width:1024px){
+  :root{--wrapw:1080px}
+  .wrap{max-width:1080px}
+  .chips nav{max-width:1080px}
+  .sec-head > p{max-width:70ch}
+  .stays{grid-template-columns:repeat(4,1fr)}
+  .planner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);column-gap:32px;align-items:start}
+  .planner > *{grid-column:1}
+  .planner > .result{grid-column:2;grid-row:1 / span 7;margin-top:0;border-top:0;border-left:2px dashed var(--line);padding:0 0 0 28px}
+  .rm-svg,.rm-read,.rm-fine{max-width:760px}
+  details.faq{max-width:860px}
+  .crowd{grid-template-columns:220px 1fr}
+}
+@media (prefers-reduced-motion: reduce){
+  .scene .layer[data-depth],.sun::before{animation:none}
+  html.theme-anim, html.theme-anim *{transition:none !important}
+}
 </style>
 </head>
 <body>
@@ -570,9 +671,15 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
       <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#2C5240"/><path d="M14 50 C30 50 34 40 22 36 C10 32 24 22 40 26 C54 30 50 16 34 14" stroke="#E8A317" stroke-width="6" fill="none" stroke-linecap="round"/></svg>
       <span lang="en">Neem Karoli Trip</span><span lang="hi">नीम करोली ट्रिप</span>
     </a>
-    <div class="lang" role="group" aria-label="Language / भाषा">
-      <button type="button" data-set-lang="hi" aria-pressed="false">हिंदी</button>
-      <button type="button" data-set-lang="en" aria-pressed="true">English</button>
+    <div class="bar-tools">
+      <button type="button" class="theme-btn" id="themeBtn" aria-label="Switch to dark mode" title="Light / dark">
+        <svg class="sun-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+        <svg class="moon-i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.2 14.6A8.5 8.5 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7 9.5 9.5 0 1 0 12.3 12.3.6.6 0 0 0-.7-.8z"/></svg>
+      </button>
+      <div class="lang" role="group" aria-label="Language / भाषा">
+        <button type="button" data-set-lang="hi" aria-pressed="false">हिंदी</button>
+        <button type="button" data-set-lang="en" aria-pressed="true">English</button>
+      </div>
     </div>
   </div>
   <div class="progress" aria-hidden="true"><span></span></div>
@@ -1934,6 +2041,35 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
 })();
 </script>
 
+<script>
+/* ================================================================
+   LIGHT / DARK BUTTON — remembers the visitor's choice (nkt-theme)
+   ================================================================ */
+(function(){
+  var root = document.documentElement, btn = document.getElementById("themeBtn");
+  var mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
+  function current(){ var t = root.getAttribute("data-theme"); return t || (mq && mq.matches ? "dark" : "light"); }
+  function sync(){
+    var dark = current() === "dark";
+    root.classList.toggle("theme-dark", dark);
+    if (btn){
+      var hi = root.getAttribute("data-lang") === "hi";
+      btn.setAttribute("aria-label", dark ? (hi ? "लाइट मोड चालू करें" : "Switch to light mode") : (hi ? "डार्क मोड चालू करें" : "Switch to dark mode"));
+    }
+  }
+  if (btn) btn.addEventListener("click", function(){
+    var next = current() === "dark" ? "light" : "dark";
+    var go = function(){ root.setAttribute("data-theme", next); sync(); };
+    root.classList.add("theme-anim");
+    if (document.startViewTransition && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) document.startViewTransition(go); else go();
+    setTimeout(function(){ root.classList.remove("theme-anim"); }, 600);
+    try { localStorage.setItem("nkt-theme", next); } catch(e){}
+  });
+  if (mq && mq.addEventListener) mq.addEventListener("change", sync);
+  new MutationObserver(sync).observe(root, {attributes:true, attributeFilter:["data-lang"]});
+  sync();
+})();
+</script>
 <div class="toast" id="toast" role="status" aria-live="polite"><span class="spin" aria-hidden="true"></span><span id="toastText"></span></div>
 
 <script>
