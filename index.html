@@ -661,6 +661,69 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
   .scene .layer[data-depth],.sun::before{animation:none}
   html.theme-anim, html.theme-anim *{transition:none !important}
 }
+/* ================================================================
+   SMART FEATURES: suggestions, saved plans, consent, Ask extras, PDF print
+   ================================================================ */
+.foryou{margin:4px 0 18px;padding:14px;border-radius:var(--radius-sm);background:linear-gradient(135deg,rgba(232,163,23,.12),rgba(127,183,154,.12));border:1px solid var(--line)}
+.foryou h3{font-family:"Mukta",sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 10px}
+.foryou ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.foryou li{display:flex;gap:10px;align-items:flex-start}
+.fy-i{flex:none;width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:var(--surface);font-size:1.05rem;box-shadow:0 1px 0 var(--line)}
+.foryou li div b{display:block;line-height:1.3}
+.foryou li div span{display:block;color:var(--muted);font-size:.95rem;line-height:1.45}
+.save-ask{margin-top:12px;padding:14px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--accent);background:var(--surface);animation:softin .35s var(--ease)}
+.save-ask p{margin:4px 0 12px;color:var(--muted);font-size:.95rem}
+.save-ask .row{display:flex;flex-wrap:wrap;gap:8px}
+.saved{margin:0 0 16px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface)}
+.saved h3{font-family:"Mukta",sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 6px}
+.saved ul{list-style:none;margin:0;padding:0}
+.saved li{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.saved li:first-child{border-top:0}
+.saved li div{flex:1;min-width:0}
+.saved li b{display:block;font-family:"Yatra One","Mukta",serif;font-weight:400;font-size:1.25rem;color:var(--accent)}
+.saved li span{display:block;color:var(--muted);font-size:.86rem;line-height:1.35}
+.saved .btn{min-height:38px;padding:0 14px;font-size:.92rem}
+.sp-del{flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--muted);font:inherit;cursor:pointer}
+.sp-del:hover{border-color:var(--alert);color:var(--alert)}
+.sp-all{margin-top:6px;background:none;border:0;padding:4px 0;color:var(--alert);text-decoration:underline;text-underline-offset:3px;font:inherit;font-size:.9rem;cursor:pointer}
+.ask-recent,.ask-sugg{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}
+.ask-sugg{margin:2px 0 12px}
+.ask-recent > span,.ask-sugg > span{font-size:.88rem;color:var(--muted);font-weight:600}
+.ask-recent button,.ask-sugg button{border:1.5px dashed var(--accent);background:transparent;color:var(--text);border-radius:999px;padding:4px 12px;font:inherit;font-size:.9rem;cursor:pointer}
+.ask-recent button:hover,.ask-sugg button:hover{border-style:solid}
+.ask-recent .rc-clear{border:0;color:var(--muted);text-decoration:underline;padding:4px 6px}
+button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;font-size:.95rem;color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.toast.nospin .spin{display:none}
+
+#printPlan{display:none}
+@media print{
+  @page{margin:14mm}
+  html,body{background:#fff !important}
+  body > *:not(#printPlan){display:none !important}
+  body::before{display:none !important}
+  #printPlan{display:block;color:#18221E;font-family:"Mukta",system-ui,sans-serif;font-size:11.5pt;line-height:1.45;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printPlan header{display:flex;align-items:center;gap:12px;padding-bottom:10px;border-bottom:3px solid #E8A317;margin-bottom:10px}
+  #printPlan header b{display:block;font-family:"Yatra One",serif;font-size:20pt;line-height:1.1;color:#1F3B2D;font-weight:400}
+  #printPlan header span{color:#4A5852}
+  #printPlan h2{font-family:"Yatra One",serif;font-weight:400;font-size:14pt;color:#1F3B2D;margin:16px 0 6px;text-shadow:none;break-after:avoid}
+  #printPlan table{width:100%;border-collapse:collapse}
+  #printPlan .pp-sum td{padding:4px 8px;border:1px solid #D5DED7}
+  #printPlan .pp-sum td:nth-child(odd){color:#4A5852;width:16%}
+  #printPlan .pp-total{font-size:12pt;margin:12px 0 6px}
+  #printPlan .pp-total b{font-family:"Yatra One",serif;font-weight:400;font-size:18pt;color:#1F3B2D}
+  #printPlan .pp-total span{color:#4A5852;font-size:10pt}
+  #printPlan .pp-rows td{padding:5px 0;border-bottom:1px solid #D5DED7;vertical-align:top}
+  #printPlan .pp-rows td:last-child{text-align:right;font-weight:700;white-space:nowrap;padding-left:10px}
+  #printPlan .pp-rows small{display:block;color:#4A5852}
+  #printPlan .pp-days{padding-left:20px;margin:0}
+  #printPlan .pp-days > li{margin-bottom:8px;break-inside:avoid}
+  #printPlan .pp-days ul{margin:2px 0 0;padding-left:16px}
+  #printPlan .pp-tips{padding-left:18px;margin:0}
+  #printPlan .pp-tips li{margin-bottom:4px}
+  #printPlan .pp-check{list-style:none;padding:0;margin:0;columns:2;column-gap:24px}
+  #printPlan .pp-check li{margin-bottom:4px;break-inside:avoid}
+  #printPlan footer{background:none;color:#4A5852;padding:8px 0 0;margin-top:18px;border-top:1px solid #D5DED7;font-size:9pt}
+}
 </style>
 </head>
 <body>
@@ -777,6 +840,7 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
         <button type="button"><span lang="en">Nearest railway station?</span><span lang="hi">नज़दीकी रेलवे स्टेशन?</span></button>
         <button type="button"><span lang="en">Where to stay?</span><span lang="hi">कहाँ ठहरें?</span></button>
       </div>
+      <div class="ask-recent" id="askRecent" hidden></div>
       <div class="ask-out" id="askOut" aria-live="polite">
         <p class="ask-q" lang="en">Do I need registration?</p>
         <p class="ask-a" lang="en">Not yet. As of 11 October 2026 no registration is needed. Officials plan weekend registration with a limit of about 20,000–25,000 visitors a day, but there is no start date. If it starts, register only on the official government portal.</p>
@@ -880,6 +944,7 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
       <p lang="hi">पाँच सवालों के जवाब दें और दिन-ब-दिन प्लान के साथ अनुमानित बजट पाएँ। ये कीमतें सिर्फ़ अंदाज़े के लिए हैं, पक्का भाव नहीं।</p>
     </div>
 
+    <div class="saved" id="savedPlans" hidden></div>
     <form class="planner" id="planForm" onsubmit="return false">
       <div class="grid2">
         <div class="field">
@@ -1521,6 +1586,7 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
     var o = readForm(), r = calc(o), it = itinerary(o), t = T[lang];
     var html = '<div class="total">' + fmt(r.total) + '</div>' +
       '<p class="total-note">' + t.range + ': ' + fmt(r.low) + ' – ' + fmt(r.high) + '<br>' + fmt(r.pp) + ' ' + t.pp + '</p>' +
+      forYouHtml(o) +
       '<table class="breakdown"><tbody>' +
       r.rows.map(function(x){ return '<tr><td>' + esc(x[0]) + '<small>' + esc(x[1]) + '</small></td><td>' + fmt(x[2]) + '</td></tr>'; }).join("") +
       '</tbody></table>' +
@@ -1531,7 +1597,9 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
     if (o.mode === "train") html += '<a data-link="plan-trains" class="btn btn-line" href="' + LINKS.trains + '" target="_blank" rel="noopener">' + t.bookTrain + '</a>';
     if (o.mode === "bus") html += '<a data-link="plan-buses" class="btn btn-line" href="' + LINKS.buses + '" target="_blank" rel="noopener sponsored">' + t.bookBus + '</a>';
     if (o.mode === "cab") html += '<a data-link="plan-cabs" class="btn btn-line" href="' + LINKS.cabs + '" target="_blank" rel="noopener sponsored">' + t.bookCab + '</a>';
-    html += '<a class="btn btn-line" id="shareBtn" href="#" target="_blank" rel="noopener">' + t.share + '</a></div>';
+    html += '<a class="btn btn-line" id="shareBtn" href="#" target="_blank" rel="noopener">' + t.share + '</a>' +
+      '<button type="button" class="btn btn-line" id="savePlanBtn">💾 ' + SM[lang].save + '</button>' +
+      '<button type="button" class="btn btn-line" id="pdfBtn">📄 ' + SM[lang].pdf + '</button></div>';
     $("#result").innerHTML = html;
     rollTotal(r.total);
 
@@ -1541,6 +1609,201 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
       "\n\nhttps://neemkarolitrip.com";
     $("#shareBtn").href = "https://wa.me/?text=" + encodeURIComponent(msg);
   }
+
+  /* ================================================================
+     SMART PLANNER: personal suggestions, PDF trip plan, saved plans (with consent)
+     Everything runs on this device. Saved data stays in this browser only.
+     ================================================================ */
+  var SM = {
+    en:{
+      forYou:"Suggested for you", save:"Save plan", pdf:"Download PDF", saved:"Plan saved on this phone ✓",
+      askTitle:"Save plans on this phone?",
+      askText:"Your saved plans and recent questions stay only on this device. Nothing is sent to us. You can delete them anytime.",
+      allow:"Allow and save", notNow:"Not now",
+      mine:"My saved plans", open:"Open", del:"Delete", delAll:"Delete all saved data", deleted:"Saved data deleted",
+      nights:function(n){ return n === 0 ? "day trip" : n + (n > 1 ? " nights" : " night"); },
+      tiers:["Budget","Comfortable","Premium"], modes:{train:"Train + taxi", car:"Own car", bus:"Bus + taxi", cab:"Taxi all the way"},
+      stay0:["Stay in Bhowali","Closest town (9 km) with budget rooms and the weekend shuttle parking. Best value for your budget."],
+      stay1:["Stay in Bhowali","Closest town (9 km). Good mid-range rooms and an easy early start for darshan."],
+      stay1f:["Stay in Bhimtal","Lakeside and quieter, good for families, and on the way up from Kathgodam."],
+      stay2:["Kainchi road or Nainital","For premium comfort: a resort on the Kainchi road (walking distance, books out first) or a lake-view hotel in Nainital."],
+      dayTrip:["Day trip","No stay needed. Start back by noon so you are off the hill roads before dark."],
+      best:function(d, lv, wk){ return ["Best day to go", "Calmest day in the next 2 weeks: " + d + " (" + lv + "). This weekend looks " + wk + ". Our estimate, not official."]; },
+      trainDelhi:["Train tip","The overnight Ranikhet Express (22:05 → 05:05) gets you into the queue before the crowds."],
+      train:["Train tip","Take a train to Kathgodam, then a taxi up the hill (about 1–1.5 hours)."],
+      car:["Driving tip","Leave by 4–5 AM. On busy weekends police send cars to parking at Bhimtal or Bhowali, with a shuttle to the temple."],
+      bus:["Bus tip","Take an overnight bus to Haldwani or Kathgodam, then a taxi up the hill."],
+      cab:["Taxi tip","Ask your driver about weekend shuttle-only rules. On busy days cars stop at the parking lots."],
+      group:function(n){ return ["Group of " + n, "An SUV or Tempo Traveller usually costs less per person than two cabs."]; },
+      solo:["Travelling solo","Shared taxis between Haldwani or Kathgodam and Bhowali are the cheapest way up the hill."],
+      places1:["After darshan","Golu Devta temple at Ghorakhal and the Bhowali fruit market are both close by."],
+      places2:["With your extra days","Add Bhumiadhar and Kakrighat ashrams, Hanuman Garhi and Naini Lake, or a drive to Mukteshwar."],
+      pdfTitle:"Kainchi Dham trip plan", summary:"Trip summary", checklist:"Packing checklist",
+      items:["ID card for every traveller","Cash in small notes (some places don't take UPI)","A warm layer, even in summer","Comfortable shoes you can slip off at the temple","Modest clothes","Water bottle and light snacks","Phone power bank","Your tickets and hotel booking"],
+      foot:function(d){ return "Estimate made on " + d + " at neemkarolitrip.com. Prices are rough guides, not quotes. Check the latest rules on the website before you go. Independent guide, not connected with the temple trust."; },
+      from:"From", trav:"Travellers", mode:"Travel", stayL:"Stay", comfort:"Comfort"
+    },
+    hi:{
+      forYou:"आपके लिए सुझाव", save:"प्लान सेव करें", pdf:"PDF डाउनलोड करें", saved:"प्लान इस फ़ोन पर सेव हो गया ✓",
+      askTitle:"प्लान इस फ़ोन पर सेव करें?",
+      askText:"आपके सेव किए प्लान और हाल के सवाल सिर्फ़ इसी डिवाइस पर रहेंगे। हमें कुछ नहीं भेजा जाता। आप इन्हें कभी भी मिटा सकते हैं।",
+      allow:"अनुमति दें और सेव करें", notNow:"अभी नहीं",
+      mine:"मेरे सेव किए प्लान", open:"खोलें", del:"हटाएँ", delAll:"सारा सेव डेटा मिटाएँ", deleted:"सेव डेटा मिटा दिया गया",
+      nights:function(n){ return n === 0 ? "एक दिन की यात्रा" : n + " रात"; },
+      tiers:["किफ़ायती","आरामदायक","प्रीमियम"], modes:{train:"ट्रेन + टैक्सी", car:"अपनी गाड़ी", bus:"बस + टैक्सी", cab:"पूरी यात्रा टैक्सी से"},
+      stay0:["भवाली में ठहरें","सबसे पास का शहर (9 किमी), किफ़ायती कमरे और वीकेंड शटल पार्किंग। आपके बजट में सबसे अच्छा।"],
+      stay1:["भवाली में ठहरें","सबसे पास का शहर (9 किमी)। अच्छे मिड-रेंज कमरे और दर्शन के लिए सुबह जल्दी निकलना आसान।"],
+      stay1f:["भीमताल में ठहरें","झील किनारे और शांत, परिवारों के लिए अच्छा, काठगोदाम से ऊपर आते रास्ते में।"],
+      stay2:["कैंची रोड या नैनीताल","प्रीमियम आराम के लिए: कैंची रोड पर रिसॉर्ट (पैदल दूरी, सबसे पहले भरते हैं) या नैनीताल में झील के नज़ारे वाला होटल।"],
+      dayTrip:["एक दिन की यात्रा","होटल की ज़रूरत नहीं। दोपहर 12 बजे तक वापसी शुरू करें ताकि अँधेरे से पहले पहाड़ी रास्ता पार हो जाए।"],
+      best:function(d, lv, wk){ return ["जाने का सबसे अच्छा दिन", "अगले 2 हफ़्तों में सबसे शांत दिन: " + d + " (" + lv + ")। इस वीकेंड: " + wk + "। यह हमारा अनुमान है, आधिकारिक नहीं।"]; },
+      trainDelhi:["ट्रेन टिप","रात की रानीखेत एक्सप्रेस (22:05 → 05:05) से आप भीड़ से पहले लाइन में लग सकते हैं।"],
+      train:["ट्रेन टिप","काठगोदाम तक ट्रेन, फिर टैक्सी से पहाड़ (लगभग 1–1.5 घंटे)।"],
+      car:["ड्राइविंग टिप","सुबह 4–5 बजे निकलें। व्यस्त वीकेंड पर पुलिस गाड़ियों को भीमताल या भवाली की पार्किंग में भेजती है, वहाँ से मंदिर तक शटल।"],
+      bus:["बस टिप","हल्द्वानी या काठगोदाम के लिए रात की बस लें, फिर टैक्सी से पहाड़।"],
+      cab:["टैक्सी टिप","ड्राइवर से वीकेंड के शटल नियम पूछ लें। व्यस्त दिनों में गाड़ियाँ पार्किंग पर रुकती हैं।"],
+      group:function(n){ return [n + " लोगों का ग्रुप", "एसयूवी या टेम्पो ट्रैवलर आम तौर पर दो कैब से सस्ता पड़ता है।"]; },
+      solo:["अकेले यात्रा","हल्द्वानी या काठगोदाम से भवाली तक शेयर्ड टैक्सी सबसे सस्ता रास्ता है।"],
+      places1:["दर्शन के बाद","घोड़ाखाल का गोलू देवता मंदिर और भवाली का फल बाज़ार, दोनों पास हैं।"],
+      places2:["अतिरिक्त दिनों में","भूमियाधार और काकड़ीघाट आश्रम, हनुमान गढ़ी और नैनी झील, या मुक्तेश्वर की ड्राइव जोड़ें।"],
+      pdfTitle:"कैंची धाम यात्रा प्लान", summary:"यात्रा का सार", checklist:"सामान की चेकलिस्ट",
+      items:["हर यात्री का पहचान पत्र","छोटे नोटों में कैश (कुछ जगह UPI नहीं चलता)","एक गर्म कपड़ा, गर्मी में भी","आरामदायक जूते जो मंदिर पर आसानी से उतर सकें","शालीन कपड़े","पानी की बोतल और हल्का नाश्ता","फ़ोन पावर बैंक","आपके टिकट और होटल बुकिंग"],
+      foot:function(d){ return d + " को neemkarolitrip.com पर बनाया गया अनुमान। कीमतें मोटा अंदाज़ा हैं, कोटेशन नहीं। जाने से पहले वेबसाइट पर ताज़ा नियम ज़रूर देखें। स्वतंत्र गाइड, मंदिर ट्रस्ट से कोई संबंध नहीं।"; },
+      from:"कहाँ से", trav:"यात्री", mode:"साधन", stayL:"ठहरना", comfort:"सुविधा"
+    }
+  };
+  var ICON = {stay:"🏨", best:"📅", tip:"🧭", group:"👨‍👩‍👧", solo:"🎒", places:"⛰️"};
+
+  function suggestions(o){
+    var m = SM[lang], list = [];
+    if (o.nights === 0) list.push([ICON.stay].concat(m.dayTrip));
+    else if (o.tier === 0) list.push([ICON.stay].concat(m.stay0));
+    else if (o.tier === 1) list.push([ICON.stay].concat(o.people >= 3 ? m.stay1f : m.stay1));
+    else list.push([ICON.stay].concat(m.stay2));
+    var C = window.nktCrowd;
+    if (C){
+      var days = C.days(14), calmest = days[0], wk = null;
+      days.forEach(function(d){ if (d.lvl < calmest.lvl) calmest = d; });
+      for (var i = 0; i < days.length && !wk; i++){ if (days[i].d.getUTCDay() === 6) wk = days[i]; }
+      var wl = C.LV[lang][(wk || days[0]).lvl], cl = C.LV[lang][calmest.lvl];
+      if (lang === "en"){ wl = wl.toLowerCase(); cl = cl.toLowerCase(); }
+      list.push([ICON.best].concat(m.best(C.label(calmest.d), cl, wl)));
+    }
+    var far = FROM[o.from].far;
+    if (o.mode === "train") list.push([ICON.tip].concat(o.from === "delhi" ? m.trainDelhi : m.train));
+    else if (o.mode === "car") list.push([ICON.tip].concat(m.car));
+    else if (o.mode === "bus") list.push([ICON.tip].concat(m.bus));
+    else list.push([ICON.tip].concat(m.cab));
+    if (o.people >= 5) list.push([ICON.group].concat(m.group(o.people)));
+    else if (o.people === 1 && far) list.push([ICON.solo].concat(m.solo));
+    if (o.sights && o.nights >= 2) list.push([ICON.places].concat(m.places2));
+    else if (o.sights && o.nights === 1) list.push([ICON.places].concat(m.places1));
+    return list;
+  }
+  function forYouHtml(o){
+    return '<div class="foryou"><h3>✨ ' + SM[lang].forYou + '</h3><ul>' + suggestions(o).map(function(s){
+      return '<li><span class="fy-i" aria-hidden="true">' + s[0] + '</span><div><b>' + esc(s[1]) + '</b><span>' + esc(s[2]) + '</span></div></li>';
+    }).join("") + '</ul></div>';
+  }
+
+  /* --- storage helpers (every call is wrapped: private mode or blocked storage must not break the page) --- */
+  function store(k, v){ try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  function load(k, d){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } }
+  function consent(){ try { return localStorage.getItem("nkt-save") === "yes"; } catch(e){ return false; } }
+  function notify(text){
+    var box = document.getElementById("toast"), t = document.getElementById("toastText");
+    if (!box || !t) return;
+    t.textContent = text; box.classList.add("show", "nospin");
+    clearTimeout(notify.t); notify.t = setTimeout(function(){ box.classList.remove("show", "nospin"); }, 2400);
+  }
+  function summary(o){
+    var m = SM[lang];
+    return FROM[o.from][lang] + " · " + T[lang].people(o.people) + " · " + m.modes[o.mode] + " · " + m.nights(o.nights) + " · " + m.tiers[o.tier];
+  }
+  function dateLabel(ts){ try { return new Date(ts).toLocaleDateString(lang === "hi" ? "hi-IN" : "en-IN", {day:"numeric", month:"short", timeZone:"Asia/Kolkata"}); } catch(e){ return ""; } }
+  function renderSaved(){
+    var box = document.getElementById("savedPlans"); if (!box) return;
+    var plans = load("nkt-plans", []), m = SM[lang];
+    if (!plans.length){ box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    box.innerHTML = '<h3>💾 ' + m.mine + '</h3><ul>' + plans.map(function(p, i){
+      return '<li><div><b>' + fmt(p.total) + '</b><span>' + esc(summary(p.o)) + ' · ' + dateLabel(p.t) + '</span></div>' +
+        '<button type="button" class="btn btn-line sp-open" data-i="' + i + '">' + m.open + '</button>' +
+        '<button type="button" class="sp-del" data-i="' + i + '" aria-label="' + m.del + '">✕</button></li>';
+    }).join("") + '</ul><button type="button" class="sp-all">' + m.delAll + '</button>';
+  }
+  function savePlan(){
+    var o = readForm(), r = calc(o), plans = load("nkt-plans", []);
+    plans = plans.filter(function(p){ return JSON.stringify(p.o) !== JSON.stringify(o); });
+    plans.unshift({o:o, total:r.total, t:Date.now()});
+    store("nkt-plans", plans.slice(0, 6));
+    renderSaved(); notify(SM[lang].saved);
+  }
+  function openPlan(o){
+    var f = $("#planForm");
+    f.from.value = o.from; syncModes();
+    var pick = function(n, v){ var el = f.querySelector('input[name=' + n + '][value="' + v + '"]'); if (el && !el.disabled) el.checked = true; };
+    pick("mode", o.mode); pick("nights", o.nights); pick("tier", o.tier);
+    $("#sights").checked = !!o.sights;
+    people = Math.min(12, Math.max(1, o.people || 2)); $("#peopleOut").textContent = people;
+    render();
+    var res = $("#result"); if (res && res.scrollIntoView) res.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+  function askConsent(after){
+    var m = SM[lang], host = $("#result .actions"); if (!host || $("#saveAsk")) return;
+    var d = document.createElement("div");
+    d.className = "save-ask"; d.id = "saveAsk"; d.setAttribute("role", "dialog"); d.setAttribute("aria-labelledby", "saveAskT");
+    d.innerHTML = '<b id="saveAskT">🔒 ' + m.askTitle + '</b><p>' + m.askText + '</p><div class="row"><button type="button" class="btn btn-solid" data-a="yes">' + m.allow + '</button><button type="button" class="btn btn-line" data-a="no">' + m.notNow + '</button></div>';
+    host.parentNode.insertBefore(d, host.nextSibling);
+    d.addEventListener("click", function(e){
+      var b = e.target.closest("button"); if (!b) return;
+      if (b.getAttribute("data-a") === "yes"){ try { localStorage.setItem("nkt-save", "yes"); } catch(err){} after(); }
+      d.remove();
+    });
+    var first = d.querySelector("button"); if (first) first.focus();
+  }
+  function printPlan(){
+    var o = readForm(), r = calc(o), it = itinerary(o), m = SM[lang], t = T[lang];
+    var box = document.getElementById("printPlan");
+    if (!box){ box = document.createElement("div"); box.id = "printPlan"; document.body.appendChild(box); }
+    box.setAttribute("lang", lang === "hi" ? "hi" : "en");
+    box.innerHTML =
+      '<header><svg width="40" height="40" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1F3B2D"/><path d="M14 50 C30 50 34 40 22 36 C10 32 24 22 40 26 C54 30 50 16 34 14" stroke="#E8A317" stroke-width="6" fill="none" stroke-linecap="round"/></svg><div><b>' + m.pdfTitle + '</b><span>neemkarolitrip.com</span></div></header>' +
+      '<h2>' + m.summary + '</h2><table class="pp-sum"><tr><td>' + m.from + '</td><td>' + esc(FROM[o.from][lang]) + '</td><td>' + m.trav + '</td><td>' + esc(t.people(o.people)) + '</td></tr>' +
+      '<tr><td>' + m.mode + '</td><td>' + esc(m.modes[o.mode]) + '</td><td>' + m.stayL + '</td><td>' + esc(m.nights(o.nights)) + ' · ' + esc(m.tiers[o.tier]) + '</td></tr></table>' +
+      '<p class="pp-total">' + t.est + ': <b>' + fmt(r.total) + '</b> <span>(' + t.range + ' ' + fmt(r.low) + ' – ' + fmt(r.high) + ' · ' + fmt(r.pp) + ' ' + t.pp + ')</span></p>' +
+      '<table class="pp-rows">' + r.rows.map(function(x){ return '<tr><td>' + esc(x[0]) + '<small>' + esc(x[1]) + '</small></td><td>' + fmt(x[2]) + '</td></tr>'; }).join("") + '</table>' +
+      '<h2>' + t.plan + '</h2><ol class="pp-days">' + it.map(function(d){ return '<li><b>' + esc(d[0]) + '</b><ul>' + d[1].map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></li>'; }).join("") + '</ol>' +
+      '<h2>✨ ' + m.forYou + '</h2><ul class="pp-tips">' + suggestions(o).map(function(s){ return '<li><b>' + esc(s[1]) + ':</b> ' + esc(s[2]) + '</li>'; }).join("") + '</ul>' +
+      '<h2>' + m.checklist + '</h2><ul class="pp-check">' + m.items.map(function(x){ return '<li>☐ ' + esc(x) + '</li>'; }).join("") + '</ul>' +
+      '<footer>' + esc(m.foot(dateLabel(Date.now()))) + '</footer>';
+    var old = document.title;
+    document.title = m.pdfTitle + " – Neem Karoli Trip";
+    var done = function(){ document.title = old; window.removeEventListener("afterprint", done); };
+    window.addEventListener("afterprint", done);
+    setTimeout(function(){ window.print(); setTimeout(done, 1500); }, 60);
+  }
+
+  /* one listener for the result area and the saved list */
+  document.addEventListener("click", function(e){
+    var b = e.target.closest && e.target.closest("button"); if (!b) return;
+    if (b.id === "savePlanBtn"){ if (consent()) savePlan(); else askConsent(savePlan); }
+    else if (b.id === "pdfBtn") printPlan();
+    else if (b.classList.contains("sp-open")){ var p = load("nkt-plans", [])[+b.getAttribute("data-i")]; if (p) openPlan(p.o); }
+    else if (b.classList.contains("sp-del")){ var ps = load("nkt-plans", []); ps.splice(+b.getAttribute("data-i"), 1); store("nkt-plans", ps.length ? ps : null); renderSaved(); }
+    else if (b.classList.contains("sp-all")){ store("nkt-plans", null); store("nkt-recent", null); store("nkt-save", null); renderSaved(); notify(SM[lang].deleted); document.dispatchEvent(new CustomEvent("nkt-saved-cleared")); }
+  });
+
+  /* small public hooks so the Ask box can quote costs and open plans */
+  window.nktPlan = {
+    quote:function(opt){
+      var from = FROM[opt.from] ? opt.from : "delhi";
+      var o = {from:from, mode:FROM[from].far ? "train" : "cab", nights:1, tier:1, sights:true, people:Math.min(12, Math.max(1, opt.people || 2))};
+      var r = calc(o); return {o:o, total:r.total, low:r.low, high:r.high, label:summary(o)};
+    },
+    open:openPlan
+  };
+  window.nktPlanRefresh = function(){ render(); renderSaved(); };
 
   function fillFrom(){
     var sel = $("#from"), cur = sel.value || "delhi";
@@ -1554,7 +1817,7 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
     document.documentElement.setAttribute("lang", l === "hi" ? "hi" : "en");
     document.querySelectorAll("[data-set-lang]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-set-lang") === l)); });
     try { localStorage.setItem("nkt-lang", l); } catch(e){}
-    fillFrom(); render();
+    fillFrom(); render(); renderSaved();
   }
 
   document.querySelectorAll("[data-link]").forEach(function(a){ var k = a.getAttribute("data-link"); if (LINKS[k]) a.href = LINKS[k]; });
@@ -1786,47 +2049,160 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
      a:{en:"Neem Karoli Baba, called Maharaj-ji, chose this riverside spot in 1962. The Hanuman temple was consecrated on 15 June 1964. He left his body on 11 September 1973 in Vrindavan.",
         hi:"महाराज जी कहे जाने वाले नीम करोली बाबा ने 1962 में नदी किनारे यह जगह चुनी। 15 जून 1964 को हनुमान मंदिर की प्रतिष्ठा हुई। 11 सितंबर 1973 को उन्होंने वृंदावन में देह त्यागी।"}}
   ];
+  /* extra Hinglish / everyday phrasings, by KB position */
+  var EXTRA = {0:["register","registeration","rajistration","registr","e pass","pass chahiye"],
+    1:["gaadi kaha","gadi kahan","park kahan","parking kahan","shuttle bus"],
+    2:["kab khulta","kab tak","khulta","band hota","opening","closing","darshan time","timings"],
+    3:["bhid","bheed","rush","bhir","kitni bheed"], 5:["train se","rail se","nearest station"],
+    6:["kaise jaye","kaise jayen","kaise pahunche","kaise pahuche","kaise jana","rasta"],
+    8:["kahan ruke","kahan rukein","rukne","lodge","stay kare"], 9:["kharch","kitna lagega","kitne paise","kitna kharcha","total cost"],
+    11:["kab jaye","kab jana","sahi samay","best month","konsa mahina"], 14:["aas paas","aaspas","dekhne","sightseeing"]};
+  KB.forEach(function(e, i){ if (EXTRA[i]) e.k = e.k.concat(EXTRA[i]); });
   var UI = {
     en:{ph:"Ask about parking, timings, trains…", more:"More in", wa:"Ask us on WhatsApp",
         none:"I couldn't find that in this guide yet. Check the FAQ, or ask us on the WhatsApp channel.",
-        example:"Do I need registration?"},
+        example:"Do I need registration?", dym:"Did you mean:", openPlan:"Open in trip planner", crowd:"See the crowd meter", recent:"Recent:", clear:"Clear"},
     hi:{ph:"पार्किंग, समय, ट्रेन के बारे में पूछें…", more:"और जानकारी:", wa:"WhatsApp पर पूछें",
         none:"यह जानकारी अभी इस गाइड में नहीं है। सवाल-जवाब देखें या WhatsApp चैनल पर पूछें।",
-        example:"क्या रजिस्ट्रेशन ज़रूरी है?"}
+        example:"क्या रजिस्ट्रेशन ज़रूरी है?", dym:"क्या आप यह पूछना चाहते हैं:", openPlan:"यात्रा प्लानर में खोलें", crowd:"भीड़ मीटर देखें", recent:"हाल के सवाल:", clear:"मिटाएँ"}
   };
   function norm(s){ s = String(s); if (s.normalize) s = s.normalize("NFD"); return " " + s.toLowerCase().replace(/़/g, "").replace(/[?.!,;:'"()–—]/g, " ").replace(/\s+/g, " ") + " "; }
   KB.forEach(function(e){ e.k = e.k.map(function(k){ return k.charAt(0) === " " ? " " + norm(k).trim() + " " : norm(k).trim(); }); });
-  function match(q){
-    var n = norm(q), best = null, top = 0;
-    KB.forEach(function(e){
-      var sc = 0;
-      e.k.forEach(function(k){ if (n.indexOf(k) > -1) sc += k.length + 2; });
-      if (sc > top){ top = sc; best = e; }
+  /* --- smarter Ask box: Hinglish words, spelling mistakes, follow-ups and live answers --- */
+  /* edit distance that also counts two swapped letters ("trian" -> "train") as one mistake */
+  function lev(a, b){
+    if (Math.abs(a.length - b.length) > 2) return 9;
+    var d = [], i, j;
+    for (i = 0; i <= a.length; i++){ d[i] = [i]; }
+    for (j = 0; j <= b.length; j++){ d[0][j] = j; }
+    for (i = 1; i <= a.length; i++){
+      for (j = 1; j <= b.length; j++){
+        var c = a[i - 1] === b[j - 1] ? 0 : 1;
+        d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + c);
+        if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+      }
+    }
+    return d[a.length][b.length];
+  }
+  var VOCAB = [];
+  var GENERIC = ["kitna","kitni","night","online","phone","mobile","delhi","route","money","price"];
+  KB.forEach(function(e, i){ e.k.forEach(function(k){ var w = k.trim(); if (w.indexOf(" ") < 0 && /^[a-z]{5,}$/.test(w) && GENERIC.indexOf(w) < 0) VOCAB.push([w, i]); }); });
+  function score(q){
+    var n = norm(q), words = n.trim().split(" ").filter(function(w){ return /^[a-z]{4,}$/.test(w); });
+    var sc = KB.map(function(e){ var s = 0; e.k.forEach(function(k){ if (n.indexOf(k) > -1) s += k.length + 2; }); return s; });
+    var near = KB.map(function(){ return 0; });
+    words.forEach(function(w){
+      VOCAB.forEach(function(v){
+        if (n.indexOf(v[0]) > -1) return;
+        var d = lev(w, v[0]), lim = v[0].length >= 7 ? 2 : 1;
+        if (d <= lim){ sc[v[1]] += v[0].length; near[v[1]] += v[0].length; }
+        else if (d === lim + 1) near[v[1]] += 1;
+      });
     });
-    return best;
+    return {n:n, sc:sc, near:near};
+  }
+  var CITY = [[/delhi|dilli|ncr|noida|gurgaon|gurugram|ghaziabad|faridabad|दिल्ली/, "delhi"], [/lucknow|lko|लखनऊ/, "lucknow"],
+              [/kathgodam|haldwani|काठगोदाम|हल्द्वानी/, "kathgodam"], [/nainital|naini tal|नैनीताल/, "nainital"]];
+  function cityOf(n){ for (var i = 0; i < CITY.length; i++) if (CITY[i][0].test(n)) return CITY[i][1]; return null; }
+  function peopleOf(n){
+    var m = n.match(/(\d{1,2})\s*(people|persons?|log|logo|logon|लोग|adults?|members?|pax|friends|jan|ke liye|के लिए)/) || n.match(/ for (\d{1,2}) /);
+    if (m && +m[1] >= 1 && +m[1] <= 12) return +m[1];
+    var W = {" solo ":1, " alone ":1, " akela ":1, " akele ":1, " couple ":2, " do log":2, " teen log":3, " char log":4, " chaar log":4, " paanch log":5};
+    for (var k in W) if (n.indexOf(k) > -1) return W[k];
+    return null;
+  }
+  var DAYW = / weekend|saturday|sunday| today | tomorrow | aaj | kal |shanivar|ravivar|वीकेंड|शनिवार|रविवार| आज | कल /;
+  var QS = [["Do I need registration?","क्या रजिस्ट्रेशन ज़रूरी है?"],["Where do I park on weekends?","वीकेंड पर पार्किंग कहाँ है?"],["Temple timings?","मंदिर कब खुलता है?"],
+    ["How crowded is it this week?","इस हफ़्ते कितनी भीड़ है?"],["Is there an entry fee?","क्या कोई एंट्री फ़ीस है?"],["Nearest railway station?","नज़दीकी रेलवे स्टेशन?"],
+    ["How do I reach from Delhi?","दिल्ली से कैसे पहुँचें?"],["Nearest airport?","नज़दीकी एयरपोर्ट?"],["Where to stay?","कहाँ ठहरें?"],
+    ["How much will the trip cost?","यात्रा में कितना खर्च होगा?"],["Can I take photos?","क्या फ़ोटो ले सकते हैं?"],["Best time to visit?","जाने का सबसे अच्छा समय?"],
+    ["When is the 15 June fair?","15 जून का मेला कब है?"],["Can I do a day trip?","क्या एक दिन में लौट सकते हैं?"],["Places to visit nearby?","आसपास घूमने की जगहें?"],
+    ["Are rate lists displayed?","क्या रेट लिस्ट लगती है?"],["Is this the official website?","क्या यह आधिकारिक वेबसाइट है?"],["Who was Neem Karoli Baba?","नीम करोली बाबा कौन थे?"]];
+  var lastCost = null, lastIntent = null;
+  function money(n){ return "₹" + Math.round(n).toLocaleString("en-IN"); }
+
+  /* Works out the answer: {text, link} where link is ready-made HTML */
+  function answer(q, remember){
+    var l = L(), U = UI[l], r = score(q), n = r.n, best = -1, top = 0;
+    r.sc.forEach(function(s, i){ if (s > top){ top = s; best = i; } });
+    var city = cityOf(n), ppl = peopleOf(n), day = DAYW.test(n), intent = null;
+    var costS = r.sc[9], crowdS = r.sc[3] + (day ? 3 : 0);
+    if ((costS > 0 && costS >= crowdS) || (top === 0 && (city || ppl) && lastIntent === "cost") || (top === 0 && city && ppl)) intent = "cost";
+    else if (r.sc[3] > 0 || (day && (top === 0 || best === 3)) || (top === 0 && lastIntent === "crowd" && day)) intent = "crowd";
+    if (remember) lastIntent = intent || (best > -1 ? "kb" : lastIntent);
+
+    if (intent === "cost" && window.nktPlan){
+      var from = city || (lastCost && lastCost.from) || "delhi", pp = ppl || (lastCost && lastCost.people) || 2;
+      var qd = window.nktPlan.quote({from:from, people:pp});
+      if (remember) lastCost = {from:qd.o.from, people:qd.o.people};
+      var text = l === "hi"
+        ? qd.label + " के लिए कुल लगभग " + money(qd.total) + " (संभावित " + money(qd.low) + " – " + money(qd.high) + ")। प्लानर में शहर, साधन या रातें बदलकर देखें।" + (city ? "" : " टिप: ऐसे पूछें — 'लखनऊ से 4 लोगों का खर्च'।")
+        : "About " + money(qd.total) + " in total for " + qd.label + " (likely " + money(qd.low) + " – " + money(qd.high) + "). Change the city, travel mode or nights in the planner." + (city ? "" : " Tip: ask like 'cost from Lucknow for 4 people'.");
+      return {text:text, link:'<button type="button" class="ask-more ask-open" data-from="' + qd.o.from + '" data-people="' + qd.o.people + '">' + U.openPlan + ' →</button>'};
+    }
+    if (intent === "crowd" && window.nktCrowd){
+      var C = window.nktCrowd, ds = C.days(8), today = ds[0], calm = ds[0], sat = null, sun = null, LV = C.LV[l];
+      ds.forEach(function(d){ if (d.lvl < calm.lvl) calm = d; if (!sat && d.d.getUTCDay() === 6) sat = d; if (!sun && d.d.getUTCDay() === 0) sun = d; });
+      sat = sat || today; sun = sun || today;
+      var t2 = l === "hi"
+        ? "हमारा अनुमान: आज (" + C.label(today.d) + ") भीड़ " + LV[today.lvl] + "। इस वीकेंड: शनिवार " + LV[sat.lvl] + ", रविवार " + LV[sun.lvl] + "। इस हफ़्ते सबसे शांत दिन: " + C.label(calm.d) + "। कार्यदिवस की सुबह दर्शन में लगभग 1–2 घंटे और वीकेंड पर कई घंटे लगते हैं; सुबह 6 से 8 बजे लाइन सबसे छोटी होती है। (अनुमान, आधिकारिक नहीं)"
+        : "Our estimate: today (" + C.label(today.d) + ") looks " + LV[today.lvl].toLowerCase() + ". This weekend: Saturday " + LV[sat.lvl].toLowerCase() + ", Sunday " + LV[sun.lvl].toLowerCase() + ". Calmest day this week: " + C.label(calm.d) + ". Darshan takes about 1–2 hours on a weekday morning and several hours on weekends; weekday mornings between 6 and 8 AM have the shortest queues. (Estimate, not official.)";
+      return {text:t2, link:'<a class="ask-more" href="#crowd">' + U.crowd + ' →</a>'};
+    }
+    if (best > -1){
+      var e = KB[best];
+      return {text:e.a[l], link:'<a class="ask-more" href="' + e.s + '">' + U.more + " " + e.l[l] + " →</a>"};
+    }
+    var sug = r.near.map(function(v, i){ return [v, i]; }).filter(function(x){ return x[0] > 0; }).sort(function(a, b){ return b[0] - a[0]; }).slice(0, 3).map(function(x){ return x[1]; });
+    if (!sug.length) sug = [0, 8, 9];
+    return {text:U.none, link:'<div class="ask-sugg"><span>' + U.dym + '</span>' + sug.map(function(i){ return '<button type="button" data-q="' + esc(QS[i][l === "hi" ? 1 : 0]) + '">' + esc(QS[i][l === "hi" ? 1 : 0]) + '</button>'; }).join("") +
+      '</div><a class="ask-more" href="https://whatsapp.com/channel/0029VbDgY4nIiRoyCXgAjm0I" target="_blank" rel="noopener">' + U.wa + " →</a>"};
   }
   var out = document.getElementById("askOut"), input = document.getElementById("askInput"), form = document.getElementById("askForm");
   var lastQ = null, isExample = true, timer = null;
-  function render(q, animate){
-    var e = match(q), l = L(), T = UI[l];
-    var ans = e ? e.a[l] : T.none;
+  function render(q, animate, remember){
+    var res = answer(q, remember);
     var body = animate && !reduce
-      ? ans.split(" ").map(function(w, i){ return '<span class="w" style="--n:' + i + '">' + esc(w) + "</span>"; }).join(" ")
-      : esc(ans);
-    var link = e
-      ? '<a class="ask-more" href="' + e.s + '">' + T.more + " " + e.l[l] + " →</a>"
-      : '<a class="ask-more" href="https://whatsapp.com/channel/0029VbDgY4nIiRoyCXgAjm0I" target="_blank" rel="noopener">' + T.wa + " →</a>";
-    out.innerHTML = '<p class="ask-q">' + esc(q) + '</p><p class="ask-a">' + body + "</p>" + link;
+      ? res.text.split(" ").map(function(w, i){ return '<span class="w" style="--n:' + i + '">' + esc(w) + "</span>"; }).join(" ")
+      : esc(res.text);
+    out.innerHTML = '<p class="ask-q">' + esc(q) + '</p><p class="ask-a">' + body + "</p>" + res.link;
   }
+  /* recent questions: kept on this phone only, and only after the visitor allowed saving */
+  function recentList(){ try { return JSON.parse(localStorage.getItem("nkt-recent") || "[]"); } catch(e){ return []; } }
+  function rememberQ(q){
+    try {
+      if (localStorage.getItem("nkt-save") !== "yes") return;
+      var a = recentList().filter(function(x){ return x.toLowerCase() !== q.toLowerCase(); });
+      a.unshift(q); localStorage.setItem("nkt-recent", JSON.stringify(a.slice(0, 5)));
+    } catch(e){}
+    showRecent();
+  }
+  function showRecent(){
+    var box = document.getElementById("askRecent"); if (!box) return;
+    var a = recentList(), U = UI[L()];
+    if (!a.length){ box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    box.innerHTML = '<span>🕘 ' + U.recent + '</span>' + a.map(function(q){ return '<button type="button" data-q="' + esc(q) + '">' + esc(q) + '</button>'; }).join("") + '<button type="button" class="rc-clear">' + U.clear + '</button>';
+  }
+  document.addEventListener("nkt-saved-cleared", showRecent);
   function ask(q){
     q = (q || "").trim();
     if (!q || !out) return;
     lastQ = q; isExample = false;
     clearTimeout(timer);
-    if (reduce){ render(q, false); return; }
+    rememberQ(q);
+    if (reduce){ render(q, false, true); return; }
     out.innerHTML = '<p class="ask-q">' + esc(q) + '</p><p class="thinking" aria-label="…"><span></span><span></span><span></span></p>';
-    timer = setTimeout(function(){ render(q, true); }, 450);
+    timer = setTimeout(function(){ render(q, true, true); }, 450);
   }
+  var askCard = document.querySelector(".ask-card");
+  if (askCard) askCard.addEventListener("click", function(ev){
+    var b = ev.target.closest && ev.target.closest("button"); if (!b) return;
+    if (b.classList.contains("rc-clear")){ try { localStorage.removeItem("nkt-recent"); } catch(e){} showRecent(); return; }
+    if (b.classList.contains("ask-open") && window.nktPlan){ window.nktPlan.open({from:b.getAttribute("data-from"), people:+b.getAttribute("data-people"), mode:"", nights:1, tier:1, sights:true}); return; }
+    var dq = b.getAttribute("data-q");
+    if (dq && (b.closest(".ask-sugg") || b.closest(".ask-recent"))){ input.value = dq; ask(dq); }
+  });
   if (form){
     form.addEventListener("submit", function(ev){ ev.preventDefault(); ask(input.value); });
     $$(".ask-chips button").forEach(function(b){
@@ -1846,6 +2222,7 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
     startTicker();
   }
   new MutationObserver(onLang).observe(root, {attributes:true, attributeFilter:["data-lang"]});
+  showRecent();
   onLang();
 })();
 </script>
@@ -2007,6 +2384,12 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
     };
     $("#crowdDays").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; sel = +b.getAttribute("data-i"); paint(); var nb = $('#crowdDays button[data-i="' + sel + '"]'); if (nb) nb.focus(); });
     paint();
+    window.nktCrowd = {
+      LV:LV,
+      days:function(n){ var t = istNow(), list = []; for (var q = 0; q < n; q++){ var dd = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate() + q)), ee = estimate(dd); list.push({d:dd, lvl:ee.lvl, why:ee.why}); } return list; },
+      label:function(dt){ return fmtDay(dt, {weekday:"short", day:"numeric", month:"short"}); }
+    };
+    if (window.nktPlanRefresh) window.nktPlanRefresh();
     var reveal = function(){ shown = true; if (needle) needle.style.transform = "rotate(" + ANG[days[sel].lvl] + "deg)"; };
     if (calm || !("IntersectionObserver" in window)) reveal();
     else new IntersectionObserver(function(en, ob){ if (en[0].isIntersecting){ setTimeout(reveal, 250); ob.disconnect(); } }, {threshold:.5}).observe(crowd);
