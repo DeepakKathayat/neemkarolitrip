@@ -469,6 +469,97 @@ footer ul.social a:hover{background:#F4C766;color:#1B1505}
 .consent .no{background:transparent;color:var(--accent)}
 footer .legal{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0 0 10px}
 footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C766;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+/* ================================================================
+   ADVANCED MOTION: live sky, route map, crowd meter, card tilt
+   ================================================================ */
+/* --- live sky (hero follows the time in India) --- */
+.stars{position:absolute;left:0;right:0;top:0;height:62%;pointer-events:none;opacity:0;transition:opacity 1.2s}
+.stars i{position:absolute;left:0;top:0;width:2px;height:2px;border-radius:50%;background:#fff}
+.stars i.b{animation:twinkle 3.2s ease-in-out infinite}
+.stars i.c{animation:twinkle 4.6s 1.4s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.25}}
+.moon{position:absolute;left:66%;top:8%;width:clamp(44px,7vw,70px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 38% 36%,#FFFBEA 0%,#F3EBCF 55%,#D9CFAE 100%);box-shadow:0 0 30px 8px rgba(255,246,214,.28),inset -10px -6px 0 0 rgba(0,0,0,.08);opacity:0;transform:translateY(20%);transition:opacity 1.2s,transform 1.2s}
+.sky-now{position:absolute;left:12px;top:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:rgba(10,20,16,.42);color:#F1F5F1;font-size:.82rem;font-weight:600;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);pointer-events:none}
+.sky-now:empty{display:none}
+.hero[data-sky="dawn"]{background:linear-gradient(180deg,#141F2B 0%,#3A3644 46%,var(--hill-4) 100%);--snow:#F7D2C2;--hill-0:#7A7F86}
+.hero[data-sky="dawn"] .scene{background:linear-gradient(180deg,rgba(244,160,140,0) 0%,rgba(244,150,120,.26) 55%,rgba(214,110,90,.34) 100%)}
+.hero[data-sky="dawn"] .sun{top:26%;background:radial-gradient(circle,#FFE3C8 0%,#F7A27A 36%,rgba(240,130,100,.42) 58%,rgba(240,130,100,0) 72%)}
+.hero[data-sky="day"]{background:linear-gradient(180deg,#163A36 0%,#2A5848 50%,var(--hill-4) 100%);--snow:#FFFFFF;--hill-0:#7C9488}
+.hero[data-sky="day"] .scene{background:linear-gradient(180deg,rgba(200,230,220,0) 0%,rgba(225,235,200,.12) 55%,rgba(232,200,120,.16) 100%)}
+.hero[data-sky="day"] .sun{top:-4%;background:radial-gradient(circle,#FFFDF2 0%,#FFF1BF 32%,rgba(255,236,170,.4) 56%,rgba(255,236,170,0) 72%)}
+.hero[data-sky="dusk"] .scene{background:linear-gradient(180deg,rgba(232,163,23,0) 0%,rgba(232,128,40,.28) 55%,rgba(185,70,30,.44) 100%)}
+.hero[data-sky="dusk"] .sun{top:24%;background:radial-gradient(circle,#FFE0A8 0%,#F29A3E 34%,rgba(220,100,40,.45) 56%,rgba(220,100,40,0) 72%)}
+.hero[data-sky="night"]{background:linear-gradient(180deg,#050A10 0%,#0B1820 50%,var(--hill-4) 100%);--snow:#C3CDD6;--hill-0:#3E4C55;--hill-1:#2F463C;--hill-2:#243D33;--hill-3:#1C332A}
+.hero[data-sky="night"] .scene{background:linear-gradient(180deg,rgba(20,30,60,0) 0%,rgba(30,44,80,.22) 55%,rgba(10,16,30,.34) 100%)}
+.hero[data-sky="night"] .sun{opacity:0 !important}
+.hero[data-sky="night"] .moon{opacity:1;transform:none}
+.hero[data-sky="night"] .stars{opacity:1}
+.hero[data-sky="night"] .lights i{box-shadow:0 0 16px 5px rgba(244,199,102,.65)}
+.hero .sun{transition:top 1.2s var(--ease),opacity 1s}
+
+/* --- route map --- */
+:root{--map-a:#EEF2E6;--map-b:#E2EBDD;--map-hill1:#B9CDBE;--map-hill2:#93B19C;--map-snow:#FFFFFF;--map-lake:#9CC6CF;--map-text:#2B3A33}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--map-a:#18261F;--map-b:#1C2E25;--map-hill1:#2E473B;--map-hill2:#3A5949;--map-snow:#C9D3CC;--map-lake:#3F6670;--map-text:#D9E3DC}}
+:root[data-theme="dark"]{--map-a:#18261F;--map-b:#1C2E25;--map-hill1:#2E473B;--map-hill2:#3A5949;--map-snow:#C9D3CC;--map-lake:#3F6670;--map-text:#D9E3DC}
+.routemap{margin:0 0 22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:10px 10px 14px}
+.rm-svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto;overflow:visible}
+.rm-plain-a{stop-color:var(--map-a)} .rm-plain-b{stop-color:var(--map-b)}
+.rm-hill.far{fill:var(--map-hill1)} .rm-hill.near{fill:var(--map-hill2)} .rm-snow{fill:var(--map-snow)} .rm-lake{fill:var(--map-lake)}
+.rm-rail{fill:none;stroke:var(--muted);stroke-width:1.6;stroke-dasharray:2 4;opacity:.75}
+.rm-road-base{fill:none;stroke:var(--line);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.rm-road{fill:none;stroke:var(--marigold);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.rm-road-key{stroke:var(--marigold);stroke-width:5;stroke-linecap:round}
+.rm-legend text{font:600 11px "Mukta",system-ui,sans-serif;fill:var(--map-text)}
+.rm-stop circle{fill:var(--surface);stroke:var(--muted);stroke-width:2;transition:fill .35s,stroke .35s}
+.rm-stop text{font:600 12.5px "Mukta",system-ui,sans-serif;fill:var(--map-text);paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round;opacity:.75;transition:opacity .35s}
+.rm-stop:not(.major) text{display:none}
+.rm-stop.end text{font-size:14px;font-weight:700}
+.rm-stop.reached circle{fill:var(--marigold);stroke:var(--marigold)}
+.rm-stop.reached text{opacity:1}
+.rm-stop.reached.pop circle{animation:stopPop .5s var(--ease)}
+.rm-stop.end.reached circle{fill:var(--sindoor);stroke:var(--sindoor)}
+@keyframes stopPop{40%{r:9}}
+.rm-car rect,.rm-car path{fill:var(--sindoor)}
+.rm-car .w{fill:#1B1505}
+.rm-read{display:flex;gap:12px;align-items:flex-start;max-width:640px;margin:10px auto 0;padding:0 6px}
+.rm-km{flex:none;min-width:5.6ch;font-family:"Yatra One","Mukta",serif;font-size:1.7rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.rm-km small{display:block;font-family:"Mukta",sans-serif;font-size:.78rem;font-weight:600;color:var(--muted);margin-top:4px}
+.rm-note b{display:block;font-size:1.05rem}
+.rm-note span{color:var(--muted);font-size:.95rem}
+.rm-fine{max-width:640px;margin:8px auto 0;padding:0 6px;font-size:.8rem;color:var(--muted)}
+
+/* --- crowd meter --- */
+.crowd{display:grid;grid-template-columns:minmax(0,190px) 1fr;gap:8px 18px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:16px;margin:0 0 18px}
+.crowd h3{grid-column:1 / -1;font-family:"Mukta",sans-serif;font-weight:700;font-size:1.1rem;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.crowd h3 small{font-weight:600;color:var(--muted);font-size:.9rem}
+.gauge{width:100%;height:auto;display:block}
+.gauge .seg{fill:none;stroke-width:16}
+.gauge .needle{transform-origin:100px 100px;transform:rotate(-90deg);transition:transform 1.3s cubic-bezier(.34,1.4,.5,1)}
+.gauge .needle path{fill:var(--text)}
+.gauge .hub{fill:var(--text)}
+.crowd-level{display:inline-block;font-family:"Yatra One","Mukta",serif;font-size:1.7rem;line-height:1.15;color:var(--text);border-bottom:5px solid var(--lvl,var(--line));padding-bottom:2px;transition:border-color .4s}
+.crowd-tip{color:var(--muted);margin:4px 0 0}
+.crowd-days{grid-column:1 / -1;display:flex;gap:6px;overflow-x:auto;padding:4px 2px 2px;scrollbar-width:none}
+.crowd-days::-webkit-scrollbar{display:none}
+.crowd-days button{flex:1 1 0;min-width:40px;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:58px;padding:6px 4px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--text);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:border-color .2s,background .2s}
+.crowd-days button b{font-size:1rem}
+.crowd-days button i{width:22px;height:5px;border-radius:3px;background:var(--lvl)}
+.crowd-days button[aria-pressed="true"]{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 2px var(--accent) inset}
+.crowd-note{grid-column:1 / -1;margin:2px 0 0;font-size:.8rem;color:var(--muted)}
+@media (max-width:520px){.crowd{grid-template-columns:130px 1fr}.crowd-level{font-size:1.4rem}}
+
+/* --- card lift & tilt --- */
+.reveal.in.settled{animation:none}
+.tilt{position:relative;transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--lift,0px));transition:transform .45s var(--ease),box-shadow .45s var(--ease);will-change:transform}
+.tilt.active{--lift:-5px;box-shadow:0 22px 40px -22px rgba(16,33,26,.5);transition:transform .12s linear,box-shadow .3s}
+.tilt::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.22),rgba(255,255,255,0) 55%);opacity:0;transition:opacity .3s}
+.tilt.active::after{opacity:1}
+
+@media (prefers-reduced-motion: reduce){
+  .stars i{animation:none}
+  .gauge .needle{transition:none}
+  .tilt,.tilt.active{transform:none;transition:none}
+}
 </style>
 </head>
 <body>
@@ -505,6 +596,7 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
 <main id="top">
 
 <div class="hero" id="hero">
+  <div class="stars" aria-hidden="true"></div>
   <div class="wrap hero-copy">
     <a class="live" href="#status"><span class="dot" aria-hidden="true"></span><span class="tag"><span lang="en">Live</span><span lang="hi">ताज़ा</span></span><span class="live-text" id="liveText"><span lang="en">Registration: not needed yet, but planned</span><span lang="hi">रजिस्ट्रेशन: अभी ज़रूरी नहीं, पर तैयारी चल रही है</span></span></a>
     <h1>
@@ -522,6 +614,7 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
   </div>
   <div class="scene" role="img" aria-label="Hills with the two hairpin bends of the road that give Kainchi its name, and the temple by the river">
     <div class="sun"></div>
+    <div class="moon" aria-hidden="true"></div>
     <svg class="layer" data-depth="0.42" viewBox="0 0 800 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M-40 300 L-40.0 91.2 L-11.3 56.0 L16.0 94.6 L48.6 32.3 L83.7 86.6 L117.5 32.8 L145.2 92.8 L186.1 35.0 L216.1 96.0 L259.1 53.1 L292.3 101.6 L319.1 64.3 L350.3 88.3 L378.4 42.3 L419.1 88.9 L455.6 55.6 L488.3 94.8 L515.4 32.4 L545.1 96.9 L578.8 42.6 L615.4 93.3 L646.8 61.8 L685.4 89.9 L721.7 51.0 L763.5 97.7 L794.6 69.2 L822.8 92.7 L862.4 36.1 L862 300 Z" fill="var(--hill-0)"/><path d="M-19.3 65.9 L-11.3 56.0 L-3.6 66.8 L-8.5 64.4 Z M39.5 49.8 L48.6 32.3 L58.4 47.5 L52.0 46.6 Z M108.1 47.9 L117.5 32.8 L125.3 49.6 L119.7 46.7 Z M174.6 51.1 L186.1 35.0 L194.5 52.1 L187.5 49.6 Z M247.1 65.1 L259.1 53.1 L268.4 66.7 L260.7 63.9 Z M370.6 55.2 L378.4 42.3 L389.8 55.4 L383.2 53.3 Z M445.4 64.9 L455.6 55.6 L464.8 66.5 L458.1 63.7 Z M507.8 49.9 L515.4 32.4 L523.8 50.4 L518.8 48.1 Z M569.4 57.8 L578.8 42.6 L589.1 56.8 L582.2 55.3 Z M711.5 61.9 L721.7 51.0 L733.4 64.1 L725.5 61.0 Z" fill="var(--snow)"/></svg>
     <svg class="layer" data-depth="0.30" viewBox="0 0 800 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M-40 300 L-40 116.5 Q21.7 131.6 51.2 124.9 Q80.7 118.3 111.9 113.1 Q143.2 107.9 173.3 115.0 Q203.5 122.2 237.6 113.6 Q271.7 105.0 298.9 105.0 Q326.2 104.9 360.5 114.5 Q394.9 124.2 418.4 128.8 Q442.0 133.4 478.5 128.2 Q515.0 122.9 546.7 115.0 Q578.3 107.0 601.5 113.0 Q624.7 118.9 648.5 113.5 Q672.4 108.1 698.8 105.5 Q725.1 103.0 754.6 109.5 Q784.1 116.1 822.1 117.4 L860 118.6 L860 300 Z" fill="var(--hill-1)"/></svg>
     <svg class="layer" data-depth="0.18" viewBox="0 0 800 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M-40 300 L-40 161.9 Q22.8 161.0 43.8 156.8 Q64.8 152.6 89.9 151.7 Q114.9 150.8 136.5 146.1 Q158.1 141.4 183.4 141.8 Q208.7 142.2 234.2 139.4 Q259.7 136.7 280.7 146.3 Q301.7 155.9 326.8 153.1 Q351.8 150.4 380.6 148.2 Q409.4 146.1 430.1 152.0 Q450.8 157.9 477.9 156.2 Q505.0 154.4 532.4 158.8 Q559.9 163.2 584.2 160.2 Q608.6 157.3 633.0 154.6 Q657.4 152.0 685.4 148.4 Q713.3 144.8 734.3 147.0 Q755.3 149.3 784.0 150.9 Q812.6 152.5 836.3 153.3 L860 154.0 L860 300 Z" fill="var(--hill-2)"/></svg>
@@ -544,6 +637,7 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
         <path class="flag" d="M0 -52 L22 -46 L0 -40Z" fill="#E8A317"/>
       </g>
     </svg>
+    <span class="sky-now" id="skyNow"></span>
     <div class="lights">
       <i style="--x:12%;--d:9s;--t:0s"></i><i style="--x:24%;--d:11s;--t:2.5s"></i><i style="--x:37%;--d:8s;--t:5s"></i>
       <i style="--x:49%;--d:12s;--t:1.2s"></i><i style="--x:58%;--d:10s;--t:6.4s"></i><i style="--x:66%;--d:9.5s;--t:3.6s"></i>
@@ -598,6 +692,13 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
       <h2><span lang="en">Before you go: latest rules</span><span lang="hi">जाने से पहले: ताज़ा नियम</span></h2>
       <p lang="en">Kainchi Dham is seeing record crowds. Police and the district administration change traffic plans for busy weekends, holidays and fair days.</p>
       <p lang="hi">कैंची धाम में रिकॉर्ड भीड़ आ रही है। व्यस्त वीकेंड, छुट्टियों और मेले के दिनों के लिए पुलिस और ज़िला प्रशासन ट्रैफ़िक प्लान बदलते रहते हैं।</p>
+    </div>
+    <div class="crowd" id="crowd">
+      <h3><span><span lang="en">Expected crowd</span><span lang="hi">अनुमानित भीड़</span></span><small id="crowdDate"></small></h3>
+      <svg class="gauge" viewBox="0 0 200 112" aria-hidden="true"><path class="seg" d="M20.0 100.0 A80 80 0 0 1 42.0 44.9" stroke="#4E9F6A"/><path class="seg" d="M44.9 42.0 A80 80 0 0 1 97.9 20.0" stroke="#D8A31A"/><path class="seg" d="M102.1 20.0 A80 80 0 0 1 155.1 42.0" stroke="#E07B39"/><path class="seg" d="M158.0 44.9 A80 80 0 0 1 180.0 100.0" stroke="#C2412B"/><g class="needle" id="crowdNeedle"><path d="M96 100 L100 30 L104 100 Z"/></g><circle class="hub" cx="100" cy="100" r="7"/></svg>
+      <div aria-live="polite"><div class="crowd-level" id="crowdLevel"></div><p class="crowd-tip" id="crowdTip"></p></div>
+      <div class="crowd-days" id="crowdDays" role="group" aria-label="Next 7 days / अगले 7 दिन"></div>
+      <p class="crowd-note"><span lang="en">Our estimate from the day of the week, the season and fixed holiday and fair dates. Not official. Festivals like Hanuman Jayanti can be busier. Check the latest rules below.</span><span lang="hi">यह हमारा अनुमान है: हफ़्ते का दिन, मौसम और तय छुट्टियों व मेले की तारीख़ों के आधार पर। यह आधिकारिक नहीं है। हनुमान जयंती जैसे त्योहारों पर भीड़ ज़्यादा हो सकती है। नीचे ताज़ा नियम ज़रूर देखें।</span></p>
     </div>
     <div class="status">
       <span class="checked"><span lang="en">Last checked: 11 October 2026</span><span lang="hi">आख़िरी बार जाँचा: 11 अक्टूबर 2026</span></span>
@@ -741,6 +842,34 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
       <p lang="en">Kainchi Dham is on the Nainital–Almora road, 9 km past Bhowali. Every route ends with a hill drive from Kathgodam or Haldwani.</p>
       <p lang="hi">कैंची धाम नैनीताल–अल्मोड़ा मार्ग पर भवाली से 9 किमी आगे है। हर रास्ते का आख़िरी हिस्सा काठगोदाम या हल्द्वानी से पहाड़ी सड़क का है।</p>
     </div>
+    <figure class="routemap" id="routemap">
+      <svg class="rm-svg" viewBox="0 0 400 290" role="img" aria-labelledby="rmTitle">
+  <title id="rmTitle">Route map: Delhi, Moradabad, Rampur, Haldwani, Kathgodam, Bhimtal, Bhowali, Kainchi Dham</title>
+  <defs>
+    <linearGradient id="rmPlain" x1="0" y1="1" x2="1" y2="0"><stop offset="0" class="rm-plain-a"/><stop offset="1" class="rm-plain-b"/></linearGradient>
+  </defs>
+  <rect width="400" height="290" rx="14" fill="url(#rmPlain)"/>
+  <path class="rm-hill far" d="M196 290 L196 150 L232 112 L252 128 L282 70 L302 96 L330 40 L352 72 L374 30 L400 58 L400 290 Z"/>
+  <path class="rm-snow" d="M282 70 L274 84 L284 80 L290 86 Z M330 40 L321 55 L331 50 L338 57 Z M374 30 L366 44 L376 40 L382 46 Z"/>
+  <path class="rm-hill near" d="M232 290 L232 176 L258 148 L274 160 L300 120 L318 134 L344 96 L364 112 L384 84 L400 96 L400 290 Z"/>
+  <ellipse class="rm-lake" cx="286" cy="126" rx="9" ry="4.5"/>
+  <path class="rm-rail" d="M34 256 C46.7 255.3 84.0 257.0 110 252 C136.0 247.0 168.3 236.3 190 226 C211.7 215.7 228.0 201.0 240 190 C252.0 179.0 258.3 165.0 262 160"/>
+  <path class="rm-road-base" d="M34 256 C41.7 253.7 64.7 247.7 80 242 C95.3 236.3 110.0 228.3 126 222 C142.0 215.7 161.3 209.3 176 204 C190.7 198.7 202.7 195.0 214 190 C225.3 185.0 236.0 179.0 244 174 C252.0 169.0 256.0 163.3 262 160 C268.0 156.7 278.7 156.8 280 154 C281.3 151.2 268.7 146.3 270 143 C271.3 139.7 284.0 137.2 288 134 C292.0 130.8 291.0 126.7 294 124 C297.0 121.3 305.3 120.8 306 118 C306.7 115.2 296.0 110.0 298 107 C300.0 104.0 312.0 101.5 318 100 C324.0 98.5 332.3 100.0 334 98 C335.7 96.0 326.2 90.3 328 88 C329.8 85.7 343.3 86.3 345 84 C346.7 81.7 335.2 77.0 338 74 C340.8 71.0 358.0 67.3 362 66"/>
+  <path class="rm-road" id="rmRoad" d="M34 256 C41.7 253.7 64.7 247.7 80 242 C95.3 236.3 110.0 228.3 126 222 C142.0 215.7 161.3 209.3 176 204 C190.7 198.7 202.7 195.0 214 190 C225.3 185.0 236.0 179.0 244 174 C252.0 169.0 256.0 163.3 262 160 C268.0 156.7 278.7 156.8 280 154 C281.3 151.2 268.7 146.3 270 143 C271.3 139.7 284.0 137.2 288 134 C292.0 130.8 291.0 126.7 294 124 C297.0 121.3 305.3 120.8 306 118 C306.7 115.2 296.0 110.0 298 107 C300.0 104.0 312.0 101.5 318 100 C324.0 98.5 332.3 100.0 334 98 C335.7 96.0 326.2 90.3 328 88 C329.8 85.7 343.3 86.3 345 84 C346.7 81.7 335.2 77.0 338 74 C340.8 71.0 358.0 67.3 362 66"/>
+  <g class="rm-stop major" data-stop="delhi" data-km="0" transform="translate(34 256)"><circle r="5"/><text x="0" y="22" text-anchor="middle" lang="en">Delhi</text><text x="0" y="22" text-anchor="middle" lang="hi">दिल्ली</text></g><g class="rm-stop major" data-stop="moradabad" data-km="165" transform="translate(126 222)"><circle r="5"/><text x="0" y="22" text-anchor="middle" lang="en">Moradabad</text><text x="0" y="22" text-anchor="middle" lang="hi">मुरादाबाद</text></g><g class="rm-stop" data-stop="rampur" data-km="190" transform="translate(176 204)"><circle r="5"/><text x="8" y="-10" text-anchor="start" lang="en">Rampur</text><text x="8" y="-10" text-anchor="start" lang="hi">रामपुर</text></g><g class="rm-stop major" data-stop="haldwani" data-km="265" transform="translate(244 174)"><circle r="5"/><text x="-10" y="8" text-anchor="end" lang="en">Haldwani</text><text x="-10" y="8" text-anchor="end" lang="hi">हल्द्वानी</text></g><g class="rm-stop major" data-stop="kathgodam" data-km="270" transform="translate(262 160)"><circle r="5"/><text x="12" y="16" text-anchor="start" lang="en">Kathgodam</text><text x="12" y="16" text-anchor="start" lang="hi">काठगोदाम</text></g><g class="rm-stop" data-stop="bhimtal" data-km="292" transform="translate(294 124)"><circle r="5"/><text x="-10" y="4" text-anchor="end" lang="en">Bhimtal</text><text x="-10" y="4" text-anchor="end" lang="hi">भीमताल</text></g><g class="rm-stop major" data-stop="bhowali" data-km="301" transform="translate(318 100)"><circle r="5"/><text x="-10" y="4" text-anchor="end" lang="en">Bhowali</text><text x="-10" y="4" text-anchor="end" lang="hi">भवाली</text></g><g class="rm-stop major end" data-stop="kainchi" data-km="310" transform="translate(362 66)"><circle r="7"/><text x="-12" y="-8" text-anchor="end" lang="en">Kainchi Dham</text><text x="-12" y="-8" text-anchor="end" lang="hi">कैंची धाम</text></g>
+  <g class="rm-car" id="rmCar"><g transform="translate(-9 -6)">
+    <rect x="0" y="3" width="18" height="7" rx="3"/><path d="M4 3 L6.5 0 L12 0 L14.5 3 Z"/>
+    <circle class="w" cx="4.5" cy="10.5" r="2.2"/><circle class="w" cx="13.5" cy="10.5" r="2.2"/></g></g>
+  <g class="rm-legend" transform="translate(16 18)">
+    <line x1="0" y1="0" x2="22" y2="0" class="rm-road-key"/><text x="28" y="4" lang="en">Road ~310 km</text><text x="28" y="4" lang="hi">सड़क ~310 किमी</text>
+    <line x1="0" y1="18" x2="22" y2="18" class="rm-rail"/><text x="28" y="22" lang="en">Train to Kathgodam</text><text x="28" y="22" lang="hi">काठगोदाम तक ट्रेन</text>
+  </g>
+</svg>
+      <figcaption>
+        <div class="rm-read"><div class="rm-km" id="rmKm">0 km<small><span lang="en">from Delhi</span><span lang="hi">दिल्ली से</span></small></div><div class="rm-note" id="rmNote" aria-live="polite"></div></div>
+        <p class="rm-fine"><span lang="en">Scroll to drive the route. Approximate road distances from Delhi; map not to scale.</span><span lang="hi">रास्ता देखने के लिए स्क्रॉल करें। दिल्ली से सड़क की अनुमानित दूरी; नक्शा पैमाने पर नहीं है।</span></p>
+      </figcaption>
+    </figure>
     <div class="journey" id="journey">
       <span class="rail" aria-hidden="true"></span><span class="mover" aria-hidden="true"></span>
       <ol>
@@ -1611,6 +1740,197 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
   }
   new MutationObserver(onLang).observe(root, {attributes:true, attributeFilter:["data-lang"]});
   onLang();
+})();
+</script>
+
+<script>
+/* ================================================================
+   ADVANCED MOTION: live sky, route map, crowd meter, card tilt
+   ================================================================ */
+(function(){
+  var $ = function(s, r){ return (r || document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var calm = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var root = document.documentElement;
+  function L(){ return root.getAttribute("data-lang") === "hi" ? "hi" : "en"; }
+  function istNow(){ return new Date(Date.now() + 330 * 60000); } /* read with getUTC* = time in India */
+
+  /* ---------- 1. LIVE SKY: the hero follows the time of day in India ---------- */
+  var hero = $("#hero"), skyNow = $("#skyNow");
+  if (hero){
+    var stars = $(".stars", hero);
+    if (stars && !stars.children.length){
+      var seed = 7, rnd = function(){ seed = (seed * 16807) % 2147483647; return seed / 2147483647; }, html = "";
+      for (var i = 0; i < 70; i++){
+        var s = (1 + rnd() * 1.6).toFixed(1), cls = i % 5 === 0 ? "b" : (i % 7 === 0 ? "c" : "");
+        html += '<i class="' + cls + '" style="left:' + (rnd() * 100).toFixed(1) + '%;top:' + (rnd() * 100).toFixed(1) + '%;width:' + s + 'px;height:' + s + 'px;opacity:' + (.45 + rnd() * .55).toFixed(2) + '"></i>';
+      }
+      stars.innerHTML = html;
+    }
+    var forced = (location.search.match(/[?&]sky=(dawn|day|dusk|night)/) || [])[1];
+    var NAMES = {en:{dawn:"🌅 Dawn", day:"☀️ Daytime", dusk:"🌇 Evening", night:"🌙 Night"},
+                 hi:{dawn:"🌅 भोर", day:"☀️ दिन", dusk:"🌇 शाम", night:"🌙 रात"}};
+    var sky = function(){
+      var d = istNow(), h = d.getUTCHours(), m = d.getUTCMinutes(), hh = h + m / 60;
+      var ph = forced || (hh >= 19.25 || hh < 5 ? "night" : hh < 7.5 ? "dawn" : hh < 16.5 ? "day" : "dusk");
+      if (hero.getAttribute("data-sky") !== ph) hero.setAttribute("data-sky", ph);
+      if (skyNow){
+        var t = ((h % 12) || 12) + ":" + (m < 10 ? "0" : "") + m + (h < 12 ? " AM" : " PM");
+        skyNow.textContent = L() === "hi" ? NAMES.hi[ph] + " · कैंची में अभी " + t : NAMES.en[ph] + " at Kainchi · " + t;
+      }
+    };
+    sky();
+    setInterval(sky, 60000);
+    new MutationObserver(sky).observe(root, {attributes:true, attributeFilter:["data-lang"]});
+  }
+
+  /* ---------- 2. ROUTE MAP: the car drives Delhi -> Kainchi as you scroll ---------- */
+  var map = $("#routemap"), road = $("#rmRoad"), car = $("#rmCar");
+  if (map && road && car && road.getTotalLength){
+    var total = road.getTotalLength();
+    road.style.strokeDasharray = total + " " + total;
+    var samples = [];
+    for (var k = 0; k <= 600; k++){ var pt = road.getPointAtLength(total * k / 600); samples.push([pt.x, pt.y, total * k / 600]); }
+    var stops = $$(".rm-stop", map).map(function(g){
+      var m = (g.getAttribute("transform") || "").match(/translate\(([\d.]+) ([\d.]+)\)/), x = +m[1], y = +m[2], best = 0, bd = 1e9;
+      samples.forEach(function(s){ var dd = (s[0] - x) * (s[0] - x) + (s[1] - y) * (s[1] - y); if (dd < bd){ bd = dd; best = s[2]; } });
+      return {g:g, key:g.getAttribute("data-stop"), km:+g.getAttribute("data-km"), at:best};
+    }).sort(function(a, b){ return a.at - b.at; });
+    stops[0].at = 0; stops[stops.length - 1].at = total;
+    var NOTES = {
+      en:{delhi:["Delhi","Start. Overnight train, or a 6–8 hour drive."],
+          moradabad:["Moradabad","About halfway. A common stop for tea or a meal."],
+          rampur:["Rampur","Turn north towards Rudrapur and Haldwani."],
+          haldwani:["Haldwani","Last big town in the plains. Top up fuel and cash here."],
+          kathgodam:["Kathgodam","The railhead. The hill road starts here."],
+          bhimtal:["Bhimtal","Lake town. On busy weekends you may have to park here and take the shuttle."],
+          bhowali:["Bhowali","9 km to go. Weekend parking and shuttles also run from here."],
+          kainchi:["Kainchi Dham 🙏","You've arrived, past the two hairpin bends that give Kainchi its name."]},
+      hi:{delhi:["दिल्ली","शुरुआत। रात की ट्रेन, या 6–8 घंटे की ड्राइव।"],
+          moradabad:["मुरादाबाद","लगभग आधा रास्ता। चाय या खाने के लिए आम पड़ाव।"],
+          rampur:["रामपुर","यहाँ से रुद्रपुर और हल्द्वानी की ओर उत्तर मुड़ें।"],
+          haldwani:["हल्द्वानी","मैदान का आख़िरी बड़ा शहर। पेट्रोल और कैश यहीं ले लें।"],
+          kathgodam:["काठगोदाम","रेलवे स्टेशन। यहीं से पहाड़ी रास्ता शुरू होता है।"],
+          bhimtal:["भीमताल","झील वाला शहर। व्यस्त वीकेंड पर यहीं पार्क करके शटल लेनी पड़ सकती है।"],
+          bhowali:["भवाली","बस 9 किमी बाकी। वीकेंड पार्किंग और शटल यहाँ से भी चलती हैं।"],
+          kainchi:["कैंची धाम 🙏","पहुँच गए! उन दो हेयरपिन मोड़ों के बाद, जिनसे 'कैंची' नाम पड़ा।"]}};
+    var kmOut = $("#rmKm"), noteOut = $("#rmNote"), lastStop = null, lastP = -1;
+    var kmAt = function(len){
+      for (var i = 1; i < stops.length; i++){
+        if (len <= stops[i].at){ var a = stops[i - 1], b = stops[i]; return a.km + (b.km - a.km) * ((len - a.at) / Math.max(1, b.at - a.at)); }
+      }
+      return stops[stops.length - 1].km;
+    };
+    var showNote = function(s){
+      var n = NOTES[L()][s.key];
+      noteOut.innerHTML = "<b>" + n[0] + "</b><span>" + n[1] + "</span>";
+    };
+    var place = function(p){
+      if (Math.abs(p - lastP) < 0.0005) return;
+      lastP = p;
+      var len = total * p, a = road.getPointAtLength(len), b = road.getPointAtLength(Math.min(total, len + 1.5)), c = road.getPointAtLength(Math.max(0, len - 1.5));
+      var ang = Math.atan2(b.y - c.y, b.x - c.x) * 180 / Math.PI, flip = Math.abs(ang) > 90 ? " scale(1 -1)" : "";
+      car.setAttribute("transform", "translate(" + a.x.toFixed(1) + " " + a.y.toFixed(1) + ") rotate(" + ang.toFixed(1) + ")" + flip);
+      road.style.strokeDashoffset = (total - len).toFixed(1);
+      var cur = stops[0];
+      stops.forEach(function(s){
+        var on = len >= s.at - 0.5;
+        if (on) cur = s;
+        if (on && !s.g.classList.contains("reached")){ s.g.classList.add("reached", "pop"); setTimeout(function(){ s.g.classList.remove("pop"); }, 520); }
+        if (!on) s.g.classList.remove("reached");
+      });
+      if (kmOut) kmOut.firstChild.nodeValue = Math.round(kmAt(len)) + " km";
+      if (cur !== lastStop){ lastStop = cur; showNote(cur); }
+    };
+    new MutationObserver(function(){ if (lastStop) showNote(lastStop); }).observe(root, {attributes:true, attributeFilter:["data-lang"]});
+    if (calm){ place(1); }
+    else {
+      var queued = false;
+      var onScroll = function(){
+        if (queued) return; queued = true;
+        requestAnimationFrame(function(){
+          queued = false;
+          var r = map.getBoundingClientRect(), vh = window.innerHeight, h = r.height;
+          var span = Math.max(220, vh - h - 190);
+          var pr = Math.min(1, Math.max(0, (vh - h - r.top) / span)); place(pr > .985 ? 1 : pr);
+        });
+      };
+      window.addEventListener("scroll", onScroll, {passive:true});
+      window.addEventListener("resize", onScroll);
+      onScroll();
+    }
+  }
+
+  /* ---------- 3. CROWD METER: estimate for today and the next 6 days ---------- */
+  var crowd = $("#crowd");
+  if (crowd){
+    var LV = {en:["Calm","Moderate","Busy","Very busy"], hi:["शांत","सामान्य","ज़्यादा भीड़","बहुत ज़्यादा भीड़"]};
+    var TIP = {en:["A good day for a peaceful darshan.","Some queues. Reach early in the morning.","Long queues likely. Arrive before 8 AM; parking may be shuttle-only.","Very heavy crowds. Expect diversions, shuttle-only access and full hotels."],
+               hi:["शांति से दर्शन के लिए अच्छा दिन।","कुछ कतारें। सुबह जल्दी पहुँचें।","लंबी कतारें संभव। सुबह 8 बजे से पहले पहुँचें; पार्किंग सिर्फ़ शटल वाली हो सकती है।","बहुत भारी भीड़। डायवर्ज़न, सिर्फ़ शटल से पहुँच और भरे होटल मानकर चलें।"]};
+    var WHY = {en:{weekend:"weekend", weekday:"weekday", peak:"peak season", hols:"holiday season", ph:"public holiday", fair:"Foundation Day fair", samadhi:"Maharaj-ji's samadhi day", why:"Why: "},
+               hi:{weekend:"वीकेंड", weekday:"आम दिन", peak:"पीक सीज़न", hols:"छुट्टियों का मौसम", ph:"सरकारी छुट्टी", fair:"स्थापना दिवस मेला", samadhi:"महाराज जी की समाधि तिथि", why:"क्यों: "}};
+    var COL = ["#4E9F6A","#D8A31A","#E07B39","#C2412B"], ANG = [-67.5,-22.5,22.5,67.5];
+    var PUBLIC = ["01-01","01-26","08-15","10-02","12-25"], FAIR = ["06-14","06-15","06-16"];
+    var estimate = function(dt){
+      var dow = dt.getUTCDay(), mo = dt.getUTCMonth(), md = ("0" + (mo + 1)).slice(-2) + "-" + ("0" + dt.getUTCDate()).slice(-2);
+      var lvl = [2,1,0,0,0,1,2][dow], why = [dow === 0 || dow === 6 ? "weekend" : "weekday"];
+      var hols = (mo === 11 && dt.getUTCDate() >= 24) || (mo === 0 && dt.getUTCDate() <= 1);
+      if (hols){ lvl++; why.push("hols"); }
+      else if ([2,3,4,5,8,9,10].indexOf(mo) > -1){ lvl++; why.push("peak"); }
+      if (PUBLIC.indexOf(md) > -1){ lvl = Math.max(lvl + 1, 2); why.push("ph"); }
+      if (md === "09-11"){ lvl++; why.push("samadhi"); }
+      if (FAIR.indexOf(md) > -1){ lvl = 3; why = ["fair"]; }
+      return {lvl:Math.min(3, lvl), why:why};
+    };
+    var t0 = istNow(), days = [];
+    for (var j = 0; j < 7; j++){ var dt = new Date(Date.UTC(t0.getUTCFullYear(), t0.getUTCMonth(), t0.getUTCDate() + j)); var e = estimate(dt); days.push({d:dt, lvl:e.lvl, why:e.why}); }
+    var sel = 0, shown = false, needle = $("#crowdNeedle");
+    var fmtDay = function(dt, opt){ try { return dt.toLocaleDateString(L() === "hi" ? "hi-IN" : "en-IN", Object.assign({timeZone:"UTC"}, opt)); } catch(e){ return dt.toUTCString().slice(0, 10); } };
+    var paint = function(){
+      var x = days[sel], lg = L();
+      crowd.style.setProperty("--lvl", COL[x.lvl]);
+      $("#crowdLevel").textContent = LV[lg][x.lvl];
+      $("#crowdTip").textContent = TIP[lg][x.lvl] + " " + WHY[lg].why + x.why.map(function(w){ return WHY[lg][w]; }).join(" + ") + ".";
+      $("#crowdDate").textContent = (sel === 0 ? (lg === "hi" ? "आज, " : "Today, ") : "") + fmtDay(x.d, {weekday:"short", day:"numeric", month:"short"});
+      if (shown && needle) needle.style.transform = "rotate(" + ANG[x.lvl] + "deg)";
+      $("#crowdDays").innerHTML = days.map(function(y, i){
+        return '<button type="button" aria-pressed="' + (i === sel) + '" data-i="' + i + '" style="--lvl:' + COL[y.lvl] + '" aria-label="' + fmtDay(y.d, {weekday:"long", day:"numeric", month:"long"}) + ': ' + LV[lg][y.lvl] + '">' +
+          '<span>' + (i === 0 ? (lg === "hi" ? "आज" : "Today") : fmtDay(y.d, {weekday:"short"})) + '</span><b>' + y.d.getUTCDate() + '</b><i></i></button>';
+      }).join("");
+    };
+    $("#crowdDays").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; sel = +b.getAttribute("data-i"); paint(); var nb = $('#crowdDays button[data-i="' + sel + '"]'); if (nb) nb.focus(); });
+    paint();
+    var reveal = function(){ shown = true; if (needle) needle.style.transform = "rotate(" + ANG[days[sel].lvl] + "deg)"; };
+    if (calm || !("IntersectionObserver" in window)) reveal();
+    else new IntersectionObserver(function(en, ob){ if (en[0].isIntersecting){ setTimeout(reveal, 250); ob.disconnect(); } }, {threshold:.5}).observe(crowd);
+    new MutationObserver(paint).observe(root, {attributes:true, attributeFilter:["data-lang"]});
+  }
+
+  /* ---------- 4. CARD LIFT & TILT: cards lean toward the finger or mouse ---------- */
+  if (!calm){
+    $$(".stay, .route, .stat").forEach(function(c){
+      c.classList.add("tilt");
+      c.addEventListener("animationend", function(e){ if (e.animationName === "reveal") c.classList.add("settled"); });
+      var settle = function(){
+        if (c.classList.contains("settled")) return;
+        if (!c.getAnimations || c.getAnimations().every(function(a){ return a.playState !== "running"; })) c.classList.add("settled");
+      };
+      var aim = function(e){
+        var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        c.style.setProperty("--ry", ((x - .5) * 8).toFixed(2) + "deg");
+        c.style.setProperty("--rx", ((.5 - y) * 6).toFixed(2) + "deg");
+        c.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+        c.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+      };
+      var rest = function(){ c.classList.remove("active"); c.style.removeProperty("--rx"); c.style.removeProperty("--ry"); };
+      c.addEventListener("pointerenter", function(e){ if (e.pointerType === "mouse"){ settle(); c.classList.add("active"); aim(e); } });
+      c.addEventListener("pointermove", function(e){ if (e.pointerType === "mouse" && c.classList.contains("active")) aim(e); });
+      c.addEventListener("pointerleave", function(e){ if (e.pointerType === "mouse") rest(); });
+      c.addEventListener("pointerdown", function(e){ if (e.pointerType !== "mouse"){ settle(); c.classList.add("active"); aim(e); } });
+      c.addEventListener("pointerup", function(e){ if (e.pointerType !== "mouse") setTimeout(rest, 160); });
+      c.addEventListener("pointercancel", rest);
+    });
+  }
 })();
 </script>
 
