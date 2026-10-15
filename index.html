@@ -782,6 +782,25 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
 .diya-fx{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 .hero.fx-on .lights{display:none}
 @media (prefers-reduced-motion: reduce){.hero h1 .wd,.hero h1 .rot{animation:none}.rot > span{transition:none}}
+/* ================================================================
+   TRIP DATE, CALENDAR, PRESETS
+   ================================================================ */
+input[type=date]{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);min-height:46px;color-scheme:light dark}
+.date-crowd{margin:8px 0 0;font-size:.93rem;color:var(--text);line-height:1.5}
+.date-crowd:empty{display:none}
+.date-crowd small{color:var(--muted)}
+.dc-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--lvl);margin-right:6px;vertical-align:baseline}
+.dc-use{margin-left:6px;border:1.5px solid var(--accent);background:transparent;color:var(--accent);border-radius:999px;padding:2px 10px;font:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
+.day-date{display:inline-block;margin-right:4px;padding:1px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-family:"Mukta","Mukta Fallback",sans-serif;font-size:.82rem;font-weight:700;color:var(--muted);vertical-align:middle}
+.cal-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;padding:12px;border:1px dashed var(--accent);border-radius:var(--radius-sm);animation:softin .3s var(--ease)}
+.cal-row[hidden]{display:none}
+.presets{display:flex;gap:8px;align-items:center;overflow-x:auto;padding:2px 2px 10px;margin:0 0 6px;scrollbar-width:none}
+.presets::-webkit-scrollbar{display:none}
+.pr-l{flex:none;font-size:.88rem;font-weight:700;color:var(--muted)}
+.presets button{flex:none;min-height:40px;padding:6px 14px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--text);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:border-color .2s,background .2s,color .2s}
+.presets button:hover{border-color:var(--accent)}
+.presets button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+@media (min-width:1024px){.presets{flex-wrap:wrap;overflow:visible}}
 </style>
 </head>
 <body>
@@ -1019,6 +1038,14 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
     </div>
 
     <div class="saved" id="savedPlans" hidden></div>
+    <div class="presets" role="group" aria-label="Quick trip templates / तैयार यात्रा प्लान">
+      <span class="pr-l"><span lang="en">Quick start:</span><span lang="hi">झटपट शुरू करें:</span></span>
+      <button type="button" data-preset="weekend" aria-pressed="false">🚆 <span lang="en">Weekend by train from Delhi</span><span lang="hi">दिल्ली से ट्रेन, वीकेंड</span></button>
+      <button type="button" data-preset="family" aria-pressed="false">🚗 <span lang="en">Family, 2 nights by car</span><span lang="hi">परिवार, कार से 2 रात</span></button>
+      <button type="button" data-preset="daytrip" aria-pressed="false">☀️ <span lang="en">Day trip from Nainital</span><span lang="hi">नैनीताल से एक दिन</span></button>
+      <button type="button" data-preset="solo" aria-pressed="false">🎒 <span lang="en">Budget solo by bus</span><span lang="hi">अकेले, कम बजट, बस से</span></button>
+      <button type="button" data-preset="premium" aria-pressed="false">✨ <span lang="en">Premium from Lucknow</span><span lang="hi">लखनऊ से प्रीमियम</span></button>
+    </div>
     <form class="planner" id="planForm" onsubmit="return false">
       <div class="grid2">
         <div class="field">
@@ -1033,6 +1060,12 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
             <button type="button" data-step="1" aria-label="More people">+</button>
           </div>
         </fieldset>
+      </div>
+
+      <div class="field">
+        <label for="tripDate"><span lang="en">Travel date</span><span lang="hi">यात्रा की तारीख</span></label>
+        <input type="date" id="tripDate" name="date">
+        <p class="date-crowd" id="dateCrowd" aria-live="polite"></p>
       </div>
 
       <fieldset class="field">
@@ -1557,6 +1590,7 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
       nights: +f.querySelector('input[name=nights]:checked').value,
       tier: +f.querySelector('input[name=tier]:checked').value,
       sights: $("#sights").checked,
+      date: ($("#tripDate") || {}).value || "",
       people: people
     };
   }
@@ -1674,7 +1708,7 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
   }
 
   function render(){
-    var o = readForm(), r = calc(o), it = itinerary(o), t = T[lang];
+    var o = readForm(), r = calc(o), it = withNote(o, itinerary(o)), t = T[lang];
     var html = '<div class="total">' + fmt(r.total) + '</div>' +
       '<p class="total-note">' + t.range + ': ' + fmt(r.low) + ' – ' + fmt(r.high) + '<br>' + fmt(r.pp) + ' ' + t.pp + '</p>' +
       forYouHtml(o) +
@@ -1682,7 +1716,7 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
       r.rows.map(function(x){ return '<tr><td>' + esc(x[0]) + '<small>' + esc(x[1]) + '</small></td><td>' + fmt(x[2]) + '</td></tr>'; }).join("") +
       '</tbody></table>' +
       '<h3 style="margin-bottom:10px">' + t.plan + '</h3><ol class="days">' +
-      it.map(function(d){ return '<li><h4>' + esc(d[0]) + '</h4><ul>' + d[1].map(function(x){return '<li>' + esc(x) + '</li>';}).join("") + '</ul></li>'; }).join("") +
+      it.map(function(d, i){ var dd = startOf(o) ? dlabel(addDays(startOf(o), i)) : ""; return '<li><h4>' + (dd ? '<span class="day-date">' + dd + '</span> ' : '') + esc(d[0]) + '</h4><ul>' + d[1].map(function(x){return '<li>' + esc(x) + '</li>';}).join("") + '</ul></li>'; }).join("") +
       '</ol><div class="actions">';
     if (o.nights > 0) html += '<a data-link="plan-stays" class="btn btn-solid" href="' + LINKS.stays + '" target="_blank" rel="noopener sponsored">' + t.bookStay + '</a>';
     if (o.mode === "train") html += '<a data-link="plan-trains" class="btn btn-line" href="' + LINKS.trains + '" target="_blank" rel="noopener">' + t.bookTrain + '</a>';
@@ -1690,13 +1724,17 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
     if (o.mode === "cab") html += '<a data-link="plan-cabs" class="btn btn-line" href="' + LINKS.cabs + '" target="_blank" rel="noopener sponsored">' + t.bookCab + '</a>';
     html += '<a class="btn btn-line" id="shareBtn" href="#" target="_blank" rel="noopener">' + t.share + '</a>' +
       '<button type="button" class="btn btn-line" id="savePlanBtn">💾 ' + SM[lang].save + '</button>' +
-      '<button type="button" class="btn btn-line" id="pdfBtn">📄 ' + SM[lang].pdf + '</button></div>';
+      '<button type="button" class="btn btn-line" id="pdfBtn">📄 ' + SM[lang].pdf + '</button>' +
+      '<button type="button" class="btn btn-line" id="calBtn" aria-expanded="false" aria-controls="calRow">📅 ' + SM[lang].cal + '</button></div>' +
+      '<div class="cal-row" id="calRow" hidden></div>';
     $("#result").innerHTML = html;
     rollTotal(r.total);
+    updateDateCrowd(o);
 
     var msg = t.shareHead + " (" + FROM[o.from][lang] + ", " + t.people(o.people) + ")\n" +
       t.est + ": " + fmt(r.total) + " (" + fmt(r.low) + " – " + fmt(r.high) + ")\n\n" +
-      it.map(function(d, i){ return t.day + " " + (i+1) + ": " + d[0] + "\n- " + d[1].join("\n- "); }).join("\n\n") +
+      (startOf(o) ? dlabel(startOf(o)) + "\n" : "") +
+      it.map(function(d, i){ return t.day + " " + (i+1) + (startOf(o) ? " (" + dlabel(addDays(startOf(o), i)) + ")" : "") + ": " + d[0] + "\n- " + d[1].join("\n- "); }).join("\n\n") +
       "\n\nhttps://neemkarolitrip.com";
     $("#shareBtn").href = "https://wa.me/?text=" + encodeURIComponent(msg);
   }
@@ -1732,7 +1770,10 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
       pdfTitle:"Kainchi Dham trip plan", summary:"Trip summary", checklist:"Packing checklist",
       items:["ID card for every traveller","Cash in small notes (some places don't take UPI)","A warm layer, even in summer","Comfortable shoes you can slip off at the temple","Modest clothes","Water bottle and light snacks","Phone power bank","Your tickets and hotel booking"],
       foot:function(d){ return "Estimate made on " + d + " at neemkarolitrip.com. Prices are rough guides, not quotes. Check the latest rules on the website before you go. Independent guide, not connected with the temple trust."; },
-      from:"From", trav:"Travellers", mode:"Travel", stayL:"Stay", comfort:"Comfort"
+      from:"From", trav:"Travellers", mode:"Travel", stayL:"Stay", comfort:"Comfort",
+      dateL:"Dates", cal:"Add to calendar", gcal:"Google Calendar", ics:"iPhone / Outlook (.ics)", calTitle:"Kainchi Dham trip",
+      calCheck:"Check the latest rules before you go: https://neemkarolitrip.com/#status", calRemind:"Tomorrow: Kainchi Dham trip. Check the latest rules on neemkarolitrip.com.",
+      crowdOn:"Expected crowd on", calmer:"Calmer nearby:", useDate:"Use this date", estimate:"our estimate"
     },
     hi:{
       forYou:"आपके लिए सुझाव", save:"प्लान सेव करें", pdf:"PDF डाउनलोड करें", saved:"प्लान इस फ़ोन पर सेव हो गया ✓",
@@ -1760,7 +1801,10 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
       pdfTitle:"कैंची धाम यात्रा प्लान", summary:"यात्रा का सार", checklist:"सामान की चेकलिस्ट",
       items:["हर यात्री का पहचान पत्र","छोटे नोटों में कैश (कुछ जगह UPI नहीं चलता)","एक गर्म कपड़ा, गर्मी में भी","आरामदायक जूते जो मंदिर पर आसानी से उतर सकें","शालीन कपड़े","पानी की बोतल और हल्का नाश्ता","फ़ोन पावर बैंक","आपके टिकट और होटल बुकिंग"],
       foot:function(d){ return d + " को neemkarolitrip.com पर बनाया गया अनुमान। कीमतें मोटा अंदाज़ा हैं, कोटेशन नहीं। जाने से पहले वेबसाइट पर ताज़ा नियम ज़रूर देखें। स्वतंत्र गाइड, मंदिर ट्रस्ट से कोई संबंध नहीं।"; },
-      from:"कहाँ से", trav:"यात्री", mode:"साधन", stayL:"ठहरना", comfort:"सुविधा"
+      from:"कहाँ से", trav:"यात्री", mode:"साधन", stayL:"ठहरना", comfort:"सुविधा",
+      dateL:"तारीख़ें", cal:"कैलेंडर में जोड़ें", gcal:"Google Calendar", ics:"iPhone / Outlook (.ics)", calTitle:"कैंची धाम यात्रा",
+      calCheck:"जाने से पहले ताज़ा नियम देखें: https://neemkarolitrip.com/#status", calRemind:"कल: कैंची धाम यात्रा। neemkarolitrip.com पर ताज़ा नियम देख लें।",
+      crowdOn:"अनुमानित भीड़:", calmer:"पास में कम भीड़ वाला दिन:", useDate:"यह तारीख़ चुनें", estimate:"हमारा अनुमान"
     }
   };
   var ICON = {stay:"🏨", best:"📅", tip:"🧭", group:"👨‍👩‍👧", solo:"🎒", places:"⛰️"};
@@ -1809,7 +1853,8 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
   }
   function summary(o){
     var m = SM[lang];
-    return FROM[o.from][lang] + " · " + T[lang].people(o.people) + " · " + m.modes[o.mode] + " · " + m.nights(o.nights) + " · " + m.tiers[o.tier];
+    var d = startOf(o);
+    return (d ? dlabel(d) + " · " : "") + FROM[o.from][lang] + " · " + T[lang].people(o.people) + " · " + m.modes[o.mode] + " · " + m.nights(o.nights) + " · " + m.tiers[o.tier];
   }
   function dateLabel(ts){ try { return new Date(ts).toLocaleDateString(lang === "hi" ? "hi-IN" : "en-IN", {day:"numeric", month:"short", timeZone:"Asia/Kolkata"}); } catch(e){ return ""; } }
   function renderSaved(){
@@ -1836,6 +1881,7 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
     var pick = function(n, v){ var el = f.querySelector('input[name=' + n + '][value="' + v + '"]'); if (el && !el.disabled) el.checked = true; };
     pick("mode", o.mode); pick("nights", o.nights); pick("tier", o.tier);
     $("#sights").checked = !!o.sights;
+    var od = parseYmd(o.date); if (od && od >= istToday()) $("#tripDate").value = ymd(od);
     people = Math.min(12, Math.max(1, o.people || 2)); $("#peopleOut").textContent = people;
     render();
     var res = $("#result"); if (res && res.scrollIntoView) res.scrollIntoView({behavior:"smooth", block:"start"});
@@ -1854,17 +1900,18 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
     var first = d.querySelector("button"); if (first) first.focus();
   }
   function printPlan(){
-    var o = readForm(), r = calc(o), it = itinerary(o), m = SM[lang], t = T[lang];
+    var o = readForm(), r = calc(o), it = withNote(o, itinerary(o)), m = SM[lang], t = T[lang];
     var box = document.getElementById("printPlan");
     if (!box){ box = document.createElement("div"); box.id = "printPlan"; document.body.appendChild(box); }
     box.setAttribute("lang", lang === "hi" ? "hi" : "en");
     box.innerHTML =
       '<header><svg width="40" height="40" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1F3B2D"/><path d="M14 50 C30 50 34 40 22 36 C10 32 24 22 40 26 C54 30 50 16 34 14" stroke="#E8A317" stroke-width="6" fill="none" stroke-linecap="round"/></svg><div><b>' + m.pdfTitle + '</b><span>neemkarolitrip.com</span></div></header>' +
       '<h2>' + m.summary + '</h2><table class="pp-sum"><tr><td>' + m.from + '</td><td>' + esc(FROM[o.from][lang]) + '</td><td>' + m.trav + '</td><td>' + esc(t.people(o.people)) + '</td></tr>' +
-      '<tr><td>' + m.mode + '</td><td>' + esc(m.modes[o.mode]) + '</td><td>' + m.stayL + '</td><td>' + esc(m.nights(o.nights)) + ' · ' + esc(m.tiers[o.tier]) + '</td></tr></table>' +
+      '<tr><td>' + m.mode + '</td><td>' + esc(m.modes[o.mode]) + '</td><td>' + m.stayL + '</td><td>' + esc(m.nights(o.nights)) + ' · ' + esc(m.tiers[o.tier]) + '</td></tr>' +
+      (startOf(o) ? '<tr><td>' + m.dateL + '</td><td colspan="3">' + esc(dlabel(startOf(o))) + (it.length > 1 ? ' – ' + esc(dlabel(addDays(startOf(o), it.length - 1))) : '') + '</td></tr>' : '') + '</table>' +
       '<p class="pp-total">' + t.est + ': <b>' + fmt(r.total) + '</b> <span>(' + t.range + ' ' + fmt(r.low) + ' – ' + fmt(r.high) + ' · ' + fmt(r.pp) + ' ' + t.pp + ')</span></p>' +
       '<table class="pp-rows">' + r.rows.map(function(x){ return '<tr><td>' + esc(x[0]) + '<small>' + esc(x[1]) + '</small></td><td>' + fmt(x[2]) + '</td></tr>'; }).join("") + '</table>' +
-      '<h2>' + t.plan + '</h2><ol class="pp-days">' + it.map(function(d){ return '<li><b>' + esc(d[0]) + '</b><ul>' + d[1].map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></li>'; }).join("") + '</ol>' +
+      '<h2>' + t.plan + '</h2><ol class="pp-days">' + it.map(function(d, i){ return '<li><b>' + (startOf(o) ? esc(dlabel(addDays(startOf(o), i))) + ' · ' : '') + esc(d[0]) + '</b><ul>' + d[1].map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></li>'; }).join("") + '</ol>' +
       '<h2>✨ ' + m.forYou + '</h2><ul class="pp-tips">' + suggestions(o).map(function(s){ return '<li><b>' + esc(s[1]) + ':</b> ' + esc(s[2]) + '</li>'; }).join("") + '</ul>' +
       '<h2>' + m.checklist + '</h2><ul class="pp-check">' + m.items.map(function(x){ return '<li>☐ ' + esc(x) + '</li>'; }).join("") + '</ul>' +
       '<footer>' + esc(m.foot(dateLabel(Date.now()))) + '</footer>';
@@ -1895,6 +1942,138 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
     open:openPlan
   };
   window.nktPlanRefresh = function(){ render(); renderSaved(); };
+
+  /* ================================================================
+     TRIP DATE, CALENDAR EXPORT AND QUICK-START PRESETS
+     ================================================================ */
+  function istToday(){ var d = new Date(Date.now() + 330 * 60000); return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())); }
+  function ymd(dt){ return dt.toISOString().slice(0, 10); }
+  function parseYmd(v){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ""); return m ? new Date(Date.UTC(+m[1], +m[2] - 1, +m[3])) : null; }
+  function addDays(dt, n){ return new Date(dt.getTime() + n * 86400000); }
+  function startOf(o){ return parseYmd(o.date); }
+  var DLF = {};
+  function dlabel(dt){
+    try { var k = lang; if (!DLF[k]) DLF[k] = new Intl.DateTimeFormat(lang === "hi" ? "hi-IN" : "en-IN", {weekday:"short", day:"numeric", month:"short", timeZone:"UTC"}); return DLF[k].format(dt); }
+    catch(e){ return ymd(dt); }
+  }
+  /* With real dates shown, make overnight travel unmistakable: you leave the evening BEFORE day 1. */
+  function withNote(o, it){
+    var d = startOf(o);
+    if (!d || !FROM[o.from] || !FROM[o.from].far || (o.mode !== "train" && o.mode !== "bus")) return it;
+    var prev = dlabel(addDays(d, -1));
+    var note = lang === "hi" ? "रात की ट्रेन या बस लें तो एक दिन पहले शाम को निकलें (" + prev + ")।" : "Taking the overnight train or bus? You leave the evening before (" + prev + ").";
+    var copy = it.map(function(x){ return [x[0], x[1].slice()]; });
+    copy[0][1].unshift(note);
+    return copy;
+  }
+  function nextSaturday(){ var d = addDays(istToday(), 1); while (d.getUTCDay() !== 6) d = addDays(d, 1); return d; }
+  (function(){
+    var inp = $("#tripDate"); if (!inp) return;
+    inp.min = ymd(istToday()); inp.max = ymd(addDays(istToday(), 365));
+    if (!inp.value) inp.value = ymd(nextSaturday());
+  })();
+
+  function updateDateCrowd(o){
+    var el = $("#dateCrowd"), C = window.nktCrowd, d = startOf(o), m = SM[lang];
+    if (!el) return;
+    if (!d || !C || !C.at){ el.innerHTML = ""; return; }
+    var e = C.at(d), LV = C.LV[lang], better = null, today = istToday();
+    for (var k = 1; k <= 7 && !better; k++){
+      [k, -k].forEach(function(sh){
+        var x = addDays(d, sh); if (better || x < today) return;
+        var ex = C.at(x); if (ex.lvl < e.lvl) better = {d:x, lvl:ex.lvl};
+      });
+    }
+    el.innerHTML = '<span class="dc-dot" style="--lvl:' + C.COL[e.lvl] + '"></span>' + m.crowdOn + ' ' + esc(dlabel(d)) + ': <b>' + LV[e.lvl] + '</b> <small>(' + m.estimate + ')</small>' +
+      (better ? '<br>' + m.calmer + ' ' + esc(dlabel(better.d)) + ' (' + LV[better.lvl] + ') <button type="button" class="dc-use" data-d="' + ymd(better.d) + '">' + m.useDate + '</button>' : '');
+  }
+
+  function icsText(s){ return String(s).replace(/\\/g, "\\\\").replace(/;/g, "\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
+  function fold(line){
+    var enc = window.TextEncoder ? new TextEncoder() : null, out = "", cur = "", n = 0;
+    Array.from(line).forEach(function(ch){
+      var b = enc ? enc.encode(ch).length : 3;
+      if (n + b > 73){ out += cur + "\r\n "; cur = ""; n = 1; }
+      cur += ch; n += b;
+    });
+    return out + cur;
+  }
+  function ymdc(dt){ return ymd(dt).replace(/-/g, ""); }
+  function calPlan(){
+    var o = readForm(), start = startOf(o) || nextSaturday(), m = SM[lang], t = T[lang];
+    var it = withNote({from:o.from, mode:o.mode, date:ymd(start)}, itinerary(o));
+    var details = it.map(function(d, i){ return t.day + " " + (i + 1) + " (" + dlabel(addDays(start, i)) + "): " + d[0] + "\n- " + d[1].join("\n- "); }).join("\n\n") + "\n\n" + m.calCheck;
+    return {o:o, it:it, start:start, m:m, t:t, details:details};
+  }
+  function googleCalUrl(){
+    var c = calPlan();
+    return "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=" + encodeURIComponent(c.m.calTitle + " (" + FROM[c.o.from][lang] + ")") +
+      "&dates=" + ymdc(c.start) + "/" + ymdc(addDays(c.start, c.it.length)) +
+      "&details=" + encodeURIComponent(c.details.slice(0, 1800)) +
+      "&location=" + encodeURIComponent("Kainchi Dham, Nainital, Uttarakhand");
+  }
+  function downloadIcs(){
+    var c = calPlan(), stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "Z"), lines = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Neem Karoli Trip//Trip planner//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH"];
+    c.it.forEach(function(d, i){
+      var day = addDays(c.start, i);
+      lines.push("BEGIN:VEVENT", "UID:nkt-" + ymdc(c.start) + "-" + i + "-" + Date.now() + "@neemkarolitrip.com", "DTSTAMP:" + stamp,
+        "DTSTART;VALUE=DATE:" + ymdc(day), "DTEND;VALUE=DATE:" + ymdc(addDays(day, 1)),
+        "SUMMARY:" + icsText(c.m.calTitle + " – " + c.t.day + " " + (i + 1) + ": " + d[0]),
+        "DESCRIPTION:" + icsText("- " + d[1].join("\n- ") + "\n\n" + c.m.calCheck),
+        "LOCATION:" + icsText("Kainchi Dham, Nainital, Uttarakhand"), "URL:https://neemkarolitrip.com/#planner");
+      if (i === 0) lines.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText(c.m.calRemind), "TRIGGER:-PT12H", "END:VALARM");
+      lines.push("END:VEVENT");
+    });
+    lines.push("END:VCALENDAR");
+    var ics = lines.map(fold).join("\r\n") + "\r\n";
+    var ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    if (ios){ location.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics); return; }
+    var url = URL.createObjectURL(new Blob([ics], {type:"text/calendar;charset=utf-8"}));
+    var a = document.createElement("a"); a.href = url; a.download = "kainchi-dham-trip.ics";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+  }
+  function toggleCal(btn){
+    var row = $("#calRow"); if (!row) return;
+    var open = row.hidden;
+    if (open){
+      var m = SM[lang];
+      row.innerHTML = '<a class="btn btn-line" id="gcalLink" href="' + esc(googleCalUrl()) + '" target="_blank" rel="noopener">' + m.gcal + '</a>' +
+        '<button type="button" class="btn btn-line" id="icsBtn">' + m.ics + '</button>';
+    }
+    row.hidden = !open; btn.setAttribute("aria-expanded", String(open));
+  }
+
+  var PRESETS = {
+    weekend:{from:"delhi", mode:"train", nights:1, tier:1, sights:true, people:2, sat:true},
+    family:{from:"delhi", mode:"car", nights:2, tier:1, sights:true, people:4},
+    daytrip:{from:"nainital", mode:"cab", nights:0, tier:1, sights:false, people:2},
+    solo:{from:"delhi", mode:"bus", nights:1, tier:0, sights:false, people:1},
+    premium:{from:"lucknow", mode:"train", nights:2, tier:2, sights:true, people:2}
+  };
+  var presetBox = document.querySelector(".presets");
+  if (presetBox) presetBox.addEventListener("click", function(e){
+    var b = e.target.closest("button[data-preset]"); if (!b) return;
+    var p = PRESETS[b.getAttribute("data-preset")]; if (!p) return;
+    var o = {from:p.from, mode:p.mode, nights:p.nights, tier:p.tier, sights:p.sights, people:p.people, date:p.sat ? ymd(nextSaturday()) : ($("#tripDate").value || "")};
+    openPlan(o);
+    presetBox.querySelectorAll("button").forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); });
+    if (window.gtag) gtag("event", "preset_used", {preset:b.getAttribute("data-preset")});
+  });
+  $("#planForm").addEventListener("change", function(e){
+    if (e.isTrusted && presetBox) presetBox.querySelectorAll("button").forEach(function(x){ x.setAttribute("aria-pressed", "false"); });
+  });
+  document.addEventListener("click", function(e){
+    var b = e.target.closest && e.target.closest("button"); if (!b) return;
+    if (b.id === "calBtn") toggleCal(b);
+    else if (b.id === "icsBtn"){ downloadIcs(); if (window.gtag) gtag("event", "calendar_add", {type:"ics"}); }
+    else if (b.classList.contains("dc-use")){ $("#tripDate").value = b.getAttribute("data-d"); render(); }
+  });
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("#gcalLink"); if (a && window.gtag) gtag("event", "calendar_add", {type:"google"});
+  });
 
   function fillFrom(){
     var sel = $("#from"), cur = sel.value || "delhi";
@@ -2509,7 +2688,8 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
     $("#crowdDays").addEventListener("click", function(e){ var b = e.target.closest("button"); if (!b) return; sel = +b.getAttribute("data-i"); paint(); var nb = $('#crowdDays button[data-i="' + sel + '"]'); if (nb) nb.focus(); });
     paint();
     window.nktCrowd = {
-      LV:LV,
+      LV:LV, COL:COL,
+      at:function(dt){ return estimate(dt); },
       days:function(n){ var t = istNow(), list = []; for (var q = 0; q < n; q++){ var dd = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate() + q)), ee = estimate(dd); list.push({d:dd, lvl:ee.lvl, why:ee.why}); } return list; },
       label:function(dt){ return fmtDay(dt, {weekday:"short", day:"numeric", month:"short"}); }
     };
@@ -2764,7 +2944,7 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
 
   /* "Opening Booking.com…" toast when a link opens in a new tab. */
   var NAMES = {"booking.com":"Booking.com","agoda.com":"Agoda","irctc.co.in":"IRCTC","redbus.in":"redBus","makemytrip.com":"MakeMyTrip",
-               "wa.me":"WhatsApp","whatsapp.com":"WhatsApp","instagram.com":"Instagram","youtube.com":"YouTube","facebook.com":"Facebook"};
+               "calendar.google.com":"Google Calendar", "wa.me":"WhatsApp","whatsapp.com":"WhatsApp","instagram.com":"Instagram","youtube.com":"YouTube","facebook.com":"Facebook"};
   var box = document.getElementById("toast"), txt = document.getElementById("toastText"), timer;
   function siteName(host){
     host = host.replace(/^www\./, "");
