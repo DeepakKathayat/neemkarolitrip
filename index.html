@@ -31,9 +31,23 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Yatra+One&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/mukta-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/yatra-one-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Fonts hosted on this site (no third-party requests). Latin and Devanagari are split so each visitor downloads only what the page needs. */
+@font-face{font-family:"Mukta";font-weight:400;font-display:swap;src:url(/fonts/mukta-400-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20B9,U+2122,U+2190-2199,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Mukta";font-weight:400;font-display:swap;src:url(/fonts/mukta-400-deva.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:"Mukta";font-weight:600;font-display:swap;src:url(/fonts/mukta-600-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20B9,U+2122,U+2190-2199,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Mukta";font-weight:600;font-display:swap;src:url(/fonts/mukta-600-deva.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:"Mukta";font-weight:700;font-display:swap;src:url(/fonts/mukta-700-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20B9,U+2122,U+2190-2199,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Mukta";font-weight:700;font-display:swap;src:url(/fonts/mukta-700-deva.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:"Yatra One";font-display:swap;src:url(/fonts/yatra-one-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20B9,U+2122,U+2190-2199,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Yatra One";font-display:swap;src:url(/fonts/yatra-one-deva.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+/* Fallbacks sized to match our fonts, so text doesn't jump when the real fonts arrive */
+@font-face{font-family:"Mukta Fallback";src:local("Arial"),local("Roboto"),local("Helvetica Neue"),local("Liberation Sans");size-adjust:93.8%;ascent-override:120.5%;descent-override:56.7%;line-gap-override:0%}
+@font-face{font-family:"Mukta Fallback";font-weight:600 700;src:local("Arial Bold"),local("Roboto Bold"),local("Helvetica Neue Bold"),local("Liberation Sans Bold");size-adjust:92.4%;ascent-override:122.3%;descent-override:57.6%;line-gap-override:0%}
+@font-face{font-family:"Yatra Fallback";src:local("Arial"),local("Roboto"),local("Helvetica Neue"),local("Liberation Sans");size-adjust:110.5%;ascent-override:89.7%;descent-override:44.1%;line-gap-override:0%}
+</style>
 
 <script type="application/ld+json">
 {
@@ -132,7 +146,7 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 body{
   margin:0;background:var(--bg);color:var(--text);
-  font-family:"Mukta",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-family:"Mukta","Mukta Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
   font-size:17px;line-height:1.6;
 }
 html[data-lang="en"] body [lang="hi"],
@@ -140,7 +154,7 @@ html[data-lang="hi"] body [lang="en"]{display:none !important}
 a{color:var(--accent);text-underline-offset:3px}
 a:hover{color:var(--hl)}
 :focus-visible{outline:3px solid var(--hl);outline-offset:2px;border-radius:6px}
-h1,h2,h3{font-family:"Yatra One","Mukta",serif;font-weight:400;line-height:1.2;margin:0}
+h1,h2,h3{font-family:"Yatra One","Yatra Fallback","Mukta","Mukta Fallback",serif;font-weight:400;line-height:1.2;margin:0}
 h2{font-size:clamp(1.6rem,4.5vw,2.2rem);color:var(--text)}
 h3{font-size:1.2rem}
 p{margin:0 0 .8em}
@@ -213,7 +227,7 @@ select,input[type=number]{width:100%;font:inherit;padding:10px 12px;border:1.5px
 @media (min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
 
 .result{margin-top:8px;border-top:2px dashed var(--line);padding-top:18px}
-.total{font-family:"Yatra One",serif;font-size:clamp(2rem,8vw,2.8rem);color:var(--text);line-height:1.1}
+.total{font-family:"Yatra One","Yatra Fallback",serif;font-size:clamp(2rem,8vw,2.8rem);color:var(--text);line-height:1.1}
 .total-note{color:var(--muted);margin:4px 0 14px}
 .breakdown{width:100%;border-collapse:collapse;margin-bottom:18px;font-size:.98rem}
 .breakdown td{padding:8px 0;border-bottom:1px solid var(--line);vertical-align:top}
@@ -246,7 +260,7 @@ select,input[type=number]{width:100%;font:inherit;padding:10px 12px;border:1.5px
 .table-scroll{overflow-x:auto}
 
 .time-big{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:12px}
-.time-big > span{font-family:"Yatra One",serif;font-size:2.2rem;color:var(--accent)}
+.time-big > span{font-family:"Yatra One","Yatra Fallback",serif;font-size:2.2rem;color:var(--accent)}
 .dos{display:grid;gap:10px;padding:0;margin:0;list-style:none}
 .dos li{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px}
 .dos b{display:block}
@@ -254,7 +268,7 @@ select,input[type=number]{width:100%;font:inherit;padding:10px 12px;border:1.5px
 .stays{display:grid;gap:12px}
 @media (min-width:700px){.stays{grid-template-columns:repeat(2,1fr)}}
 .stay{border-top:3px solid var(--hl);background:var(--surface);padding:14px 16px;border-radius:0 0 var(--radius-sm) var(--radius-sm)}
-.stay h3{font-family:"Mukta",sans-serif;font-weight:700;font-size:1.1rem}
+.stay h3{font-family:"Mukta","Mukta Fallback",sans-serif;font-weight:700;font-size:1.1rem}
 .km{color:var(--muted);font-size:.9rem}
 .price-guide{margin:16px 0;width:100%;border-collapse:collapse}
 .price-guide td{padding:8px 0;border-bottom:1px solid var(--line)}
@@ -262,18 +276,18 @@ select,input[type=number]{width:100%;font:inherit;padding:10px 12px;border:1.5px
 
 .places{list-style:none;padding:0;margin:0;display:grid;gap:0}
 .places li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:14px 0;border-bottom:1px solid var(--line)}
-.places h3{font-family:"Mukta",sans-serif;font-weight:700;font-size:1.08rem}
+.places h3{font-family:"Mukta","Mukta Fallback",sans-serif;font-weight:700;font-size:1.08rem}
 .places p{grid-column:1 / -1;margin:0;color:var(--muted)}
 .places .km{white-space:nowrap}
 
 .events{list-style:none;padding:0;margin:0}
 .events li{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
-.date{font-family:"Yatra One",serif;font-size:1.25rem;color:var(--alert);line-height:1.15}
-.events h3{font-family:"Mukta",sans-serif;font-weight:700;font-size:1.08rem}
+.date{font-family:"Yatra One","Yatra Fallback",serif;font-size:1.25rem;color:var(--alert);line-height:1.15}
+.events h3{font-family:"Mukta","Mukta Fallback",sans-serif;font-weight:700;font-size:1.08rem}
 .events p{margin:2px 0 0;color:var(--muted)}
 
 .story p{max-width:64ch}
-.story .pull{font-family:"Yatra One",serif;font-size:1.35rem;line-height:1.35;color:var(--accent);border-left:4px solid var(--hl);padding-left:14px;margin:18px 0}
+.story .pull{font-family:"Yatra One","Yatra Fallback",serif;font-size:1.35rem;line-height:1.35;color:var(--accent);border-left:4px solid var(--hl);padding-left:14px;margin:18px 0}
 
 details.faq{border-bottom:1px solid var(--line);padding:12px 0}
 details.faq summary{cursor:pointer;font-weight:700;font-size:1.05rem;list-style:none;display:flex;justify-content:space-between;gap:12px}
@@ -395,15 +409,15 @@ footer ul.social a:hover{background:#F4C766;color:#1B1505}
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (min-width:760px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px;min-width:0}
-.stat .big{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 6px;font-family:"Yatra One","Mukta",serif;font-size:clamp(1.7rem,7vw,2.3rem);line-height:1.1;color:var(--accent);font-variant-numeric:tabular-nums}
-.stat .big small{font-family:"Mukta",system-ui,sans-serif;font-size:1rem;font-weight:700;color:var(--muted)}
+.stat .big{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 6px;font-family:"Yatra One","Yatra Fallback","Mukta","Mukta Fallback",serif;font-size:clamp(1.7rem,7vw,2.3rem);line-height:1.1;color:var(--accent);font-variant-numeric:tabular-nums}
+.stat .big small{font-family:"Mukta","Mukta Fallback",system-ui,sans-serif;font-size:1rem;font-weight:700;color:var(--muted)}
 .stat p{margin:6px 0 0;color:var(--muted);font-size:.95rem;line-height:1.35}
 
 /* journey rail */
 .journey{position:relative;padding-left:36px;margin:0 0 24px}
 .journey::before{content:"";position:absolute;left:11px;top:10px;bottom:10px;border-left:2px dashed var(--line)}
 .journey .rail{position:absolute;left:10px;top:10px;bottom:10px;width:4px;border-radius:4px;background:linear-gradient(180deg,var(--hl),var(--alert));transform-origin:50% 0;transform:scaleY(var(--p,1))}
-.journey .mover{position:absolute;left:3px;top:calc(10px + (100% - 20px) * var(--p,1));width:18px;height:18px;margin-top:-9px;border-radius:50%;background:var(--hl);box-shadow:0 0 0 5px rgba(232,163,23,.22),0 0 16px rgba(232,163,23,.7)}
+.journey .mover{position:absolute;left:3px;top:10px;transform:translateY(calc(var(--jh,0px) * var(--p,1)));width:18px;height:18px;margin-top:-9px;border-radius:50%;background:var(--hl);box-shadow:0 0 0 5px rgba(232,163,23,.22),0 0 16px rgba(232,163,23,.7)}
 .journey ol{list-style:none;margin:0;padding:0;display:grid;gap:18px}
 .journey li{position:relative;min-width:0}
 .journey li::before{content:"";position:absolute;left:-31px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--surface);border:3px solid var(--line);transition:border-color .4s,background .4s,box-shadow .4s}
@@ -513,9 +527,9 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
 .rm-road-base{fill:none;stroke:var(--line);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
 .rm-road{fill:none;stroke:var(--marigold);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
 .rm-road-key{stroke:var(--marigold);stroke-width:5;stroke-linecap:round}
-.rm-legend text{font:600 11px "Mukta",system-ui,sans-serif;fill:var(--map-text)}
+.rm-legend text{font:600 11px "Mukta","Mukta Fallback",system-ui,sans-serif;fill:var(--map-text)}
 .rm-stop circle{fill:var(--surface);stroke:var(--muted);stroke-width:2;transition:fill .35s,stroke .35s}
-.rm-stop text{font:600 12.5px "Mukta",system-ui,sans-serif;fill:var(--map-text);paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round;opacity:.75;transition:opacity .35s}
+.rm-stop text{font:600 12.5px "Mukta","Mukta Fallback",system-ui,sans-serif;fill:var(--map-text);paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round;opacity:.75;transition:opacity .35s}
 .rm-stop:not(.major) text{display:none}
 .rm-stop.end text{font-size:14px;font-weight:700}
 .rm-stop.reached circle{fill:var(--marigold);stroke:var(--marigold)}
@@ -526,22 +540,22 @@ footer .legal button{background:none;border:0;padding:0;font:inherit;color:#F4C7
 .rm-car rect,.rm-car path{fill:var(--sindoor)}
 .rm-car .w{fill:#1B1505}
 .rm-read{display:flex;gap:12px;align-items:flex-start;max-width:640px;margin:10px auto 0;padding:0 6px}
-.rm-km{flex:none;min-width:5.6ch;font-family:"Yatra One","Mukta",serif;font-size:1.7rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
-.rm-km small{display:block;font-family:"Mukta",sans-serif;font-size:.78rem;font-weight:600;color:var(--muted);margin-top:4px}
+.rm-km{flex:none;min-width:5.6ch;font-family:"Yatra One","Yatra Fallback","Mukta","Mukta Fallback",serif;font-size:1.7rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.rm-km small{display:block;font-family:"Mukta","Mukta Fallback",sans-serif;font-size:.78rem;font-weight:600;color:var(--muted);margin-top:4px}
 .rm-note b{display:block;font-size:1.05rem}
 .rm-note span{color:var(--muted);font-size:.95rem}
 .rm-fine{max-width:640px;margin:8px auto 0;padding:0 6px;font-size:.8rem;color:var(--muted)}
 
 /* --- crowd meter --- */
 .crowd{display:grid;grid-template-columns:minmax(0,190px) 1fr;gap:8px 18px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:16px;margin:0 0 18px}
-.crowd h3{grid-column:1 / -1;font-family:"Mukta",sans-serif;font-weight:700;font-size:1.1rem;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.crowd h3{grid-column:1 / -1;font-family:"Mukta","Mukta Fallback",sans-serif;font-weight:700;font-size:1.1rem;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .crowd h3 small{font-weight:600;color:var(--muted);font-size:.9rem}
 .gauge{width:100%;height:auto;display:block}
 .gauge .seg{fill:none;stroke-width:16}
 .gauge .needle{transform-origin:100px 100px;transform:rotate(-90deg);transition:transform 1.3s cubic-bezier(.34,1.4,.5,1)}
 .gauge .needle path{fill:var(--text)}
 .gauge .hub{fill:var(--text)}
-.crowd-level{display:inline-block;font-family:"Yatra One","Mukta",serif;font-size:1.7rem;line-height:1.15;color:var(--text);border-bottom:5px solid var(--lvl,var(--line));padding-bottom:2px;transition:border-color .4s}
+.crowd-level{display:inline-block;font-family:"Yatra One","Yatra Fallback","Mukta","Mukta Fallback",serif;font-size:1.7rem;line-height:1.15;color:var(--text);border-bottom:5px solid var(--lvl,var(--line));padding-bottom:2px;transition:border-color .4s}
 .crowd-tip{color:var(--muted);margin:4px 0 0}
 .crowd-days{grid-column:1 / -1;display:flex;gap:6px;overflow-x:auto;padding:4px 2px 2px;scrollbar-width:none}
 .crowd-days::-webkit-scrollbar{display:none}
@@ -665,7 +679,7 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
    SMART FEATURES: suggestions, saved plans, consent, Ask extras, PDF print
    ================================================================ */
 .foryou{margin:4px 0 18px;padding:14px;border-radius:var(--radius-sm);background:linear-gradient(135deg,rgba(232,163,23,.12),rgba(127,183,154,.12));border:1px solid var(--line)}
-.foryou h3{font-family:"Mukta",sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 10px}
+.foryou h3{font-family:"Mukta","Mukta Fallback",sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 10px}
 .foryou ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .foryou li{display:flex;gap:10px;align-items:flex-start}
 .fy-i{flex:none;width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:var(--surface);font-size:1.05rem;box-shadow:0 1px 0 var(--line)}
@@ -675,12 +689,12 @@ html.theme-anim, html.theme-anim *{transition:background-color .45s ease,border-
 .save-ask p{margin:4px 0 12px;color:var(--muted);font-size:.95rem}
 .save-ask .row{display:flex;flex-wrap:wrap;gap:8px}
 .saved{margin:0 0 16px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface)}
-.saved h3{font-family:"Mukta",sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 6px}
+.saved h3{font-family:"Mukta","Mukta Fallback",sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 6px}
 .saved ul{list-style:none;margin:0;padding:0}
 .saved li{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
 .saved li:first-child{border-top:0}
 .saved li div{flex:1;min-width:0}
-.saved li b{display:block;font-family:"Yatra One","Mukta",serif;font-weight:400;font-size:1.25rem;color:var(--accent)}
+.saved li b{display:block;font-family:"Yatra One","Yatra Fallback","Mukta","Mukta Fallback",serif;font-weight:400;font-size:1.25rem;color:var(--accent)}
 .saved li span{display:block;color:var(--muted);font-size:.86rem;line-height:1.35}
 .saved .btn{min-height:38px;padding:0 14px;font-size:.92rem}
 .sp-del{flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--muted);font:inherit;cursor:pointer}
@@ -701,16 +715,16 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
   html,body{background:#fff !important}
   body > *:not(#printPlan){display:none !important}
   body::before{display:none !important}
-  #printPlan{display:block;color:#18221E;font-family:"Mukta",system-ui,sans-serif;font-size:11.5pt;line-height:1.45;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printPlan{display:block;color:#18221E;font-family:"Mukta","Mukta Fallback",system-ui,sans-serif;font-size:11.5pt;line-height:1.45;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   #printPlan header{display:flex;align-items:center;gap:12px;padding-bottom:10px;border-bottom:3px solid #E8A317;margin-bottom:10px}
-  #printPlan header b{display:block;font-family:"Yatra One",serif;font-size:20pt;line-height:1.1;color:#1F3B2D;font-weight:400}
+  #printPlan header b{display:block;font-family:"Yatra One","Yatra Fallback",serif;font-size:20pt;line-height:1.1;color:#1F3B2D;font-weight:400}
   #printPlan header span{color:#4A5852}
-  #printPlan h2{font-family:"Yatra One",serif;font-weight:400;font-size:14pt;color:#1F3B2D;margin:16px 0 6px;text-shadow:none;break-after:avoid}
+  #printPlan h2{font-family:"Yatra One","Yatra Fallback",serif;font-weight:400;font-size:14pt;color:#1F3B2D;margin:16px 0 6px;text-shadow:none;break-after:avoid}
   #printPlan table{width:100%;border-collapse:collapse}
   #printPlan .pp-sum td{padding:4px 8px;border:1px solid #D5DED7}
   #printPlan .pp-sum td:nth-child(odd){color:#4A5852;width:16%}
   #printPlan .pp-total{font-size:12pt;margin:12px 0 6px}
-  #printPlan .pp-total b{font-family:"Yatra One",serif;font-weight:400;font-size:18pt;color:#1F3B2D}
+  #printPlan .pp-total b{font-family:"Yatra One","Yatra Fallback",serif;font-weight:400;font-size:18pt;color:#1F3B2D}
   #printPlan .pp-total span{color:#4A5852;font-size:10pt}
   #printPlan .pp-rows td{padding:5px 0;border-bottom:1px solid #D5DED7;vertical-align:top}
   #printPlan .pp-rows td:last-child{text-align:right;font-weight:700;white-space:nowrap;padding-left:10px}
@@ -745,6 +759,29 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
 .ab-x{flex:none;width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font:inherit;cursor:pointer}
 .ab-x:hover{background:rgba(255,255,255,.26)}
 @media (prefers-reduced-motion: reduce){.ab-dot{animation:none}.f-in{animation:none}}
+/* ================================================================
+   PERFORMANCE: pause hidden animations, lighter blur on phones
+   ================================================================ */
+.hero.hero-off *,.hero.hero-off *::before,.hero.hero-off *::after{animation-play-state:paused !important}
+.tilt{will-change:auto}
+.tilt.active{will-change:transform}
+@media (max-width:760px){
+  .sec-head h2{-webkit-backdrop-filter:none !important;backdrop-filter:none !important;background:var(--bg) !important}
+  .bar{-webkit-backdrop-filter:blur(8px) !important;backdrop-filter:blur(8px) !important}
+  .chips{-webkit-backdrop-filter:blur(8px) !important;backdrop-filter:blur(8px) !important}
+}
+/* ================================================================
+   HERO: dynamic headline + interactive diya particles
+   ================================================================ */
+.hero h1 .wd{display:inline-block;animation:wordrise .8s var(--ease) both;animation-delay:calc(var(--k,0) * 90ms + 120ms)}
+@keyframes wordrise{from{opacity:0;transform:translateY(.45em);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.hero h1 .rot{display:inline-grid;vertical-align:top;max-width:100%;animation:wordrise .8s var(--ease) both;animation-delay:calc(var(--k,0) * 90ms + 120ms)}
+.rot > span{grid-area:1 / 1;background:linear-gradient(90deg,#FFE3A0,#F4C766 40%,#E8A317);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;transform:translateY(.35em);filter:blur(5px);transition:opacity .55s var(--ease),transform .55s var(--ease),filter .55s var(--ease)}
+.rot > span.on{opacity:1;transform:none;filter:none}
+.rot > span.out{opacity:0;transform:translateY(-.35em);filter:blur(5px)}
+.diya-fx{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.hero.fx-on .lights{display:none}
+@media (prefers-reduced-motion: reduce){.hero h1 .wd,.hero h1 .rot{animation:none}.rot > span{transition:none}}
 </style>
 </head>
 <body>
@@ -1504,7 +1541,8 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
   var lang = "en";
   var people = 2;
   var $ = function(s){return document.querySelector(s);};
-  var fmt = function(n){return "₹" + Math.round(n).toLocaleString("en-IN");};
+  var NF = (window.Intl && Intl.NumberFormat) ? new Intl.NumberFormat("en-IN") : null;
+  var fmt = function(n){ n = Math.round(n); return "₹" + (NF ? NF.format(n) : n.toLocaleString("en-IN")); };
   var round100 = function(n){return Math.round(n/100)*100;};
 
   function vehicleFor(p){
@@ -1922,43 +1960,54 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
   var stops = journey ? $$("li", journey) : [];
   var ticking = false;
 
-  function frame(){
-    ticking = false;
-    var y = window.pageYOffset || root.scrollTop;
-    var max = root.scrollHeight - window.innerHeight;
-    if (bar) bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ")";
-    if (!reduce && hero){
-      var hb = hero.offsetHeight;
-      if (y < hb + 80){
-        layers.forEach(function(l){ l.style.transform = "translate3d(0," + (y * +l.getAttribute("data-depth")).toFixed(1) + "px,0)"; });
-        if (scene) scene.style.transform = "scale(" + (1 + Math.min(y / hb, 1) * 0.14).toFixed(4) + ")";
-        if (copy){
-          copy.style.transform = "translate3d(0," + (y * -0.12).toFixed(1) + "px,0)";
-          copy.style.opacity = Math.max(0, 1 - y / (hb * 0.85)).toFixed(3);
-        }
-      }
-    }
-    if (journey && !reduce){
-      var r = journey.getBoundingClientRect();
-      var p = Math.max(0, Math.min(1, (window.innerHeight * 0.7 - r.top) / r.height));
-      journey.style.setProperty("--p", p.toFixed(3));
-      stops.forEach(function(s){ s.classList.toggle("reached", p >= (s.offsetTop + 12) / r.height - 0.02); });
-    }
-  }
-  function stickState(){
-    var st = parseFloat(getComputedStyle(root).getPropertyValue("--stick")) || 108;
-    heads.forEach(function(h){ h.classList.toggle("is-stuck", Math.abs(h.getBoundingClientRect().top - st) < 2); });
-  }
-  function onScroll(){ stickState(); if (!ticking){ ticking = true; requestAnimationFrame(frame); } }
-  window.addEventListener("scroll", onScroll, {passive:true});
-  window.addEventListener("resize", onScroll);
-  if (journey && reduce){ journey.style.setProperty("--p", 1); stops.forEach(function(s){ s.classList.add("reached"); }); }
+  /* Measurements are cached and refreshed on resize, so scrolling only reads positions once per frame
+     and then writes styles (no read-write-read "layout thrashing"). */
+  var hb = 0, jh = 0, stopTops = [], stickPx = 108;
   function setStick(){
     var b = document.querySelector(".bar"), c = document.querySelector(".chips");
     var h = (b ? b.getBoundingClientRect().height : 56) + (c ? c.getBoundingClientRect().height : 52);
     root.style.setProperty("--stick", Math.round(h) + "px");
+    stickPx = Math.round(h);
   }
-  setStick(); window.addEventListener("resize", setStick);
+  function measure(){
+    setStick();
+    hb = hero ? hero.offsetHeight : 0;
+    if (journey){
+      jh = journey.getBoundingClientRect().height || 1;
+      journey.style.setProperty("--jh", Math.max(0, jh - 20).toFixed(1) + "px");
+      stopTops = stops.map(function(s){ return s.offsetTop; });
+    }
+  }
+  function frame(){
+    ticking = false;
+    /* reads */
+    var y = window.pageYOffset || root.scrollTop, vh = window.innerHeight;
+    var max = root.scrollHeight - vh;
+    var jr = journey && !reduce ? journey.getBoundingClientRect() : null;
+    var stuck = heads.map(function(h){ return Math.abs(h.getBoundingClientRect().top - stickPx) < 2; });
+    /* writes */
+    if (bar) bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ")";
+    if (!reduce && hero && y < hb + 80){
+      layers.forEach(function(l){ l.style.transform = "translate3d(0," + (y * +l.getAttribute("data-depth")).toFixed(1) + "px,0)"; });
+      if (scene) scene.style.transform = "scale(" + (1 + Math.min(y / hb, 1) * 0.14).toFixed(4) + ")";
+      if (copy){
+        copy.style.transform = "translate3d(0," + (y * -0.12).toFixed(1) + "px,0)";
+        copy.style.opacity = Math.max(0, 1 - y / (hb * 0.85)).toFixed(3);
+      }
+    }
+    if (jr && jr.top < vh && jr.bottom > 0){
+      var p = Math.max(0, Math.min(1, (vh * 0.7 - jr.top) / jh));
+      journey.style.setProperty("--p", p.toFixed(3));
+      stops.forEach(function(s, i){ s.classList.toggle("reached", p >= (stopTops[i] + 12) / jh - 0.02); });
+    }
+    heads.forEach(function(h, i){ if (h.classList.contains("is-stuck") !== stuck[i]) h.classList.toggle("is-stuck", stuck[i]); });
+  }
+  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(frame); } }
+  window.addEventListener("scroll", onScroll, {passive:true});
+  window.addEventListener("resize", function(){ measure(); onScroll(); });
+  if (journey && reduce){ journey.style.setProperty("--p", 1); stops.forEach(function(s){ s.classList.add("reached"); }); }
+  measure();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ measure(); onScroll(); });
   frame();
 
   /* ---------- gold highlight on key words ---------- */
@@ -2172,7 +2221,8 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
     ["When is the 15 June fair?","15 जून का मेला कब है?"],["Can I do a day trip?","क्या एक दिन में लौट सकते हैं?"],["Places to visit nearby?","आसपास घूमने की जगहें?"],
     ["Are rate lists displayed?","क्या रेट लिस्ट लगती है?"],["Is this the official website?","क्या यह आधिकारिक वेबसाइट है?"],["Who was Neem Karoli Baba?","नीम करोली बाबा कौन थे?"]];
   var lastCost = null, lastIntent = null;
-  function money(n){ return "₹" + Math.round(n).toLocaleString("en-IN"); }
+  var NF2 = (window.Intl && Intl.NumberFormat) ? new Intl.NumberFormat("en-IN") : null;
+  function money(n){ n = Math.round(n); return "₹" + (NF2 ? NF2.format(n) : n.toLocaleString("en-IN")); }
 
   /* Works out the answer: {text, link} where link is ready-made HTML */
   function answer(q, remember){
@@ -2321,13 +2371,19 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
     new MutationObserver(sky).observe(root, {attributes:true, attributeFilter:["data-lang"]});
   }
 
+  /* Pause the hero's looping animations while it is off screen (saves battery and keeps scrolling smooth). */
+  if (hero && "IntersectionObserver" in window){
+    new IntersectionObserver(function(es){ hero.classList.toggle("hero-off", !es[0].isIntersecting); }).observe(hero);
+  }
+
   /* ---------- 2. ROUTE MAP: the car drives Delhi -> Kainchi as you scroll ---------- */
   var map = $("#routemap"), road = $("#rmRoad"), car = $("#rmCar");
-  if (map && road && car && road.getTotalLength){
+  /* Set up only when the map is about to scroll into view: keeps page load light. */
+  var initMap = function(){
     var total = road.getTotalLength();
     road.style.strokeDasharray = total + " " + total;
     var samples = [];
-    for (var k = 0; k <= 600; k++){ var pt = road.getPointAtLength(total * k / 600); samples.push([pt.x, pt.y, total * k / 600]); }
+    for (var k = 0; k <= 240; k++){ var pt = road.getPointAtLength(total * k / 240); samples.push([pt.x, pt.y, total * k / 240]); }
     var stops = $$(".rm-stop", map).map(function(g){
       var m = (g.getAttribute("transform") || "").match(/translate\(([\d.]+) ([\d.]+)\)/), x = +m[1], y = +m[2], best = 0, bd = 1e9;
       samples.forEach(function(s){ var dd = (s[0] - x) * (s[0] - x) + (s[1] - y) * (s[1] - y); if (dd < bd){ bd = dd; best = s[2]; } });
@@ -2396,6 +2452,12 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
       window.addEventListener("resize", onScroll);
       onScroll();
     }
+  };
+  if (map && road && car && road.getTotalLength){
+    if ("IntersectionObserver" in window){
+      var mio = new IntersectionObserver(function(es){ if (es[0].isIntersecting){ mio.disconnect(); initMap(); } }, {rootMargin:"900px 0px"});
+      mio.observe(map);
+    } else initMap();
   }
 
   /* ---------- 3. CROWD METER: estimate for today and the next 6 days ---------- */
@@ -2424,7 +2486,14 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
     var t0 = istNow(), days = [];
     for (var j = 0; j < 7; j++){ var dt = new Date(Date.UTC(t0.getUTCFullYear(), t0.getUTCMonth(), t0.getUTCDate() + j)); var e = estimate(dt); days.push({d:dt, lvl:e.lvl, why:e.why}); }
     var sel = 0, shown = false, needle = $("#crowdNeedle");
-    var fmtDay = function(dt, opt){ try { return dt.toLocaleDateString(L() === "hi" ? "hi-IN" : "en-IN", Object.assign({timeZone:"UTC"}, opt)); } catch(e){ return dt.toUTCString().slice(0, 10); } };
+    var DF = {};
+    var fmtDay = function(dt, opt){
+      try {
+        var key = L() + JSON.stringify(opt);
+        if (!DF[key]) DF[key] = new Intl.DateTimeFormat(L() === "hi" ? "hi-IN" : "en-IN", Object.assign({timeZone:"UTC"}, opt));
+        return DF[key].format(dt);
+      } catch(e){ return dt.toUTCString().slice(0, 10); }
+    };
     var paint = function(){
       var x = days[sel], lg = L();
       crowd.style.setProperty("--lvl", COL[x.lvl]);
@@ -2542,6 +2611,127 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
     bar.hidden = false;
     bar.querySelector(".ab-x").addEventListener("click", function(){ bar.hidden = true; });
   }
+})();
+</script>
+<script>
+/* ================================================================
+   HERO: words rise in, the key phrase rotates a few times, and diya lights
+   drift up and glow toward your finger. Everything pauses off screen,
+   and stays off for reduced-motion users and data-saver mode.
+   ================================================================ */
+(function(){
+  var hero = document.getElementById("hero"); if (!hero) return;
+  var root = document.documentElement;
+  var calm = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var conn = navigator.connection || {};
+  var lite = conn.saveData || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || (navigator.deviceMemory && navigator.deviceMemory <= 4);
+  function visible(){ return !hero.classList.contains("hero-off") && !document.hidden; }
+
+  /* --- 1. dynamic headline --- */
+  var ALT = {en:["parking sorted", "crowds avoided", "costs clear"], hi:["भीड़ से बचकर", "खर्च पहले से तय", "पार्किंग तय"]};
+  var h1 = hero.querySelector("h1"), rots = [];
+  if (h1){
+    [].slice.call(h1.querySelectorAll("span[lang]")).forEach(function(sp){
+      var lg = sp.getAttribute("lang"), txt = sp.textContent.trim(), cut = txt.indexOf(",");
+      if (cut < 0) return;
+      var lead = txt.slice(0, cut + 1), rest = txt.slice(cut + 1).trim(), k = 0;
+      var words = lead.split(" ").map(function(w){ return '<span class="wd" style="--k:' + (k++) + '">' + w + '</span>'; }).join(" ");
+      sp.innerHTML = words + ' <span class="rot" aria-hidden="true" style="--k:' + k + '"><span class="on">' + rest + '</span>' +
+        (calm ? "" : ALT[lg].map(function(a){ return '<span>' + a + '</span>'; }).join("")) + '</span><span class="sr-only">' + rest + '</span>';
+      var rot = sp.querySelector(".rot");
+      rots.push(rot);
+    });
+    /* never let a shorter alternative make the headline jump: drop any phrase wider than the original */
+    var textW = function(el){ var r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width; };
+    var prune = function(){ rots.forEach(function(rot){
+      var items = [].slice.call(rot.children), w0 = textW(items[0]);
+      if (!w0) return;
+      items.slice(1).forEach(function(it){ if (textW(it) > w0 + 1) it.remove(); });
+    }); };
+    prune();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(prune);
+    if (!calm){
+      var cycles = 0, idx = 0, MAX = 2;
+      var tick = function(){
+        if (!visible()) return;
+        rots.forEach(function(rot){
+          if (!rot.offsetParent) return;
+          var items = rot.children, n = items.length; if (n < 2) return;
+          var cur = idx % n, nxt = (idx + 1) % n;
+          items[cur].classList.remove("on"); items[cur].classList.add("out");
+          items[nxt].classList.remove("out"); items[nxt].classList.add("on");
+          setTimeout(function(){ items[cur].classList.remove("out"); }, 600);
+        });
+        idx++;
+        var n0 = rots[0] ? rots[0].children.length : 1;
+        if (idx % Math.max(1, n0) === 0 && ++cycles >= MAX) clearInterval(timer);
+      };
+      var timer;
+      setTimeout(function(){ timer = setInterval(tick, 2600); }, 2400);
+    }
+  }
+
+  /* --- 2. interactive diya particles (canvas) --- */
+  if (calm || conn.saveData || !window.requestAnimationFrame) return;
+  var cv = document.createElement("canvas"), ctx = cv.getContext && cv.getContext("2d");
+  if (!ctx) return;
+  cv.className = "diya-fx"; cv.setAttribute("aria-hidden", "true");
+  var stars = hero.querySelector(".stars");
+  hero.insertBefore(cv, stars ? stars.nextSibling : hero.firstChild);
+  hero.classList.add("fx-on");
+  var small = window.innerWidth < 600;
+  var DPR = Math.min(window.devicePixelRatio || 1, small ? 1 : 1.5), W = 0, H = 0, N = lite ? 18 : (small ? 24 : 38), P = [];
+  /* while the page is being scrolled, hold the particles still: scrolling stays smooth */
+  var scrolling = false, sTimer;
+  window.addEventListener("scroll", function(){
+    if (!scrolling){ scrolling = true; cv.style.visibility = "hidden"; }
+    clearTimeout(sTimer); sTimer = setTimeout(function(){ scrolling = false; cv.style.visibility = ""; }, 160);
+  }, {passive:true});
+  var sprite = document.createElement("canvas"); sprite.width = sprite.height = 64;
+  var sg = sprite.getContext("2d"), g = sg.createRadialGradient(32, 32, 0, 32, 32, 32);
+  g.addColorStop(0, "rgba(255,243,196,1)"); g.addColorStop(.25, "rgba(244,199,102,.85)"); g.addColorStop(.6, "rgba(232,163,23,.25)"); g.addColorStop(1, "rgba(232,163,23,0)");
+  sg.fillStyle = g; sg.fillRect(0, 0, 64, 64);
+  function size(){ var r = hero.getBoundingClientRect(); W = r.width; H = r.height; cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR); ctx.setTransform(DPR, 0, 0, DPR, 0, 0); }
+  function spawn(p, anywhere){
+    p.x = Math.random() * W; p.y = anywhere ? Math.random() * H : H + 10 + Math.random() * 40;
+    p.vx = (Math.random() - .5) * .25; p.vy = -(.18 + Math.random() * .42);
+    p.r = 5 + Math.random() * 9; p.ph = Math.random() * 6.28; p.glow = 0; return p;
+  }
+  size(); for (var i = 0; i < N; i++) P.push(spawn({}, true));
+  if (window.ResizeObserver) new ResizeObserver(size).observe(hero); else window.addEventListener("resize", size);
+  var ptr = {x:-999, y:-999, on:false};
+  hero.addEventListener("pointermove", function(e){ var r = hero.getBoundingClientRect(); ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top; ptr.on = true; }, {passive:true});
+  hero.addEventListener("pointerdown", function(e){ var r = hero.getBoundingClientRect(); ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top; ptr.on = true; }, {passive:true});
+  hero.addEventListener("pointerleave", function(){ ptr.on = false; });
+  hero.addEventListener("pointerup", function(e){ if (e.pointerType !== "mouse") setTimeout(function(){ ptr.on = false; }, 900); });
+  var last = 0, step = (lite || small) ? 1000 / 30 : 1000 / 60;
+  function loop(t){
+    requestAnimationFrame(loop);
+    if (!visible() || scrolling || t - last < step - 1) return;
+    var dt = Math.min(3, (t - last) / 16.7); last = t;
+    var sky = hero.getAttribute("data-sky"), base = sky === "night" ? 1 : sky === "day" ? .5 : .8;
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalCompositeOperation = "lighter";
+    for (var i = 0; i < P.length; i++){
+      var p = P[i];
+      if (ptr.on){
+        var dx = ptr.x - p.x, dy = ptr.y - p.y, d2 = dx * dx + dy * dy;
+        if (d2 < 160 * 160){ var f = .018 * (1 - Math.sqrt(d2) / 160); p.vx += dx * f * .05 * dt; p.vy += dy * f * .05 * dt; p.glow = Math.min(1, p.glow + .08 * dt); }
+      }
+      p.vx *= .985; p.vy = p.vy * .985 - .004 * dt;
+      p.x += (p.vx + Math.sin(t / 1400 + p.ph) * .12) * dt; p.y += p.vy * dt;
+      p.glow = Math.max(0, p.glow - .01 * dt);
+      if (p.y < -20 || p.x < -30 || p.x > W + 30) spawn(p, false);
+      var fade = Math.min(1, (H - p.y) / 80) * Math.min(1, (p.y + 20) / (H * .35));
+      var a = base * (.45 + .35 * Math.sin(t / 380 + p.ph * 3) + .5 * p.glow) * Math.max(0, fade);
+      if (a <= .02) continue;
+      var s = p.r * (1 + p.glow * .8);
+      ctx.globalAlpha = Math.min(1, a);
+      ctx.drawImage(sprite, p.x - s, p.y - s, s * 2, s * 2);
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+  }
+  requestAnimationFrame(loop);
 })();
 </script>
 <div class="toast" id="toast" role="status" aria-live="polite"><span class="spin" aria-hidden="true"></span><span id="toastText"></span></div>

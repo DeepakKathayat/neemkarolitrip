@@ -16,15 +16,29 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Yatra+One&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/mukta-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/yatra-one-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Fonts hosted on this site (no third-party requests). Latin and Devanagari are split so each visitor downloads only what the page needs. */
+@font-face{font-family:"Mukta";font-weight:400;font-display:swap;src:url(/fonts/mukta-400-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20B9,U+2122,U+2190-2199,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Mukta";font-weight:400;font-display:swap;src:url(/fonts/mukta-400-deva.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:"Mukta";font-weight:600;font-display:swap;src:url(/fonts/mukta-600-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20B9,U+2122,U+2190-2199,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Mukta";font-weight:600;font-display:swap;src:url(/fonts/mukta-600-deva.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:"Mukta";font-weight:700;font-display:swap;src:url(/fonts/mukta-700-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20B9,U+2122,U+2190-2199,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Mukta";font-weight:700;font-display:swap;src:url(/fonts/mukta-700-deva.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:"Yatra One";font-display:swap;src:url(/fonts/yatra-one-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20B9,U+2122,U+2190-2199,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Yatra One";font-display:swap;src:url(/fonts/yatra-one-deva.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+/* Fallbacks sized to match our fonts, so text doesn't jump when the real fonts arrive */
+@font-face{font-family:"Mukta Fallback";src:local("Arial"),local("Roboto"),local("Helvetica Neue"),local("Liberation Sans");size-adjust:93.8%;ascent-override:120.5%;descent-override:56.7%;line-gap-override:0%}
+@font-face{font-family:"Mukta Fallback";font-weight:600 700;src:local("Arial Bold"),local("Roboto Bold"),local("Helvetica Neue Bold"),local("Liberation Sans Bold");size-adjust:92.4%;ascent-override:122.3%;descent-override:57.6%;line-gap-override:0%}
+@font-face{font-family:"Yatra Fallback";src:local("Arial"),local("Roboto"),local("Helvetica Neue"),local("Liberation Sans");size-adjust:110.5%;ascent-override:89.7%;descent-override:44.1%;line-gap-override:0%}
+</style>
 <style>
 :root{--pine:#1F3B2D;--marigold:#E8A317;--bg:#F1F5F1;--surface:#fff;--text:#18221E;--muted:#4A5852;--line:#D5DED7;--accent:#1F3B2D}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0F1915;--surface:#16231D;--text:#E6EDE8;--muted:#A7B6AE;--line:#2A3B33;--accent:#7FB79A;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#0F1915;--surface:#16231D;--text:#E6EDE8;--muted:#A7B6AE;--line:#2A3B33;--accent:#7FB79A;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Mukta",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.65}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Mukta","Mukta Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.65}
 html[data-lang="en"] body [lang="hi"],html[data-lang="hi"] body [lang="en"]{display:none !important}
 a{color:var(--accent);text-underline-offset:3px}
 :focus-visible{outline:3px solid var(--marigold);outline-offset:2px;border-radius:6px}
@@ -35,7 +49,7 @@ a{color:var(--accent);text-underline-offset:3px}
 .lang{display:flex;background:rgba(255,255,255,.12);border-radius:999px;padding:3px}
 .lang button{border:0;background:transparent;color:#fff;font:inherit;font-weight:600;padding:4px 12px;border-radius:999px;cursor:pointer}
 .lang button[aria-pressed="true"]{background:var(--marigold);color:#1B1505}
-h1,h2{font-family:"Yatra One","Mukta",serif;font-weight:400;line-height:1.2}
+h1,h2{font-family:"Yatra One","Yatra Fallback","Mukta","Mukta Fallback",serif;font-weight:400;line-height:1.2}
 h1{font-size:clamp(2rem,7vw,2.8rem);margin:32px 0 6px}
 h2{font-size:1.35rem;margin:28px 0 6px}
 .updated{color:var(--muted);margin:0 0 20px}
@@ -63,7 +77,7 @@ footer a{color:#F4C766}
 
 <main class="wrap">
   <h1><span lang="en">Privacy Policy</span><span lang="hi">गोपनीयता नीति</span></h1>
-  <p class="updated"><span lang="en">Last updated 14 October 2026</span><span lang="hi">अंतिम अपडेट 14 अक्टूबर 2026</span></p>
+  <p class="updated"><span lang="en">Last updated 15 October 2026</span><span lang="hi">अंतिम अपडेट 15 अक्टूबर 2026</span></p>
 
   <div class="card" lang="en">
     <h2>In short</h2>
@@ -91,7 +105,7 @@ footer a{color:#F4C766}
     <p>You can change your mind at any time: <button type="button" class="btn" data-consent-reset>Change analytics choice</button></p>
 
     <h2>Fonts</h2>
-    <p>Our fonts load from Google Fonts. Like any website request, this sends your IP address to Google so the font files can be delivered.</p>
+    <p>Our fonts are stored on this website itself, so loading them does not contact Google or any other company.</p>
 
     <h2>Booking and travel links</h2>
     <p>Hotel links (for example Agoda or Booking.com) and links to IRCTC, redBus and MakeMyTrip take you to other websites. Some of these are affiliate links, which means we may earn a small commission if you book, at no extra cost to you. Once you leave our site, that website's own privacy policy applies.</p>
@@ -132,7 +146,7 @@ footer a{color:#F4C766}
     <p>आप कभी भी अपनी पसंद बदल सकते हैं: <button type="button" class="btn" data-consent-reset>एनालिटिक्स की पसंद बदलें</button></p>
 
     <h2>फ़ॉन्ट</h2>
-    <p>हमारे फ़ॉन्ट Google Fonts से लोड होते हैं। किसी भी वेबसाइट की तरह, इससे फ़ॉन्ट फ़ाइल भेजने के लिए आपका IP पता Google तक जाता है।</p>
+    <p>हमारे फ़ॉन्ट इसी वेबसाइट पर रखे हैं, इसलिए इन्हें लोड करने के लिए Google या किसी और कंपनी से संपर्क नहीं होता।</p>
 
     <h2>बुकिंग और यात्रा लिंक</h2>
     <p>होटल लिंक (जैसे Agoda या Booking.com) और IRCTC, redBus, MakeMyTrip के लिंक आपको दूसरी वेबसाइट पर ले जाते हैं। इनमें से कुछ एफ़िलिएट लिंक हैं, यानी आपके बुक करने पर हमें आपके बिना किसी अतिरिक्त खर्च के छोटा कमीशन मिल सकता है। हमारी साइट छोड़ने के बाद उस वेबसाइट की अपनी गोपनीयता नीति लागू होती है।</p>
