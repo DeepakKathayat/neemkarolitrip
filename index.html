@@ -724,6 +724,27 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
   #printPlan .pp-check li{margin-bottom:4px;break-inside:avoid}
   #printPlan footer{background:none;color:#4A5852;padding:8px 0 0;margin-top:18px;border-top:1px solid #D5DED7;font-size:9pt}
 }
+/* ================================================================
+   FILTERS + RULES ALERT BAR
+   ================================================================ */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:2px 0 14px}
+.filters button{min-height:38px;padding:6px 14px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--text);font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;transition:background .25s,border-color .25s,color .25s}
+.filters button:hover{border-color:var(--accent)}
+.filters button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.f-count{font-size:.85rem;color:var(--muted);margin-left:2px}
+.f-hide{display:none !important}
+.f-in{animation:softin .4s var(--ease)}
+.alertbar{background:linear-gradient(90deg,#9E3A17,#C9561F 55%,#D9771F);color:#fff;position:relative;z-index:3}
+.alertbar[hidden]{display:none}
+.alertbar .wrap{display:flex;align-items:center;gap:10px;min-height:46px;padding-top:7px;padding-bottom:7px}
+.alertbar p{margin:0;flex:1;min-width:0;font-size:.95rem;line-height:1.35}
+.alertbar a{color:#fff;font-weight:700;white-space:nowrap;text-underline-offset:3px}
+.alertbar a:hover{color:#FFE7B8}
+.ab-dot{flex:none;width:10px;height:10px;border-radius:50%;background:#FFE7B8;animation:abping 1.8s infinite}
+@keyframes abping{0%{box-shadow:0 0 0 0 rgba(255,231,184,.7)}70%{box-shadow:0 0 0 9px rgba(255,231,184,0)}100%{box-shadow:0 0 0 0 rgba(255,231,184,0)}}
+.ab-x{flex:none;width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font:inherit;cursor:pointer}
+.ab-x:hover{background:rgba(255,255,255,.26)}
+@media (prefers-reduced-motion: reduce){.ab-dot{animation:none}.f-in{animation:none}}
 </style>
 </head>
 <body>
@@ -764,6 +785,21 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
 </div>
 
 <main id="top">
+
+<!-- ============================================================
+     RULES-CHANGED ALERT BAR (managed by the daily news check)
+     Show it: set data-active="true", data-id to the announcement date
+     (YYYY-MM-DD), and write ONE short line in both <span>s below.
+     Hide it: set data-active="false" (after the event or within 7 days).
+     ============================================================ -->
+<div class="alertbar" id="alertBar" data-active="false" data-id="" role="status" hidden>
+  <div class="wrap">
+    <span class="ab-dot" aria-hidden="true"></span>
+    <p><b><span lang="en">Rules update:</span><span lang="hi">नियमों में बदलाव:</span></b> <span lang="en" class="ab-en"></span><span lang="hi" class="ab-hi"></span></p>
+    <a href="#status"><span lang="en">Details</span><span lang="hi">विवरण</span></a>
+    <button type="button" class="ab-x" aria-label="Close / बंद करें">✕</button>
+  </div>
+</div>
 
 <div class="hero" id="hero">
   <div class="stars" aria-hidden="true"></div>
@@ -864,7 +900,8 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
       <p lang="en">Kainchi Dham is seeing record crowds. Police and the district administration change traffic plans for busy weekends, holidays and fair days.</p>
       <p lang="hi">कैंची धाम में रिकॉर्ड भीड़ आ रही है। व्यस्त वीकेंड, छुट्टियों और मेले के दिनों के लिए पुलिस और ज़िला प्रशासन ट्रैफ़िक प्लान बदलते रहते हैं।</p>
     </div>
-    <div class="crowd" id="crowd">
+    <!-- Crowd meter: add confirmed extra-busy dates (fairs, announced traffic plans) to data-busy, comma-separated YYYY-MM-DD. -->
+    <div class="crowd" id="crowd" data-busy="">
       <h3><span><span lang="en">Expected crowd</span><span lang="hi">अनुमानित भीड़</span></span><small id="crowdDate"></small></h3>
       <svg class="gauge" viewBox="0 0 200 112" aria-hidden="true"><path class="seg" d="M20.0 100.0 A80 80 0 0 1 42.0 44.9" stroke="#4E9F6A"/><path class="seg" d="M44.9 42.0 A80 80 0 0 1 97.9 20.0" stroke="#D8A31A"/><path class="seg" d="M102.1 20.0 A80 80 0 0 1 155.1 42.0" stroke="#E07B39"/><path class="seg" d="M158.0 44.9 A80 80 0 0 1 180.0 100.0" stroke="#C2412B"/><g class="needle" id="crowdNeedle"><path d="M96 100 L100 30 L104 100 Z"/></g><circle class="hub" cx="100" cy="100" r="7"/></svg>
       <div aria-live="polite"><div class="crowd-level" id="crowdLevel"></div><p class="crowd-tip" id="crowdTip"></p></div>
@@ -1132,26 +1169,34 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
       <p lang="en">Book before you leave home, especially for weekends. Weekend rates are usually higher than weekday rates.</p>
       <p lang="hi">घर से निकलने से पहले बुकिंग कर लें, खासकर वीकेंड के लिए। वीकेंड के दाम आम दिनों से ज़्यादा होते हैं।</p>
     </div>
+    <div class="filters" role="group" aria-label="Filter stays / ठहरने की जगह चुनें" data-target=".stays .stay">
+      <button type="button" data-f="all" aria-pressed="true"><span lang="en">All</span><span lang="hi">सभी</span></button>
+      <button type="button" data-f="closest" aria-pressed="false"><span lang="en">Closest to temple</span><span lang="hi">मंदिर के सबसे पास</span></button>
+      <button type="button" data-f="budget" aria-pressed="false"><span lang="en">Budget-friendly</span><span lang="hi">किफ़ायती</span></button>
+      <button type="button" data-f="families" aria-pressed="false"><span lang="en">Families</span><span lang="hi">परिवार के लिए</span></button>
+      <button type="button" data-f="choice" aria-pressed="false"><span lang="en">Most choice</span><span lang="hi">सबसे ज़्यादा विकल्प</span></button>
+      <span class="f-count" aria-live="polite"></span>
+    </div>
     <div class="stays">
-      <div class="stay">
+      <div class="stay" data-tags="closest">
         <h3><span lang="en">Kainchi road</span><span lang="hi">कैंची रोड</span></h3>
         <p class="km"><span lang="en">Walking distance to a few minutes' drive</span><span lang="hi">पैदल से लेकर कुछ मिनट की दूरी</span></p>
         <p lang="en">A handful of hotels and homestays right by the temple. Best for early darshan, but they fill up first.</p>
         <p lang="hi">मंदिर के पास कुछ होटल और होमस्टे। सुबह जल्दी दर्शन के लिए सबसे अच्छे, पर सबसे पहले भरते हैं।</p>
       </div>
-      <div class="stay">
+      <div class="stay" data-tags="closest budget">
         <h3><span lang="en">Bhowali</span><span lang="hi">भवाली</span></h3>
         <p class="km"><span lang="en">9 km from the temple</span><span lang="hi">मंदिर से 9 किमी</span></p>
         <p lang="en">The closest town, with budget and mid-range rooms, a fruit market and the shuttle parking at Bhowali Sanatorium.</p>
         <p lang="hi">सबसे नज़दीकी कस्बा। किफ़ायती और मध्यम दाम के कमरे, फल बाज़ार, और भवाली सेनेटोरियम की शटल पार्किंग।</p>
       </div>
-      <div class="stay">
+      <div class="stay" data-tags="families">
         <h3><span lang="en">Bhimtal</span><span lang="hi">भीमताल</span></h3>
         <p class="km"><span lang="en">About 20 km</span><span lang="hi">लगभग 20 किमी</span></p>
         <p lang="en">Lakeside and quieter than Nainital, on the way up from Kathgodam. Good for families.</p>
         <p lang="hi">झील किनारे, नैनीताल से शांत, काठगोदाम से आते हुए रास्ते में। परिवार के साथ अच्छा विकल्प।</p>
       </div>
-      <div class="stay">
+      <div class="stay" data-tags="choice">
         <h3><span lang="en">Nainital</span><span lang="hi">नैनीताल</span></h3>
         <p class="km"><span lang="en">17 km</span><span lang="hi">17 किमी</span></p>
         <p lang="en">The most choice at every price, plus the lake and Mall Road. Expect heavy traffic on weekends.</p>
@@ -1181,44 +1226,52 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
       <p lang="en">Several of these are places linked to Maharaj-ji himself.</p>
       <p lang="hi">इनमें से कई जगहें स्वयं महाराज जी से जुड़ी हैं।</p>
     </div>
+    <div class="filters" role="group" aria-label="Filter places / जगहें चुनें" data-target=".places > li">
+      <button type="button" data-f="all" aria-pressed="true"><span lang="en">All</span><span lang="hi">सभी</span></button>
+      <button type="button" data-f="ashram" aria-pressed="false"><span lang="en">Baba's ashrams</span><span lang="hi">बाबा के आश्रम</span></button>
+      <button type="button" data-f="temple" aria-pressed="false"><span lang="en">Temples</span><span lang="hi">मंदिर</span></button>
+      <button type="button" data-f="lake view" aria-pressed="false"><span lang="en">Lakes &amp; views</span><span lang="hi">झील और नज़ारे</span></button>
+      <button type="button" data-f="near" aria-pressed="false"><span lang="en">Close to Kainchi</span><span lang="hi">कैंची के पास</span></button>
+      <span class="f-count" aria-live="polite"></span>
+    </div>
     <ul class="places">
-      <li>
+      <li data-tags="temple near">
         <h3><span lang="en">Golu Devta Temple, Ghorakhal</span><span lang="hi">गोलू देवता मंदिर, घोड़ाखाल</span></h3>
         <span class="km"><span lang="en">near Bhowali</span><span lang="hi">भवाली के पास</span></span>
         <p lang="en">Known as the temple of justice, its walls are hung with thousands of bells and written petitions.</p>
         <p lang="hi">न्याय के देवता का मंदिर, जहाँ हज़ारों घंटियाँ और अर्ज़ियाँ टंगी रहती हैं।</p>
       </li>
-      <li>
+      <li data-tags="ashram near">
         <h3><span lang="en">Bhumiadhar Ashram</span><span lang="hi">भूमियाधार आश्रम</span></h3>
         <span class="km"><span lang="en">Bhowali–Nainital road</span><span lang="hi">भवाली–नैनीताल मार्ग</span></span>
         <p lang="en">One of Neem Karoli Baba's ashrams, where he often stayed. Small and quiet.</p>
         <p lang="hi">नीम करोली बाबा के आश्रमों में से एक, जहाँ वे अक्सर ठहरते थे। छोटा और शांत।</p>
       </li>
-      <li>
+      <li data-tags="ashram">
         <h3><span lang="en">Kakrighat Ashram</span><span lang="hi">काकड़ीघाट आश्रम</span></h3>
         <span class="km"><span lang="en">further along the Almora road</span><span lang="hi">अल्मोड़ा मार्ग पर आगे</span></span>
         <p lang="en">A riverside ashram where Baba meditated and set up a Hanuman temple. Few crowds.</p>
         <p lang="hi">नदी किनारे का आश्रम, जहाँ बाबा ने ध्यान किया और हनुमान मंदिर बनवाया। भीड़ कम रहती है।</p>
       </li>
-      <li>
+      <li data-tags="ashram temple">
         <h3><span lang="en">Hanuman Garhi, Nainital</span><span lang="hi">हनुमान गढ़ी, नैनीताल</span></h3>
         <span class="km"><span lang="en">Nainital</span><span lang="hi">नैनीताल</span></span>
         <p lang="en">Another of Baba's ashrams, known for its sunset view over the plains.</p>
         <p lang="hi">बाबा का एक और आश्रम, मैदानों के ऊपर सूर्यास्त के नज़ारे के लिए प्रसिद्ध।</p>
       </li>
-      <li>
+      <li data-tags="lake">
         <h3><span lang="en">Naini Lake and Mall Road</span><span lang="hi">नैनी झील और मॉल रोड</span></h3>
         <span class="km"><span lang="en">17 km</span><span lang="hi">17 किमी</span></span>
         <p lang="en">Boating, Naina Devi temple and the cable car. Go on a weekday if you can.</p>
         <p lang="hi">नौका विहार, नैना देवी मंदिर और रोपवे। हो सके तो किसी कार्यदिवस पर जाएँ।</p>
       </li>
-      <li>
+      <li data-tags="lake">
         <h3><span lang="en">Bhimtal and Naukuchiatal</span><span lang="hi">भीमताल और नौकुचियाताल</span></h3>
         <span class="km"><span lang="en">about 20 km</span><span lang="hi">लगभग 20 किमी</span></span>
         <p lang="en">Calmer lakes on the Kathgodam side, easy to add on the way up or down.</p>
         <p lang="hi">काठगोदाम की ओर शांत झीलें, आते या जाते समय आसानी से जोड़ी जा सकती हैं।</p>
       </li>
-      <li>
+      <li data-tags="temple view">
         <h3><span lang="en">Mukteshwar</span><span lang="hi">मुक्तेश्वर</span></h3>
         <span class="km"><span lang="en">about 35 km</span><span lang="hi">लगभग 35 किमी</span></span>
         <p lang="en">An old Shiva temple and wide Himalayan views on a clear day.</p>
@@ -2351,10 +2404,11 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
     var LV = {en:["Calm","Moderate","Busy","Very busy"], hi:["शांत","सामान्य","ज़्यादा भीड़","बहुत ज़्यादा भीड़"]};
     var TIP = {en:["A good day for a peaceful darshan.","Some queues. Reach early in the morning.","Long queues likely. Arrive before 8 AM; parking may be shuttle-only.","Very heavy crowds. Expect diversions, shuttle-only access and full hotels."],
                hi:["शांति से दर्शन के लिए अच्छा दिन।","कुछ कतारें। सुबह जल्दी पहुँचें।","लंबी कतारें संभव। सुबह 8 बजे से पहले पहुँचें; पार्किंग सिर्फ़ शटल वाली हो सकती है।","बहुत भारी भीड़। डायवर्ज़न, सिर्फ़ शटल से पहुँच और भरे होटल मानकर चलें।"]};
-    var WHY = {en:{weekend:"weekend", weekday:"weekday", peak:"peak season", hols:"holiday season", ph:"public holiday", fair:"Foundation Day fair", samadhi:"Maharaj-ji's samadhi day", why:"Why: "},
-               hi:{weekend:"वीकेंड", weekday:"आम दिन", peak:"पीक सीज़न", hols:"छुट्टियों का मौसम", ph:"सरकारी छुट्टी", fair:"स्थापना दिवस मेला", samadhi:"महाराज जी की समाधि तिथि", why:"क्यों: "}};
+    var WHY = {en:{weekend:"weekend", weekday:"weekday", peak:"peak season", hols:"holiday season", ph:"public holiday", fair:"Foundation Day fair", samadhi:"Maharaj-ji's samadhi day", busy:"announced big crowd day", why:"Why: "},
+               hi:{weekend:"वीकेंड", weekday:"आम दिन", peak:"पीक सीज़न", hols:"छुट्टियों का मौसम", ph:"सरकारी छुट्टी", fair:"स्थापना दिवस मेला", samadhi:"महाराज जी की समाधि तिथि", busy:"घोषित भीड़ वाला दिन", why:"क्यों: "}};
     var COL = ["#4E9F6A","#D8A31A","#E07B39","#C2412B"], ANG = [-67.5,-22.5,22.5,67.5];
     var PUBLIC = ["01-01","01-26","08-15","10-02","12-25"], FAIR = ["06-14","06-15","06-16"];
+    var BUSY = (crowd.getAttribute("data-busy") || "").split(",").map(function(x){ return x.trim(); }).filter(Boolean);
     var estimate = function(dt){
       var dow = dt.getUTCDay(), mo = dt.getUTCMonth(), md = ("0" + (mo + 1)).slice(-2) + "-" + ("0" + dt.getUTCDate()).slice(-2);
       var lvl = [2,1,0,0,0,1,2][dow], why = [dow === 0 || dow === 6 ? "weekend" : "weekday"];
@@ -2364,6 +2418,7 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
       if (PUBLIC.indexOf(md) > -1){ lvl = Math.max(lvl + 1, 2); why.push("ph"); }
       if (md === "09-11"){ lvl++; why.push("samadhi"); }
       if (FAIR.indexOf(md) > -1){ lvl = 3; why = ["fair"]; }
+      if (BUSY.indexOf(dt.getUTCFullYear() + "-" + md) > -1){ lvl = 3; why = ["busy"]; }
       return {lvl:Math.min(3, lvl), why:why};
     };
     var t0 = istNow(), days = [];
@@ -2451,6 +2506,42 @@ button.ask-more{background:none;border:0;padding:0;font:inherit;font-weight:700;
   if (mq && mq.addEventListener) mq.addEventListener("change", sync);
   new MutationObserver(sync).observe(root, {attributes:true, attributeFilter:["data-lang"]});
   sync();
+})();
+</script>
+<script>
+/* ================================================================
+   FILTERS (stays, nearby places) + RULES ALERT BAR
+   ================================================================ */
+(function(){
+  var root = document.documentElement;
+  function hi(){ return root.getAttribute("data-lang") === "hi"; }
+  document.querySelectorAll(".filters").forEach(function(group){
+    var items = [].slice.call(document.querySelectorAll(group.getAttribute("data-target")));
+    var count = group.querySelector(".f-count"), current = "all";
+    function apply(f, animate){
+      current = f;
+      var keys = f.split(" "), shown = 0;
+      items.forEach(function(el){
+        var tags = (el.getAttribute("data-tags") || "").split(" ");
+        var on = f === "all" || keys.some(function(k){ return tags.indexOf(k) > -1; });
+        el.classList.toggle("f-hide", !on);
+        if (on){ shown++; if (animate){ el.classList.remove("f-in"); void el.offsetWidth; el.classList.add("f-in"); } }
+      });
+      if (count) count.textContent = f === "all" ? "" : (hi() ? items.length + " में से " + shown : "Showing " + shown + " of " + items.length);
+    }
+    group.addEventListener("click", function(e){
+      var b = e.target.closest("button"); if (!b) return;
+      group.querySelectorAll("button").forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); });
+      apply(b.getAttribute("data-f"), true);
+    });
+    new MutationObserver(function(){ apply(current, false); }).observe(root, {attributes:true, attributeFilter:["data-lang"]});
+  });
+
+  var bar = document.getElementById("alertBar");
+  if (bar && bar.getAttribute("data-active") === "true" && (bar.querySelector(".ab-en").textContent.trim() || bar.querySelector(".ab-hi").textContent.trim())){
+    bar.hidden = false;
+    bar.querySelector(".ab-x").addEventListener("click", function(){ bar.hidden = true; });
+  }
 })();
 </script>
 <div class="toast" id="toast" role="status" aria-live="polite"><span class="spin" aria-hidden="true"></span><span id="toastText"></span></div>
