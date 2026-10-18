@@ -1,0 +1,54 @@
+/* Shared styles for the guide pages (delhi-to-kainchi-dham.html and friends). Fonts are declared inline in each page. */
+:root{--pine:#1F3B2D;--marigold:#E8A317;--bg:#F1F5F1;--surface:#fff;--text:#18221E;--muted:#4A5852;--line:#D5DED7;--accent:#1F3B2D;--accent-ink:#fff;--soft:#E8EFE9}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0F1915;--surface:#16231D;--text:#E6EDE8;--muted:#A7B6AE;--line:#2A3B33;--accent:#7FB79A;--accent-ink:#0F1915;--soft:#1B2B24;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1915;--surface:#16231D;--text:#E6EDE8;--muted:#A7B6AE;--line:#2A3B33;--accent:#7FB79A;--accent-ink:#0F1915;--soft:#1B2B24;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Mukta","Mukta Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.65}
+html[data-lang="en"] body [lang="hi"],html[data-lang="hi"] body [lang="en"]{display:none !important}
+a{color:var(--accent);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--marigold);outline-offset:2px;border-radius:6px}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+.bar{position:sticky;top:0;z-index:5;background:var(--pine);color:#fff}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:700}
+.lang{display:flex;background:rgba(255,255,255,.12);border-radius:999px;padding:3px}
+.lang button{border:0;background:transparent;color:#fff;font:inherit;font-weight:600;padding:4px 12px;border-radius:999px;cursor:pointer;min-height:36px}
+.lang button[aria-pressed="true"]{background:var(--marigold);color:#1B1505}
+h1,h2{font-family:"Yatra One","Yatra Fallback","Mukta","Mukta Fallback",serif;font-weight:400;line-height:1.2}
+h1{font-size:clamp(1.9rem,7vw,2.7rem);margin:12px 0 6px}
+h2{font-size:1.35rem;margin:26px 0 6px}
+h3{font-size:1.05rem;margin:16px 0 2px;line-height:1.35}
+.crumbs{margin:18px 0 0;font-size:.92rem;color:var(--muted)}
+.crumbs a{color:var(--muted)}
+.updated{color:var(--muted);margin:0 0 14px;font-size:.95rem}
+.lead{font-size:1.06rem;margin:0 0 18px}
+.quick{background:var(--soft);border:1px solid var(--line);border-left:5px solid var(--marigold);border-radius:14px;padding:12px 18px;margin:0 0 18px}
+.quick h2{margin-top:6px;font-size:1.15rem}
+.quick ul{margin:4px 0 8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:4px 20px 16px;margin-bottom:18px}
+ul,ol{padding-left:22px}
+li{margin:5px 0}
+.tbl{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:.97rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--soft);font-weight:700}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:999px;border:2px solid var(--accent);background:transparent;color:var(--accent);font:inherit;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.primary{background:var(--marigold);border-color:var(--marigold);color:#1B1505}
+.more ul{list-style:none;padding:0;margin:6px 0}
+.more li{margin:8px 0}
+.more a{font-weight:700}
+footer{background:var(--pine);color:#D6E3DA;padding:24px 0 100px;font-size:.92rem;margin-top:26px}
+footer a{color:#F4C766}
+footer h2{color:#fff;font-size:1.05rem;margin:14px 0 4px}
+footer ul{margin:4px 0}
+footer .linkbtn{background:none;border:0;color:#F4C766;font:inherit;text-decoration:underline;cursor:pointer;padding:0;margin-left:10px}
+.consent{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;max-width:560px;margin:0 auto;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:0 18px 40px -16px rgba(16,33,26,.45);font-size:.95rem;line-height:1.5}
+.consent[hidden]{display:none}
+.consent p{margin:0 0 12px}
+.consent .row{display:flex;flex-wrap:wrap;gap:10px}
+.consent button{min-height:44px;padding:0 20px;border-radius:999px;font:inherit;font-weight:700;cursor:pointer;border:2px solid var(--accent)}
+.consent .yes{background:var(--accent);color:var(--accent-ink)}
+.consent .no{background:transparent;color:var(--accent)}
+@media print{.bar,.cta,.consent,footer .linkbtn{display:none}}

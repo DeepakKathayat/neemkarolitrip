@@ -22,3 +22,14 @@ An independent Kainchi Dham trip guide (not the official trust). Static site on 
 
 ## Numbers
 Digits and the rupee sign use Mukta Bold everywhere (the heading font only supplies letters). Avoid `ch` units on heading text: the `ch` width follows the digit zero.
+
+
+## Guide pages
+
+`delhi-to-kainchi-dham.html`, `kainchi-dham-parking-shuttle.html`, `kainchi-dham-timings.html` and `nainital-kathgodam-to-kainchi-dham.html` are **generated**. Do not edit the HTML by hand.
+
+- Edit the text in `tools/guide_content.py` (English and Hindi side by side), then run `python3 tools/build-guides.py` from the repo root.
+- The shared design is `guide.css`. Bump the `?v=` date in `tools/build-guides.py` (`VER`) when you change it.
+- The builder copies the font block, the "independent guide" notice and the consent banner from `privacy.html` and `index.html`, so those stay in step.
+- Each page has Article, BreadcrumbList and FAQPage data built in. New pages also need an entry in `sitemap.xml` and links from the menu and footer in `index.html`.
+- The parking page shows a dated **example** traffic plan. Replace it when a newer plan is confirmed.

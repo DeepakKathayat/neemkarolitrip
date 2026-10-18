@@ -731,6 +731,7 @@ input[type=date]{width:100%;font:inherit;padding:10px 12px;border:1.5px solid va
 .menu-list a[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .menu-list a:hover{border-color:var(--accent)}
 body.menu-open{overflow:hidden}
+.menu-sub{margin:16px 2px 8px;font-weight:700;color:var(--muted);font-size:.92rem}
 @media (prefers-reduced-motion: reduce){.menu-back,.menu-panel{transition:none}}
 @media print{.menu-sheet,.chips-all{display:none !important}}
 
