@@ -757,3 +757,24 @@ html.fx-gl .brand::before{content:"";position:absolute;left:0;top:50%;width:30px
 @media (max-width:380px){html.fx-gl .brand::before{width:26px;height:26px;margin-top:-13px}}
 @media (prefers-reduced-motion: reduce){html.fx-gl .btn-main::before,html.fx-gl .brand::before{animation:none;opacity:0}}
 @media print{.sky-gl,.river-gl{display:none}}
+
+/* ===== Glass, clay and enquiry (added) ===== */
+.stat,.route,.stay{box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 12px 26px -18px rgba(16,33,26,.4)}
+.route,.stat{background:linear-gradient(180deg,color-mix(in srgb,var(--surface) 92%,#fff),var(--surface))}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .stat,:root:not([data-theme="light"]) .route,:root:not([data-theme="light"]) .stay{box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 26px -18px rgba(0,0,0,.7)}}
+:root[data-theme="dark"] .stat,:root[data-theme="dark"] .route,:root[data-theme="dark"] .stay{box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 26px -18px rgba(0,0,0,.7)}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  @media (prefers-reduced-transparency:no-preference){
+    .menu-panel{background:color-mix(in srgb,var(--surface) 84%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);border:1px solid color-mix(in srgb,#fff 35%,transparent);border-bottom:0}
+    .ask-card,.consent{background:color-mix(in srgb,var(--surface) 80%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);border-color:color-mix(in srgb,#fff 40%,var(--line))}
+  }
+}
+.sound-toggle{display:flex;align-items:center;gap:8px;width:100%;margin-top:14px;min-height:46px;padding:0 14px;font:inherit;font-weight:600;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:14px;cursor:pointer}
+.sound-toggle[aria-pressed="true"]{border-color:var(--accent)}
+.sound-toggle[aria-pressed="false"] .s-on,.sound-toggle[aria-pressed="true"] .s-off{display:none}
+#enquiry{padding:8px 0 40px}
+.enq{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px;max-width:560px}
+.enq input[type=text],.enq textarea{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);min-height:46px}
+.enq textarea{resize:vertical}
+.enq input:focus,.enq select:focus,.enq textarea:focus{outline:none;border-color:var(--hl);box-shadow:0 0 0 4px rgba(232,163,23,.22)}
+.enq .btn{width:100%}

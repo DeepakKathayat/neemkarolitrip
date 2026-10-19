@@ -44,3 +44,10 @@ A small WebGL layer: night-sky glow behind the hero headline, light along the he
 - It draws at low resolution, 30 frames a second, only while the hero is on screen and not scrolling. If the phone cannot keep up, it lowers the resolution once, then removes itself and the page looks as before.
 - The page looks the same with it off: the CSS sky stays underneath, and all the extra CSS applies only when `html.fx-gl` is set.
 - `?fx=force` skips the speed checks (for testing on a computer).
+
+## Glass cards, haptics, bell sound, WhatsApp enquiry
+
+- **Glass cards:** CSS only (end of `style.css`). Frosted menu sheet, Ask card and consent banner; soft clay-style shadows on cards. Skipped automatically if the phone asks for reduced transparency.
+- **Tap haptics:** a 10 ms vibration on main buttons (Android Chrome only; skipped for reduced motion).
+- **Temple-bell sound:** off by default. Visitors turn it on in the ☰ All menu. The bell is made in the browser, no audio file.
+- **WhatsApp enquiry form:** set `WA_NUMBER` (country code, no + or spaces) in part 11 of `app.js`. While empty, the form stays hidden. Details go only into the WhatsApp message; nothing is stored.
