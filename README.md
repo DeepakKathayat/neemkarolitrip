@@ -39,8 +39,7 @@ Digits and the rupee sign use Mukta Bold everywhere (the heading font only suppl
 
 A small WebGL layer: night-sky glow behind the hero headline, light along the hero river, a soft pointer light on cards, and a gentle shine on the main button and logo.
 
-- **Off for everyone by default.** `FX_DEFAULT = false` in the last part of `app.js`. Try it on your own phone with `neemkarolitrip.com/?fx=1` (remembered on that phone). Turn it off with `/?fx=off`.
-- To switch it on for all visitors, set `FX_DEFAULT = true` and bump the `?v=` dates.
+- **On for everyone by default** (`FX_DEFAULT = true` in the last part of `app.js`). It skips reduced-motion, Data Saver, 2G and low-end phones, and removes itself if the frame rate drops. Test off on one phone with `neemkarolitrip.com/?fx=off`; set `FX_DEFAULT = false` to disable for all.
 - `fx.js` is only downloaded when the phone passes the checks in `app.js`: no reduced motion, no Data Saver, not 2G, not a very low-end phone. It then loads after the page is ready.
 - It draws at low resolution, 30 frames a second, only while the hero is on screen and not scrolling. If the phone cannot keep up, it lowers the resolution once, then removes itself and the page looks as before.
 - The page looks the same with it off: the CSS sky stays underneath, and all the extra CSS applies only when `html.fx-gl` is set.
