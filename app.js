@@ -1650,6 +1650,43 @@ try {
 } catch (e) { if (window.console) console.error('nkt part 9', e); }
 });
 
+/* ===== part 10 ===== */
+NKT_PARTS.push(function () {
+try {
+/* ================================================================
+   LIGHT EFFECTS (WebGL): loads fx.js only for visitors whose phone can handle it.
+   OFF for everyone by default. To try it on your own phone, open  neemkarolitrip.com/?fx=1
+   (it is remembered on that phone). Turn it off again with  /?fx=off.  To switch it on for everyone,
+   change FX_DEFAULT to true. Never loads with reduced motion, Data Saver, 2G, or a very low-end phone.
+   ================================================================ */
+(function(){
+  var FX_DEFAULT = false;
+  var q = location.search, v = null;
+  try {
+    if (/[?&]fx=1\b/.test(q)) localStorage.setItem("nkt-fx", "on");
+    if (/[?&]fx=force\b/.test(q)) localStorage.setItem("nkt-fx", "force");
+    if (/[?&]fx=off\b/.test(q)) localStorage.setItem("nkt-fx", "off");
+    v = localStorage.getItem("nkt-fx");
+  } catch (e) { v = /[?&]fx=1\b/.test(q) ? "on" : null; }
+  if (v === "off" || !(v === "on" || v === "force" || (FX_DEFAULT && v === null))) return;
+  var conn = navigator.connection || {}, force = v === "force";
+  if (!force){
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")) return;
+    if ((navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2)) return;
+  }
+  if (!window.requestAnimationFrame) return;
+  function go(){
+    var s = document.createElement("script");
+    s.async = true; s.src = "/fx.js?v=20261020";
+    document.head.appendChild(s);
+  }
+  function later(){ if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else setTimeout(go, 1500); }
+  if (document.readyState === "complete") later(); else window.addEventListener("load", later);
+})();
+} catch (e) { if (window.console) console.error('nkt part 10', e); }
+});
+
 /* Each part runs as its own task, one after another, so the phone can paint and respond to taps in between. */
 function nktBoot() {
   var i = 0;
