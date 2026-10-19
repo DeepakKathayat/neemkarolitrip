@@ -778,3 +778,5 @@ html.fx-gl .brand::before{content:"";position:absolute;left:0;top:50%;width:30px
 .enq textarea{resize:vertical}
 .enq input:focus,.enq select:focus,.enq textarea:focus{outline:none;border-color:var(--hl);box-shadow:0 0 0 4px rgba(232,163,23,.22)}
 .enq .btn{width:100%}
+
+#enquiry[data-via="mail"] .via-wa,#enquiry[data-via="wa"] .via-mail{display:none}

@@ -1677,7 +1677,7 @@ try {
   if (!window.requestAnimationFrame) return;
   function go(){
     var s = document.createElement("script");
-    s.async = true; s.src = "/fx.js?v=20261022";
+    s.async = true; s.src = "/fx.js?v=20261023";
     document.head.appendChild(s);
   }
   function later(){ if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else setTimeout(go, 1500); }
@@ -1693,6 +1693,8 @@ try {
   /* Put your WhatsApp number here with country code and no + or spaces, e.g. "919876543210".
      While it is empty the enquiry form stays hidden. */
   var WA_NUMBER = "";
+  /* Used while WA_NUMBER is empty: the form opens the visitor's email app. Brand address, safe to show. */
+  var ENQ_EMAIL = "neemkarolitrip@gmail.com";
 
   var rm = false;
   try { rm = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
@@ -1740,7 +1742,9 @@ try {
 
   /* WhatsApp enquiry: builds a ready message, nothing is stored or sent to our server. */
   var sec = document.getElementById("enquiry"), f = document.getElementById("enqForm");
-  if (sec && f && /^\d{10,15}$/.test(WA_NUMBER)) {
+  var viaWa = /^\d{10,15}$/.test(WA_NUMBER);
+  if (sec && f && (viaWa || ENQ_EMAIL)) {
+    sec.setAttribute("data-via", viaWa ? "wa" : "mail");
     sec.hidden = false;
     var d = document.getElementById("enqDate");
     if (d) { var x = new Date(); d.min = x.getFullYear() + "-" + ("0"+(x.getMonth()+1)).slice(-2) + "-" + ("0"+x.getDate()).slice(-2); }
@@ -1756,7 +1760,8 @@ try {
         : "Hello Neem Karoli Trip, I am " + nm + ". We are " + ppl + " people planning to visit Kainchi Dham" + (dt ? " on " + dt : "") + ", starting from " + fr + "." + (q ? " " + q : "") + " (from neemkarolitrip.com)";
       var c = null; try { c = localStorage.getItem("nkt-consent"); } catch (er) {}
       if (c === "granted" && window.gtag) window.gtag("event", "enquiry_submit");
-      window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(m), "_blank", "noopener");
+      if (viaWa) window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(m), "_blank", "noopener");
+      else location.href = "mailto:" + ENQ_EMAIL + "?subject=" + encodeURIComponent(hi ? "कैंची धाम यात्रा पूछताछ" : "Kainchi Dham trip enquiry") + "&body=" + encodeURIComponent(m);
     });
   }
 })();
