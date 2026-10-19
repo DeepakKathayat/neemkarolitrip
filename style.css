@@ -740,3 +740,20 @@ body.menu-open{overflow:hidden}
 .rm-km{letter-spacing:-.05em}
 .rm-km small{letter-spacing:0}
 @media print{#printPlan .pp-total b{font-family:"Mukta","Mukta Fallback",system-ui,sans-serif;font-weight:700}}
+
+
+/* ===== light effects: WebGL sky and river, card light, button and logo shine =====
+   Dormant unless fx.js runs. html.fx-gl is set by fx.js and removed again if the phone cannot keep up. */
+.sky-gl{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0;transition:opacity 1.6s ease}
+.river-gl{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 1.6s ease}
+.sky-gl.on,.river-gl.on{opacity:1}
+html.fx-gl .lit{position:relative}
+html.fx-gl .lit::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:var(--la,0);transition:opacity .4s;background:radial-gradient(260px circle at var(--lx,50%) var(--ly,50%),rgba(244,199,102,.2),rgba(244,199,102,.07) 45%,transparent 70%)}
+html.fx-gl .btn-main::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,rgba(255,120,160,0) 18%,rgba(255,170,90,.38) 34%,rgba(120,220,255,.38) 50%,rgba(170,140,255,.38) 66%,rgba(255,120,160,0) 82%);background-size:260% 100%;background-position:150% 0;mix-blend-mode:soft-light;animation:iridescent 7s 1.5s ease-in-out infinite}
+@keyframes iridescent{0%{background-position:150% 0}45%,100%{background-position:-50% 0}}
+html.fx-gl .brand{position:relative}
+html.fx-gl .brand::before{content:"";position:absolute;left:0;top:50%;width:30px;height:30px;margin-top:-15px;border-radius:8px;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(150,230,255,.55) 44%,rgba(255,200,120,.55) 52%,rgba(190,150,255,.5) 60%,transparent 72%);background-size:320% 100%;background-position:130% 0;mix-blend-mode:overlay;animation:logoglint 9s 3s ease-in-out infinite}
+@keyframes logoglint{0%{background-position:130% 0}30%,100%{background-position:-30% 0}}
+@media (max-width:380px){html.fx-gl .brand::before{width:26px;height:26px;margin-top:-13px}}
+@media (prefers-reduced-motion: reduce){html.fx-gl .btn-main::before,html.fx-gl .brand::before{animation:none;opacity:0}}
+@media print{.sky-gl,.river-gl{display:none}}
