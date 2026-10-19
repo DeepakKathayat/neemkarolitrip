@@ -9,7 +9,7 @@ from guide_content import PAGES, NAMES, UPDATED, UPDATED_ISO
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def rd(p): return open(os.path.join(ROOT, p), encoding="utf-8").read()
-VER = "20261023"
+VER = "20261024"
 SITE = "https://neemkarolitrip.com"
 
 priv = rd("privacy.html")
@@ -27,6 +27,7 @@ def plain(s): return html.unescape(re.sub(r"<[^>]+>", "", s)).strip()
 def esc(s): return html.escape(s, quote=True)
 
 def build(pg):
+    UPDATED, UPDATED_ISO = pg.get("updated", (globals()["UPDATED"], globals()["UPDATED_ISO"]))
     slug = pg["slug"]; url = "%s/%s.html" % (SITE, slug)
     en_h1, hi_h1 = pg["h1"]
     faqs = pg["faq"]

@@ -1677,7 +1677,7 @@ try {
   if (!window.requestAnimationFrame) return;
   function go(){
     var s = document.createElement("script");
-    s.async = true; s.src = "/fx.js?v=20261023";
+    s.async = true; s.src = "/fx.js?v=20261024";
     document.head.appendChild(s);
   }
   function later(){ if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else setTimeout(go, 1500); }
@@ -1766,6 +1766,42 @@ try {
   }
 })();
 } catch (e) { if (window.console) console.error('nkt part 11', e); }
+});
+
+/* ===== part 12: live weather (only when the visitor taps the button) ===== */
+NKT_PARTS.push(function () {
+try {
+(function(){
+  var btn = document.getElementById("wxBtn"), out = document.getElementById("wxOut");
+  if (!btn || !out) return;
+  var WX = {0:["☀️","Clear","साफ़"],1:["🌤️","Mostly clear","ज़्यादातर साफ़"],2:["⛅","Partly cloudy","आंशिक बादल"],3:["☁️","Cloudy","बादल"],
+    45:["🌫️","Fog","कोहरा"],48:["🌫️","Fog","कोहरा"],51:["🌦️","Drizzle","बूँदाबाँदी"],53:["🌦️","Drizzle","बूँदाबाँदी"],55:["🌦️","Drizzle","बूँदाबाँदी"],
+    61:["🌧️","Rain","बारिश"],63:["🌧️","Rain","बारिश"],65:["🌧️","Heavy rain","तेज़ बारिश"],71:["🌨️","Snow","बर्फ़"],73:["🌨️","Snow","बर्फ़"],75:["🌨️","Snow","बर्फ़"],
+    80:["🌦️","Showers","बौछारें"],81:["🌧️","Showers","बौछारें"],82:["⛈️","Heavy showers","तेज़ बौछारें"],95:["⛈️","Thunderstorm","आँधी-तूफ़ान"],96:["⛈️","Thunderstorm","आँधी-तूफ़ान"],99:["⛈️","Thunderstorm","आँधी-तूफ़ान"]};
+  function wx(c){ return WX[c] || WX[c - (c % 10)] || ["🌡️","Weather","मौसम"]; }
+  function two(en, hi){ return '<span lang="en">' + en + '</span><span lang="hi">' + hi + '</span>'; }
+  var DAY = {en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], hi:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"]};
+  btn.addEventListener("click", function(){
+    btn.disabled = true;
+    out.innerHTML = two("Loading…", "लोड हो रहा है…");
+    var url = "https://api.open-meteo.com/v1/forecast?latitude=29.34&longitude=79.51&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FKolkata&forecast_days=3";
+    fetch(url).then(function(r){ if (!r.ok) throw 0; return r.json(); }).then(function(d){
+      var c = wx(d.current.weather_code), h = '<div class="wx-now"><span class="ic" aria-hidden="true">' + c[0] + '</span><div><b>' + Math.round(d.current.temperature_2m) + '°C</b> · ' + two(c[1], c[2]) + '</div></div><div class="wx-days">';
+      d.daily.time.forEach(function(t, i){
+        var dt = new Date(t + "T12:00:00"), w = wx(d.daily.weather_code[i]), p = d.daily.precipitation_probability_max[i];
+        h += '<div><b>' + (i === 0 ? two("Today", "आज") : two(DAY.en[dt.getDay()], DAY.hi[dt.getDay()])) + '</b><span class="ic" aria-hidden="true">' + w[0] + '</span>' + Math.round(d.daily.temperature_2m_min[i]) + '–' + Math.round(d.daily.temperature_2m_max[i]) + '°C' + (p != null ? '<br>' + two("Rain ", "बारिश ") + p + '%' : '') + '</div>';
+      });
+      out.innerHTML = h + '</div>';
+      btn.disabled = false;
+      var t = btn.querySelector('[lang="en"]'), u = btn.querySelector('[lang="hi"]');
+      if (t) t.textContent = "Refresh"; if (u) u.textContent = "रीफ़्रेश करें";
+    }).catch(function(){
+      out.innerHTML = two("Could not load the forecast. Please check the India Meteorological Department or a weather app.", "पूर्वानुमान लोड नहीं हो सका। कृपया भारतीय मौसम विज्ञान विभाग या कोई मौसम ऐप देखें।");
+      btn.disabled = false;
+    });
+  });
+})();
+} catch (e) { if (window.console) console.error('nkt part 12', e); }
 });
 
 /* Each part runs as its own task, one after another, so the phone can paint and respond to taps in between. */
