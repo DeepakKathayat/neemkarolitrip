@@ -9,7 +9,7 @@ from guide_content import PAGES, NAMES, UPDATED, UPDATED_ISO
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def rd(p): return open(os.path.join(ROOT, p), encoding="utf-8").read()
-VER = "20261022"
+VER = "20261023"
 SITE = "https://neemkarolitrip.com"
 
 priv = rd("privacy.html")

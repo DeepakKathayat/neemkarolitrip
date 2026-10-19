@@ -50,4 +50,4 @@ A small WebGL layer: night-sky glow behind the hero headline, light along the he
 - **Glass cards:** CSS only (end of `style.css`). Frosted menu sheet, Ask card and consent banner; soft clay-style shadows on cards. Skipped automatically if the phone asks for reduced transparency.
 - **Tap haptics:** a 10 ms vibration on main buttons (Android Chrome only; skipped for reduced motion).
 - **Temple-bell sound:** off by default. Visitors turn it on in the ☰ All menu. The bell is made in the browser, no audio file.
-- **WhatsApp enquiry form:** set `WA_NUMBER` (country code, no + or spaces) in part 11 of `app.js`. While empty, the form stays hidden. Details go only into the WhatsApp message; nothing is stored.
+- **WhatsApp enquiry form:** while `WA_NUMBER` (part 11 of `app.js`) is empty, the form opens the visitor's email app to `ENQ_EMAIL` (the brand Gmail). Set `WA_NUMBER` (country code, no + or spaces) later, ideally a separate WhatsApp Business number, and it switches to WhatsApp. Details go only into the WhatsApp message; nothing is stored.
