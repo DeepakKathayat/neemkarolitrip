@@ -1677,13 +1677,90 @@ try {
   if (!window.requestAnimationFrame) return;
   function go(){
     var s = document.createElement("script");
-    s.async = true; s.src = "/fx.js?v=20261021";
+    s.async = true; s.src = "/fx.js?v=20261022";
     document.head.appendChild(s);
   }
   function later(){ if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else setTimeout(go, 1500); }
   if (document.readyState === "complete") later(); else window.addEventListener("load", later);
 })();
 } catch (e) { if (window.console) console.error('nkt part 10', e); }
+});
+
+/* ===== part 11: tap haptics, opt-in bell sound, WhatsApp enquiry ===== */
+NKT_PARTS.push(function () {
+try {
+(function(){
+  /* Put your WhatsApp number here with country code and no + or spaces, e.g. "919876543210".
+     While it is empty the enquiry form stays hidden. */
+  var WA_NUMBER = "";
+
+  var rm = false;
+  try { rm = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+  var vib = navigator.vibrate ? navigator.vibrate.bind(navigator) : null;
+  var sound = false;
+  try { sound = localStorage.getItem("nkt-sound") === "on"; } catch (e) {}
+  var ctx = null, last = 0;
+
+  function bell(){
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      if (!ctx) ctx = new AC();
+      if (ctx.state === "suspended") ctx.resume();
+      var t = ctx.currentTime, out = ctx.createGain();
+      out.gain.value = 0.05; out.connect(ctx.destination);
+      [[1,.5],[2.01,.26],[3.02,.12],[4.2,.06]].forEach(function(p){
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = "sine"; o.frequency.value = 523.25 * p[0];
+        g.gain.setValueAtTime(p[1], t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 1.5);
+        o.connect(g); g.connect(out); o.start(t); o.stop(t + 1.6);
+      });
+    } catch (e) {}
+  }
+
+  document.addEventListener("click", function(e){
+    var t = e.target.closest && e.target.closest(".btn,.chips-all,.menu-list a,.stepper button,.ask-chips button,[data-link],.seg label,.sound-toggle");
+    if (!t) return;
+    var n = Date.now(); if (n - last < 150) return; last = n;
+    if (vib && !rm) { try { vib(10); } catch (e) {} }
+    if (sound && !t.classList.contains("sound-toggle")) bell();
+  }, true);
+
+  var sb = document.getElementById("soundBtn");
+  if (sb) {
+    sb.setAttribute("aria-pressed", sound ? "true" : "false");
+    sb.addEventListener("click", function(){
+      sound = !sound;
+      sb.setAttribute("aria-pressed", sound ? "true" : "false");
+      try { localStorage.setItem("nkt-sound", sound ? "on" : "off"); } catch (e) {}
+      if (sound) bell();
+    });
+  }
+
+  /* WhatsApp enquiry: builds a ready message, nothing is stored or sent to our server. */
+  var sec = document.getElementById("enquiry"), f = document.getElementById("enqForm");
+  if (sec && f && /^\d{10,15}$/.test(WA_NUMBER)) {
+    sec.hidden = false;
+    var d = document.getElementById("enqDate");
+    if (d) { var x = new Date(); d.min = x.getFullYear() + "-" + ("0"+(x.getMonth()+1)).slice(-2) + "-" + ("0"+x.getDate()).slice(-2); }
+    f.addEventListener("submit", function(e){
+      e.preventDefault();
+      var nm = document.getElementById("enqName").value.trim();
+      if (!nm) { document.getElementById("enqName").focus(); return; }
+      var dt = d.value ? (function(v){var z=v.split("-"),M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];return +z[2]+" "+M[+z[1]-1]+" "+z[0];})(d.value) : "", ppl = document.getElementById("enqPeople").value || "2",
+          fr = document.getElementById("enqFrom").value, q = document.getElementById("enqMsg").value.trim();
+      var hi = document.documentElement.getAttribute("data-lang") === "hi";
+      var m = hi
+        ? "नमस्ते नीम करोली ट्रिप, मैं " + nm + " हूँ। " + (dt ? dt + " को " : "") + fr + " से " + ppl + " लोग कैंची धाम जाने की योजना बना रहे हैं।" + (q ? " " + q : "") + " (neemkarolitrip.com से)"
+        : "Hello Neem Karoli Trip, I am " + nm + ". We are " + ppl + " people planning to visit Kainchi Dham" + (dt ? " on " + dt : "") + ", starting from " + fr + "." + (q ? " " + q : "") + " (from neemkarolitrip.com)";
+      var c = null; try { c = localStorage.getItem("nkt-consent"); } catch (er) {}
+      if (c === "granted" && window.gtag) window.gtag("event", "enquiry_submit");
+      window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(m), "_blank", "noopener");
+    });
+  }
+})();
+} catch (e) { if (window.console) console.error('nkt part 11', e); }
 });
 
 /* Each part runs as its own task, one after another, so the phone can paint and respond to taps in between. */
