@@ -51,3 +51,9 @@ A small WebGL layer: night-sky glow behind the hero headline, light along the he
 - **Tap haptics:** a 10 ms vibration on main buttons (Android Chrome only; skipped for reduced motion).
 - **Temple-bell sound:** off by default. Visitors turn it on in the ☰ All menu. The bell is made in the browser, no audio file.
 - **WhatsApp enquiry form:** while `WA_NUMBER` (part 11 of `app.js`) is empty, the form opens the visitor's email app to `ENQ_EMAIL` (the brand Gmail). Set `WA_NUMBER` (country code, no + or spaces) later, ideally a separate WhatsApp Business number, and it switches to WhatsApp. Details go only into the WhatsApp message; nothing is stored.
+
+## Elderly guide, emergency help and weather
+
+- **Elderly and family guide:** `tools/guide_content.py` (slug `kainchi-dham-for-elderly-and-families`), per-page "Last checked" date via the `updated` key. It says plainly what could not be confirmed (stairs, wheelchair, walk distance). Add facts only with a source.
+- **Weather and emergency help:** `#help` section in `index.html`. Weather loads from Open-Meteo only when the visitor taps the button (part 12 of `app.js`). Emergency numbers: 112, 108, 100 plus CHC Bhowali. Re-check hospital names yearly.
+- **Privacy page** updated for the enquiry form, sound/effects choices and the weather request.
