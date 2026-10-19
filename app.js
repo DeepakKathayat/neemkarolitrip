@@ -1655,12 +1655,11 @@ NKT_PARTS.push(function () {
 try {
 /* ================================================================
    LIGHT EFFECTS (WebGL): loads fx.js only for visitors whose phone can handle it.
-   OFF for everyone by default. To try it on your own phone, open  neemkarolitrip.com/?fx=1
-   (it is remembered on that phone). Turn it off again with  /?fx=off.  To switch it on for everyone,
-   change FX_DEFAULT to true. Never loads with reduced motion, Data Saver, 2G, or a very low-end phone.
+   ON for everyone by default (FX_DEFAULT). Turn it off on one phone with  neemkarolitrip.com/?fx=off ;
+   set FX_DEFAULT = false to disable for all. Never loads with reduced motion, Data Saver, 2G, or a very low-end phone.
    ================================================================ */
 (function(){
-  var FX_DEFAULT = false;
+  var FX_DEFAULT = true;
   var q = location.search, v = null;
   try {
     if (/[?&]fx=1\b/.test(q)) localStorage.setItem("nkt-fx", "on");
@@ -1678,7 +1677,7 @@ try {
   if (!window.requestAnimationFrame) return;
   function go(){
     var s = document.createElement("script");
-    s.async = true; s.src = "/fx.js?v=20261020";
+    s.async = true; s.src = "/fx.js?v=20261021";
     document.head.appendChild(s);
   }
   function later(){ if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else setTimeout(go, 1500); }
