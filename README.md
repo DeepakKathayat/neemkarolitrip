@@ -57,3 +57,9 @@ A small WebGL layer: night-sky glow behind the hero headline, light along the he
 - **Elderly and family guide:** `tools/guide_content.py` (slug `kainchi-dham-for-elderly-and-families`), per-page "Last checked" date via the `updated` key. It says plainly what could not be confirmed (stairs, wheelchair, walk distance). Add facts only with a source.
 - **Weather and emergency help:** `#help` section in `index.html`. Weather loads from Open-Meteo only when the visitor taps the button (part 12 of `app.js`). Emergency numbers: 112, 108, 100 plus CHC Bhowali. Re-check hospital names yearly.
 - **Privacy page** updated for the enquiry form, sound/effects choices and the weather request.
+
+## News & updates
+
+- `news.html` and the homepage "Latest news" strip are generated from `tools/news_content.py`.
+- To publish a post: copy a block, paste it at the top of `POSTS`, edit the text and source links, then run `python3 tools/build-guides.py && python3 tools/build-news.py`.
+- Only write what the linked source says. Each post gets its own anchor link (`news.html#post-id`) and NewsArticle structured data.

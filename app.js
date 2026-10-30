@@ -1677,7 +1677,7 @@ try {
   if (!window.requestAnimationFrame) return;
   function go(){
     var s = document.createElement("script");
-    s.async = true; s.src = "/fx.js?v=20261024";
+    s.async = true; s.src = "/fx.js?v=20261031";
     document.head.appendChild(s);
   }
   function later(){ if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else setTimeout(go, 1500); }
