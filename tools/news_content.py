@@ -1,0 +1,35 @@
+# News posts for news.html and the homepage "Latest news" strip. Newest first.
+# To add a post: copy one block, paste it at the TOP, change the text, then run: python3 tools/build-news.py
+# cat is one of: rules, traffic, crowd. Only write what the linked sources say.
+POSTS = [
+ dict(id="weekend-traffic-plan-10-oct", date="2026-10-10", cat="traffic",
+  title=("Police issue a traffic plan for busy Kainchi Dham weekends", "व्यस्त वीकेंड के लिए पुलिस का ट्रैफ़िक प्लान"),
+  body=("On 10–11 October, cars coming via Bhimtal were parked at Vikas Bhawan in Bhimtal, and cars via Gethia or Nainital at the Sanatorium in Bhowali, with shuttles to the temple. Heavy vehicles were banned from 3 AM to 11 PM, and taxis and two-wheelers were not allowed into the Kainchi Dham area. Expect similar rules on busy weekends.",
+        "10–11 अक्टूबर को भीमताल की ओर से आने वाली गाड़ियाँ भीमताल विकास भवन में, और गेठिया या नैनीताल की ओर से आने वाली गाड़ियाँ भवाली सेनेटोरियम में पार्क कराई गईं, वहाँ से मंदिर तक शटल चली। भारी वाहन रात 3 बजे से रात 11 बजे तक प्रतिबंधित रहे, और टैक्सी व दोपहिया वाहनों को कैंची धाम क्षेत्र में नहीं जाने दिया गया। व्यस्त वीकेंड पर ऐसे ही नियम की उम्मीद रखें।"),
+  tip=("Plan to park at the shuttle point and leave extra time.", "शटल पॉइंट पर पार्क करने की योजना रखें और समय ज़्यादा लेकर चलें।"),
+  src=[("ETV Bharat (Hindi), 10 Oct 2026", "ईटीवी भारत, 10 अक्टूबर 2026", "https://etvbharat.com/hi/state/police-have-implemented-a-traffic-plan-for-pilgrims-and-tourists-visiting-kainchi-dham-uts26101000948")],
+  more="/kainchi-dham-parking-shuttle.html"),
+ dict(id="registration-planned-9-oct", date="2026-10-09", cat="rules",
+  title=("Weekend registration planned for Kainchi Dham, not started yet", "कैंची धाम में वीकेंड रजिस्ट्रेशन की तैयारी, अभी शुरू नहीं"),
+  body=("As of 11 October 2026 you do not need to register. The Nainital DM and SSP will recommend registration for weekends, with a limit of about 20,000–25,000 visitors a day, and entry may be stopped on very busy days. There is no start date yet. If it starts, register only on the official government portal.",
+        "11 अक्टूबर 2026 तक रजिस्ट्रेशन की ज़रूरत नहीं है। नैनीताल के डीएम और एसएसपी वीकेंड पर रजिस्ट्रेशन की सिफ़ारिश करेंगे, जिसमें रोज़ लगभग 20,000–25,000 श्रद्धालुओं की सीमा होगी, और बहुत भीड़ वाले दिन प्रवेश रोका जा सकता है। शुरू होने की तारीख़ अभी तय नहीं है। शुरू हो तो केवल सरकारी पोर्टल पर रजिस्टर करें।"),
+  tip=("Ignore any link on social media that asks for money to register.", "रजिस्ट्रेशन के नाम पर पैसे माँगने वाले सोशल मीडिया लिंक से बचें।"),
+  src=[("ETV Bharat, 9 Oct 2026", "ईटीवी भारत, 9 अक्टूबर 2026", "https://www.etvbharat.com/en/state/authorities-to-make-registration-mandatory-for-visiting-kainchi-dham-shrine-in-uttarakhand-enn26100906005"),
+       ("Business Today, 7 Oct 2026", "बिज़नेस टुडे, 7 अक्टूबर 2026", "https://www.businesstoday.in/india/story/hanuman-ansh-impact-authorities-propose-mandatory-registration-crowd-control-system-as-kainchi-dham-sees-50000-devotees-560023-2026-10-07")],
+  more="/#status"),
+ dict(id="rate-list-rule-7-oct", date="2026-10-07", cat="rules",
+  title=("Hotels, shops and eateries must display rate lists", "होटल, दुकानों और ढाबों को रेट लिस्ट लगानी होगी"),
+  body=("Hotels, homestays, shops and eateries must now display their rates, and overcharging can be reported. Officials will also act against picnics on the Shipra riverbank. The administration has also asked devotees to book hotels or homestays in advance.",
+        "होटल, होमस्टे, दुकानों और ढाबों को अब रेट लिस्ट लगानी होगी, और ज़्यादा पैसे लेने की शिकायत की जा सकती है। शिप्रा नदी के किनारे पिकनिक करने वालों पर भी कार्रवाई होगी। प्रशासन ने श्रद्धालुओं से पहले से होटल या होमस्टे बुक करने की भी अपील की है।"),
+  tip=("Ask to see the rate list before you pay or book.", "भुगतान या बुकिंग से पहले रेट लिस्ट दिखाने को कहें।"),
+  src=[("Business Today, 7 Oct 2026", "बिज़नेस टुडे, 7 अक्टूबर 2026", "https://www.businesstoday.in/india/story/hanuman-ansh-impact-authorities-propose-mandatory-registration-crowd-control-system-as-kainchi-dham-sees-50000-devotees-560023-2026-10-07")],
+  more="/#stay"),
+ dict(id="queues-from-4-am-4-oct", date="2026-10-04", cat="crowd",
+  title=("Weekend queues now start at 4 AM", "वीकेंड पर लाइन अब सुबह 4 बजे से"),
+  body=("Since the film Hanuman Ansh, busy days have seen 35,000–40,000 visitors. On 4 October the queue began at 4 AM and darshan opened at 7 AM.",
+        "फ़िल्म 'हनुमान अंश' के बाद व्यस्त दिनों में 35,000–40,000 श्रद्धालु आ रहे हैं। 4 अक्टूबर को लाइन सुबह 4 बजे से लगी और दर्शन 7 बजे शुरू हुए।"),
+  tip=("Come on a weekday if you can.", "हो सके तो किसी कार्यदिवस पर आएँ।"),
+  src=[("Amar Ujala, 4 Oct 2026", "अमर उजाला, 4 अक्टूबर 2026", "https://www.amarujala.com/uttarakhand/nainital/surge-of-faith-at-kainchi-dham-queues-for-darshan-since-morning-2026-10-04")],
+  more="/#planner"),
+]
+CATS = {"rules": ("Rules", "नियम"), "traffic": ("Traffic", "ट्रैफ़िक"), "crowd": ("Crowd", "भीड़")}
