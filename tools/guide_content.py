@@ -19,8 +19,8 @@ PAGES = []
 # ---------------------------------------------------------------- DELHI
 PAGES.append(dict(
     slug="delhi-to-kainchi-dham",
-    title="Delhi to Kainchi Dham: Train, Car, Bus & Cost (2026) | Neem Karoli Trip",
-    desc="How to reach Kainchi Dham from Delhi: trains to Kathgodam with timings, the 6–8 hour drive via Moradabad and Haldwani, buses, a one-day plan and tips. In Hindi and English.",
+    title="Delhi to Kainchi Dham: Train, Car & Bus (2026) | Neem Karoli Trip",
+    desc="Delhi to Kainchi Dham: trains to Kathgodam, the 6–8 hour drive via Moradabad and Haldwani, buses, cost and a one-day plan. In Hindi and English.",
     h1=("Delhi to Kainchi Dham: how to go", "दिल्ली से कैंची धाम कैसे जाएँ"),
     intro=("Kainchi Dham has no railway station of its own. From Delhi, most people take a train to Kathgodam and a taxi for the last 40 km, or drive the whole way. Here are the options, with times, so you can choose.",
            "कैंची धाम का अपना रेलवे स्टेशन नहीं है। दिल्ली से ज़्यादातर लोग काठगोदाम तक ट्रेन लेते हैं और आख़िरी 40 किमी टैक्सी से जाते हैं, या पूरा रास्ता खुद गाड़ी चलाकर जाते हैं। नीचे समय के साथ सभी विकल्प दिए हैं।"),
@@ -117,8 +117,8 @@ PAGES.append(dict(
 # ---------------------------------------------------------------- PARKING
 PAGES.append(dict(
     slug="kainchi-dham-parking-shuttle",
-    title="Kainchi Dham Parking & Shuttle Rules for Weekends (Oct 2026) | Neem Karoli Trip",
-    desc="Where to park for Kainchi Dham on busy weekends, how the shuttle works, what police banned, and an example traffic plan from 17–18 October 2026. In Hindi and English.",
+    title="Kainchi Dham Parking & Shuttle Rules | Neem Karoli Trip",
+    desc="Where to park for Kainchi Dham on busy weekends, how the shuttle works, what police ban, and an example traffic plan. In Hindi and English.",
     h1=("Kainchi Dham parking and shuttle rules", "कैंची धाम पार्किंग और शटल के नियम"),
     intro=("Parking and shuttle rules change almost every busy weekend. This page explains how the system usually works and shows a real example, so you know what to expect. For the newest plan, always check <a href=\"/#status\">Latest rules</a> on our home page.",
            "भीड़ वाले लगभग हर वीकेंड पर पार्किंग और शटल के नियम बदलते हैं। यह पेज बताता है कि व्यवस्था आम तौर पर कैसे चलती है और एक असली उदाहरण देता है, ताकि आपको अंदाज़ा रहे। सबसे नया प्लान हमेशा हमारे होम पेज पर <a href=\"/#status\">ताज़ा नियम</a> में देखें।"),
@@ -209,8 +209,8 @@ PAGES.append(dict(
 # ---------------------------------------------------------------- TIMINGS
 PAGES.append(dict(
     slug="kainchi-dham-timings",
-    title="Kainchi Dham Timings, Darshan Time & Etiquette (2026) | Neem Karoli Trip",
-    desc="Kainchi Dham opens about 6 AM to 7 PM. Best time for darshan, how long it takes, photography and dress rules, and the best months to visit. In Hindi and English.",
+    title="Kainchi Dham Timings & Darshan Etiquette | Neem Karoli Trip",
+    desc="Kainchi Dham opens about 6 AM to 7 PM. Best darshan time, how long it takes, photo and dress rules, and the best months to visit. In Hindi and English.",
     h1=("Kainchi Dham timings and etiquette", "कैंची धाम का समय और नियम"),
     intro=("What time to go, how long darshan takes, and the simple rules to follow inside the temple.",
            "कब जाएँ, दर्शन में कितना समय लगता है, और मंदिर में किन सरल नियमों का पालन करें।"),
@@ -299,8 +299,8 @@ PAGES.append(dict(
 # ---------------------------------------------------------------- NAINITAL / KATHGODAM
 PAGES.append(dict(
     slug="nainital-kathgodam-to-kainchi-dham",
-    title="Nainital & Kathgodam to Kainchi Dham: Distance, Taxi & Route | Neem Karoli Trip",
-    desc="Distance from Kathgodam, Nainital, Bhowali, Haldwani and Pantnagar to Kainchi Dham, travel time, taxi and bus tips, and weekend traffic rules. In Hindi and English.",
+    title="Nainital & Kathgodam to Kainchi Dham | Neem Karoli Trip",
+    desc="Distance and travel time to Kainchi Dham from Kathgodam, Nainital, Bhowali, Haldwani and Pantnagar, with taxi, bus and weekend traffic tips.",
     h1=("Nainital and Kathgodam to Kainchi Dham", "नैनीताल और काठगोदाम से कैंची धाम"),
     intro=("Kainchi Dham is on the Nainital–Almora road, 9 km past Bhowali. Here is how far it is from each nearby town, and what to know about the last stretch.",
            "कैंची धाम नैनीताल–अल्मोड़ा रोड पर भवाली से 9 किमी आगे है। नीचे हर पास के शहर से दूरी है और आख़िरी हिस्से के बारे में ज़रूरी बातें।"),
@@ -405,8 +405,8 @@ PAGES.append(dict(
 PAGES.append(dict(
     slug="kainchi-dham-for-elderly-and-families",
     updated=(("19 October 2026", "19 अक्टूबर 2026"), "2026-10-19"),
-    title="Kainchi Dham with Elderly Parents and Family: Practical Guide (2026) | Neem Karoli Trip",
-    desc="Planning Kainchi Dham for elderly parents or a family? Best day and time, shuttle and parking waits, cold mornings, footwear, medical help and what we cannot confirm. In Hindi and English.",
+    title="Kainchi Dham with Elderly Parents & Family | Neem Karoli Trip",
+    desc="Visiting Kainchi Dham with elderly parents or family: best day and time, shuttle waits, cold mornings, footwear, medical help and what we can't confirm.",
     h1=("Kainchi Dham with elderly parents and family", "बुज़ुर्ग माता-पिता और परिवार के साथ कैंची धाम"),
     intro=("Many people visit Kainchi Dham with parents or grandparents. This page gathers what is reliably known, and says plainly what we could not confirm, so you can plan a calm visit. It is not medical advice.",
            "बहुत से लोग माता-पिता या दादा-दादी के साथ कैंची धाम जाते हैं। इस पेज में वही बातें हैं जो भरोसेमंद स्रोतों से पता चलीं, और साफ़ लिखा है कि किन बातों की पुष्टि हम नहीं कर पाए, ताकि आप शांति से यात्रा प्लान कर सकें। यह चिकित्सा सलाह नहीं है।"),
