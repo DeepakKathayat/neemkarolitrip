@@ -9,7 +9,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def rd(p): return open(os.path.join(ROOT, p), encoding="utf-8").read()
 def wr(p, s): open(os.path.join(ROOT, p), "w", encoding="utf-8").write(s)
 esc = lambda s: html.escape(s, quote=True)
-SITE = "https://neemkarolitrip.com"; VER = "20261105"
+SITE = "https://neemkarolitrip.com"; VER = "2026110502"
 EN_M = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
 HI_M = "जनवरी फ़रवरी मार्च अप्रैल मई जून जुलाई अगस्त सितंबर अक्टूबर नवंबर दिसंबर".split()
 def sp(en, hi): return '<span lang="en">%s</span><span lang="hi">%s</span>' % (en, hi)

@@ -255,15 +255,20 @@ try {
 
   function render(){
     var o = readForm(), r = calc(o), it = withNote(o, itinerary(o)), t = T[lang];
+    /* Breakdown and day plan sit in tap-to-open blocks so the page stays short; remember what the visitor opened. */
+    var wasOpen = {};
+    document.querySelectorAll("#result details[data-k]").forEach(function(d){ wasOpen[d.getAttribute("data-k")] = d.open; });
+    var bdLabel = lang === "hi" ? "खर्च का पूरा हिसाब" : "Cost breakdown";
     var html = '<div class="total">' + fmt(r.total) + '</div>' +
       '<p class="total-note">' + t.range + ': ' + fmt(r.low) + ' – ' + fmt(r.high) + '<br>' + fmt(r.pp) + ' ' + t.pp + '</p>' +
       forYouHtml(o) +
+      '<details class="res-more" data-k="bd"' + (wasOpen.bd ? ' open' : '') + '><summary>' + bdLabel + '</summary>' +
       '<table class="breakdown"><tbody>' +
       r.rows.map(function(x){ return '<tr><td>' + esc(x[0]) + '<small>' + esc(x[1]) + '</small></td><td>' + fmt(x[2]) + '</td></tr>'; }).join("") +
-      '</tbody></table>' +
-      '<h3 style="margin-bottom:10px">' + t.plan + '</h3><ol class="days">' +
+      '</tbody></table></details>' +
+      '<details class="res-more" data-k="days"' + (wasOpen.days ? ' open' : '') + '><summary>' + t.plan + '</summary><ol class="days">' +
       it.map(function(d, i){ var dd = startOf(o) ? dlabel(addDays(startOf(o), i)) : ""; return '<li><h4>' + (dd ? '<span class="day-date">' + dd + '</span> ' : '') + esc(d[0]) + '</h4><ul>' + d[1].map(function(x){return '<li>' + esc(x) + '</li>';}).join("") + '</ul></li>'; }).join("") +
-      '</ol><div class="actions">';
+      '</ol></details><div class="actions">';
     if (o.nights > 0) html += '<a data-link="plan-stays" class="btn btn-solid" href="' + LINKS.stays + '" target="_blank" rel="noopener sponsored">' + t.bookStay + '</a>';
     if (o.mode === "train") html += '<a data-link="plan-trains" class="btn btn-line" href="' + LINKS.trains + '" target="_blank" rel="noopener">' + t.bookTrain + '</a>';
     if (o.mode === "bus") html += '<a data-link="plan-buses" class="btn btn-line" href="' + LINKS.buses + '" target="_blank" rel="noopener sponsored">' + t.bookBus + '</a>';
@@ -1677,7 +1682,7 @@ try {
   if (!window.requestAnimationFrame) return;
   function go(){
     var s = document.createElement("script");
-    s.async = true; s.src = "/fx.js?v=20261105";
+    s.async = true; s.src = "/fx.js?v=2026110502";
     document.head.appendChild(s);
   }
   function later(){ if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else setTimeout(go, 1500); }
@@ -1814,6 +1819,36 @@ NKT_PARTS.push(function () {
   if (days < 14) return;
   note.querySelectorAll(".stale-days").forEach(function (b) { b.textContent = String(days); });
   note.hidden = false;
+});
+
+/* ---------- 14. "Show more" folds: any element with data-fold="N" keeps its first N children visible ---------- */
+NKT_PARTS.push(function () {
+  var LABEL = {
+    rules: ["Show all rules", "सभी नियम देखें", "Show fewer rules", "कम नियम दिखाएँ"],
+    routes: ["More ways to reach (air, bus)", "पहुँचने के और तरीके (हवाई, बस)", "Show less", "कम दिखाएँ"],
+    story: ["Read the full story", "पूरी कहानी पढ़ें", "Show less", "कम दिखाएँ"]
+  };
+  document.querySelectorAll("[data-fold]").forEach(function (box) {
+    var keep = parseInt(box.getAttribute("data-fold"), 10) || 1;
+    var kids = Array.prototype.filter.call(box.children, function (k) { return k.tagName !== "BUTTON"; });
+    if (kids.length <= keep) return;
+    var extra = kids.slice(keep), l = LABEL[box.getAttribute("data-fold-what")] || LABEL.story;
+    var lang = box.getAttribute("lang");
+    var btn = document.createElement("button");
+    btn.type = "button"; btn.className = "fold-btn"; btn.setAttribute("aria-expanded", "false");
+    if (lang) btn.setAttribute("lang", lang);
+    function paint(open) {
+      var n = open ? "" : " (" + extra.length + ")";
+      btn.innerHTML = '<span lang="en">' + (open ? l[2] : l[0] + n) + '</span><span lang="hi">' + (open ? l[3] : l[1] + n) + "</span>";
+      btn.setAttribute("aria-expanded", String(open));
+      extra.forEach(function (k) { k.classList.toggle("folded", !open); });
+    }
+    btn.addEventListener("click", function () { paint(btn.getAttribute("aria-expanded") !== "true"); });
+    paint(false);
+    box.insertAdjacentElement("afterend", btn);
+    // If a link points inside a folded part, open it first.
+    if (location.hash) { try { var t = document.querySelector(location.hash); if (t && box.contains(t)) paint(true); } catch (e) {} }
+  });
 });
 
 /* Each part runs as its own task, one after another, so the phone can paint and respond to taps in between. */
