@@ -826,3 +826,19 @@ html.fx-gl .brand::before{content:"";position:absolute;left:0;top:50%;width:30px
 :root[data-theme="dark"] .rule-tag[data-state="proposed"]{background:#3A2C0C;color:#F4CF7A;border-color:#5C4615}
 :root[data-theme="dark"] .rule-tag[data-state="past"]{background:#22302A;color:#B9C6BF;border-color:#33443B}
 :root[data-theme="dark"] .stale-note{background:#3A2C0C;color:#F7DFA6}
+
+/* "Show more" folds (app.js part 14) */
+.folded{display:none !important}
+.fold-btn{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin:10px 0 4px;padding:0 18px;border-radius:999px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.fold-btn::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+.fold-btn[aria-expanded="true"]::after{transform:rotate(-135deg) translateY(-2px)}
+@media (prefers-reduced-motion: reduce){.fold-btn::after{transition:none}}
+
+/* Planner result: breakdown and day plan open on tap */
+.res-more{margin:12px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.res-more > summary{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;font-weight:700;cursor:pointer;list-style:none}
+.res-more > summary::-webkit-details-marker{display:none}
+.res-more > summary::after{content:"";flex:none;width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .2s}
+.res-more[open] > summary::after{transform:rotate(-135deg)}
+.res-more > .breakdown,.res-more > .days{margin:0 16px 14px}
+@media (prefers-reduced-motion: reduce){.res-more > summary::after{transition:none}}
