@@ -809,3 +809,20 @@ html.fx-gl .brand::before{content:"";position:absolute;left:0;top:50%;width:30px
 .news-strip li a{display:block;padding:10px 0;color:var(--text);text-decoration:none;min-height:44px}
 .news-strip time{display:block;font-size:.85rem;color:var(--ink-2)}
 .news-strip li a span:last-child{font-weight:600}
+
+/* Rule status labels and the stale-check note (Latest rules) */
+.rule-legend{margin:0 0 6px;font-size:.82rem;color:var(--muted)}
+.rule-tag{display:inline-block;margin:0 0 4px;padding:1px 10px;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em;border:1px solid transparent}
+.rule-tag[data-state="active"]{background:#E3F1E6;color:#1D5A2E;border-color:#B9DCC1}
+.rule-tag[data-state="proposed"]{background:#FDF1D6;color:#7A4E00;border-color:#EFD290}
+.rule-tag[data-state="past"]{background:#ECEEED;color:#4A5852;border-color:#D5DED7}
+.status li.is-past{opacity:.85}
+.stale-note{margin:0 0 8px;padding:10px 12px;border-radius:10px;background:#FDF1D6;color:#5C3B00;font-size:.92rem}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .rule-tag[data-state="active"]{background:#17352A;color:#A6DDB7;border-color:#2C5A43}
+:root:not([data-theme="light"]) .rule-tag[data-state="proposed"]{background:#3A2C0C;color:#F4CF7A;border-color:#5C4615}
+:root:not([data-theme="light"]) .rule-tag[data-state="past"]{background:#22302A;color:#B9C6BF;border-color:#33443B}
+:root:not([data-theme="light"]) .stale-note{background:#3A2C0C;color:#F7DFA6}}
+:root[data-theme="dark"] .rule-tag[data-state="active"]{background:#17352A;color:#A6DDB7;border-color:#2C5A43}
+:root[data-theme="dark"] .rule-tag[data-state="proposed"]{background:#3A2C0C;color:#F4CF7A;border-color:#5C4615}
+:root[data-theme="dark"] .rule-tag[data-state="past"]{background:#22302A;color:#B9C6BF;border-color:#33443B}
+:root[data-theme="dark"] .stale-note{background:#3A2C0C;color:#F7DFA6}

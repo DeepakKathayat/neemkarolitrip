@@ -825,8 +825,8 @@ try {
   /* ---------- Ask the guide: answers only from this page's own facts ---------- */
   var KB = [
     {k:["regist","रजिस्ट्रेशन","पंजीकरण","panjikaran","permit","e-pass","epass"," pass ","token","slot","online","booking for darshan"], s:"#status", l:{en:"Latest rules", hi:"ताज़ा नियम"},
-     a:{en:"Not yet. As of 11 October 2026 no registration is needed. Officials plan weekend registration with a limit of about 20,000–25,000 visitors a day, but there is no start date. If it starts, register only on the official government portal.",
-        hi:"अभी नहीं। 11 अक्टूबर 2026 तक रजिस्ट्रेशन की ज़रूरत नहीं है। अधिकारी वीकेंड के लिए रोज़ लगभग 20,000–25,000 श्रद्धालुओं की सीमा के साथ रजिस्ट्रेशन की योजना बना रहे हैं, पर शुरू होने की तारीख़ तय नहीं है। लागू होने पर केवल आधिकारिक सरकारी पोर्टल पर रजिस्टर करें।"}},
+     a:{en:"Not yet. As of 5 November 2026 no registration is needed. Officials plan weekend registration with a limit of about 20,000–25,000 visitors a day, but there is no start date. If it starts, register only on the official government portal.",
+        hi:"अभी नहीं। 5 नवंबर 2026 तक रजिस्ट्रेशन की ज़रूरत नहीं है। अधिकारी वीकेंड के लिए रोज़ लगभग 20,000–25,000 श्रद्धालुओं की सीमा के साथ रजिस्ट्रेशन की योजना बना रहे हैं, पर शुरू होने की तारीख़ तय नहीं है। लागू होने पर केवल आधिकारिक सरकारी पोर्टल पर रजिस्टर करें।"}},
     {k:["parking","पार्किंग","park","पार्क","car","कार","gaadi","gadi","गाड़ी","गाडी","vehicle","वाहन","shuttle","शटल","bike","बाइक","scooty","taxi","टैक्सी","drive"], s:"#status", l:{en:"Latest rules", hi:"ताज़ा नियम"},
      a:{en:"On busy weekends police send cars to set parking: Vikas Bhawan in Bhimtal if you come via Bhimtal, or the Sanatorium in Bhowali if you come via Gethia or Nainital. A shuttle takes you to the temple. On quiet weekdays you can drive to the parking near the temple.",
         hi:"व्यस्त वीकेंड पर पुलिस गाड़ियों को तय पार्किंग में भेजती है: भीमताल की ओर से आएँ तो भीमताल विकास भवन, गेठिया या नैनीताल की ओर से आएँ तो भवाली सेनेटोरियम। वहाँ से शटल मंदिर तक ले जाती है। शांत कार्यदिवसों पर मंदिर के पास की पार्किंग तक जा सकते हैं।"}},
@@ -1677,7 +1677,7 @@ try {
   if (!window.requestAnimationFrame) return;
   function go(){
     var s = document.createElement("script");
-    s.async = true; s.src = "/fx.js?v=20261031";
+    s.async = true; s.src = "/fx.js?v=20261105";
     document.head.appendChild(s);
   }
   function later(){ if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else setTimeout(go, 1500); }
@@ -1802,6 +1802,18 @@ try {
   });
 })();
 } catch (e) { if (window.console) console.error('nkt part 12', e); }
+});
+
+/* ---------- 13. Stale-rules warning: if "Latest rules" has not been checked for 14+ days, say so plainly ---------- */
+NKT_PARTS.push(function () {
+  var box = document.querySelector(".status[data-checked]"), note = document.getElementById("staleNote");
+  if (!box || !note) return;
+  var checked = new Date(box.getAttribute("data-checked") + "T00:00:00+05:30");
+  if (isNaN(checked)) return;
+  var days = Math.floor((Date.now() - checked.getTime()) / 86400000);
+  if (days < 14) return;
+  note.querySelectorAll(".stale-days").forEach(function (b) { b.textContent = String(days); });
+  note.hidden = false;
 });
 
 /* Each part runs as its own task, one after another, so the phone can paint and respond to taps in between. */
