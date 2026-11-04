@@ -63,3 +63,10 @@ A small WebGL layer: night-sky glow behind the hero headline, light along the he
 - `news.html` and the homepage "Latest news" strip are generated from `tools/news_content.py`.
 - To publish a post: copy a block, paste it at the top of `POSTS`, edit the text and source links, then run `python3 tools/build-guides.py && python3 tools/build-news.py`.
 - Only write what the linked source says. Each post gets its own anchor link (`news.html#post-id`) and NewsArticle structured data.
+
+## Hindi pages (/hi/)
+
+- `python3 tools/build-guides.py` writes every guide twice: English at `/<slug>.html` and Hindi at `/hi/<slug>.html`, each in one language only, with `hreflang` links between them (x-default = English). The language switch on these pages is a pair of links.
+- Hindi titles and descriptions are `title_hi` / `desc_hi` in `tools/guide_content.py`.
+- The homepage stays one bilingual page; when a visitor switches it to Hindi, links to guides point at the `/hi/` versions (app.js `setLang`).
+- `tools/news-shell.tmpl` is a bilingual page shell written by build-guides.py for `tools/build-news.py`. Run build-guides.py first.

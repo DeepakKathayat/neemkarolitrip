@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Builds news.html and the homepage "Latest news" strip from tools/news_content.py.
 Run from the repo root:  python3 tools/build-news.py
-Uses kainchi-dham-timings.html (built by build-guides.py) as the page shell, so run build-guides.py first."""
+Uses tools/news-shell.tmpl (a bilingual page shell written by build-guides.py), so run build-guides.py first."""
 import html, json, os, re, sys, datetime
 sys.path.insert(0, os.path.dirname(__file__))
 from news_content import POSTS, CATS
@@ -9,7 +9,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def rd(p): return open(os.path.join(ROOT, p), encoding="utf-8").read()
 def wr(p, s): open(os.path.join(ROOT, p), "w", encoding="utf-8").write(s)
 esc = lambda s: html.escape(s, quote=True)
-SITE = "https://neemkarolitrip.com"; VER = "2026110502"
+SITE = "https://neemkarolitrip.com"; VER = "2026110503"
 EN_M = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
 HI_M = "जनवरी फ़रवरी मार्च अप्रैल मई जून जुलाई अगस्त सितंबर अक्टूबर नवंबर दिसंबर".split()
 def sp(en, hi): return '<span lang="en">%s</span><span lang="hi">%s</span>' % (en, hi)
@@ -46,7 +46,7 @@ main = '''<main class="wrap">
    sp("Neem Karoli Trip is an independent guide. These posts summarise public news reports and do not speak for the temple trust or the administration. Rules change often, so check the <a href=\"/#status\">latest rules</a> before you travel.",
       "नीम करोली ट्रिप एक स्वतंत्र गाइड है। ये पोस्ट सार्वजनिक समाचारों का सार हैं और मंदिर ट्रस्ट या प्रशासन की ओर से नहीं हैं। नियम अक्सर बदलते हैं, इसलिए यात्रा से पहले <a href=\"/#status\">ताज़ा नियम</a> देखें।"))
 
-page = rd("kainchi-dham-timings.html")
+page = rd("tools/news-shell.tmpl")
 title = "Kainchi Dham News and Updates | Neem Karoli Trip"
 desc = "Latest sourced updates on Kainchi Dham: registration plans, weekend traffic and shuttle rules, rate lists and crowd levels. English and Hindi."
 url = SITE + "/news.html"

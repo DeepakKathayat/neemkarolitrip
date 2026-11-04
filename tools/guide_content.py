@@ -19,6 +19,8 @@ PAGES = []
 # ---------------------------------------------------------------- DELHI
 PAGES.append(dict(
     slug="delhi-to-kainchi-dham",
+    title_hi="दिल्ली से कैंची धाम: ट्रेन, कार और बस (2026) | नीम करोली ट्रिप",
+    desc_hi="दिल्ली से कैंची धाम कैसे पहुँचें: काठगोदाम की ट्रेनें, मुरादाबाद और हल्द्वानी होकर 6–8 घंटे की ड्राइव, बसें, खर्च और एक दिन का प्लान।",
     title="Delhi to Kainchi Dham: Train, Car & Bus (2026) | Neem Karoli Trip",
     desc="Delhi to Kainchi Dham: trains to Kathgodam, the 6–8 hour drive via Moradabad and Haldwani, buses, cost and a one-day plan. In Hindi and English.",
     h1=("Delhi to Kainchi Dham: how to go", "दिल्ली से कैंची धाम कैसे जाएँ"),
@@ -117,6 +119,8 @@ PAGES.append(dict(
 # ---------------------------------------------------------------- PARKING
 PAGES.append(dict(
     slug="kainchi-dham-parking-shuttle",
+    title_hi="कैंची धाम पार्किंग और शटल के नियम | नीम करोली ट्रिप",
+    desc_hi="व्यस्त वीकेंड पर कैंची धाम के लिए गाड़ी कहाँ पार्क करें, शटल कैसे चलती है, पुलिस किन चीज़ों पर रोक लगाती है और एक उदाहरण ट्रैफ़िक प्लान।",
     title="Kainchi Dham Parking & Shuttle Rules | Neem Karoli Trip",
     desc="Where to park for Kainchi Dham on busy weekends, how the shuttle works, what police ban, and an example traffic plan. In Hindi and English.",
     h1=("Kainchi Dham parking and shuttle rules", "कैंची धाम पार्किंग और शटल के नियम"),
@@ -209,6 +213,8 @@ PAGES.append(dict(
 # ---------------------------------------------------------------- TIMINGS
 PAGES.append(dict(
     slug="kainchi-dham-timings",
+    title_hi="कैंची धाम का समय और दर्शन के नियम | नीम करोली ट्रिप",
+    desc_hi="कैंची धाम लगभग सुबह 6 से शाम 7 बजे तक खुला रहता है। दर्शन का सही समय, कितना समय लगता है, फ़ोटो और कपड़ों के नियम, और घूमने के सबसे अच्छे महीने।",
     title="Kainchi Dham Timings & Darshan Etiquette | Neem Karoli Trip",
     desc="Kainchi Dham opens about 6 AM to 7 PM. Best darshan time, how long it takes, photo and dress rules, and the best months to visit. In Hindi and English.",
     h1=("Kainchi Dham timings and etiquette", "कैंची धाम का समय और नियम"),
@@ -299,6 +305,8 @@ PAGES.append(dict(
 # ---------------------------------------------------------------- NAINITAL / KATHGODAM
 PAGES.append(dict(
     slug="nainital-kathgodam-to-kainchi-dham",
+    title_hi="नैनीताल और काठगोदाम से कैंची धाम | नीम करोली ट्रिप",
+    desc_hi="काठगोदाम, नैनीताल, भवाली, हल्द्वानी और पंतनगर से कैंची धाम की दूरी और समय, साथ में टैक्सी, बस और वीकेंड ट्रैफ़िक की जानकारी।",
     title="Nainital & Kathgodam to Kainchi Dham | Neem Karoli Trip",
     desc="Distance and travel time to Kainchi Dham from Kathgodam, Nainital, Bhowali, Haldwani and Pantnagar, with taxi, bus and weekend traffic tips.",
     h1=("Nainital and Kathgodam to Kainchi Dham", "नैनीताल और काठगोदाम से कैंची धाम"),
@@ -404,6 +412,8 @@ PAGES.append(dict(
 # ---------------------------------------------------------------- ELDERLY / FAMILY
 PAGES.append(dict(
     slug="kainchi-dham-for-elderly-and-families",
+    title_hi="बुज़ुर्ग माता-पिता और परिवार के साथ कैंची धाम | नीम करोली ट्रिप",
+    desc_hi="बुज़ुर्गों या परिवार के साथ कैंची धाम: सही दिन और समय, शटल का इंतज़ार, ठंडी सुबह, जूते-चप्पल, मेडिकल मदद और कौन-सी बातें हम पक्की नहीं कर पाए।",
     updated=(("19 October 2026", "19 अक्टूबर 2026"), "2026-10-19"),
     title="Kainchi Dham with Elderly Parents & Family | Neem Karoli Trip",
     desc="Visiting Kainchi Dham with elderly parents or family: best day and time, shuttle waits, cold mornings, footwear, medical help and what we can't confirm.",

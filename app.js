@@ -638,6 +638,11 @@ try {
     document.documentElement.setAttribute("lang", l === "hi" ? "hi" : "en");
     document.querySelectorAll("[data-set-lang]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-set-lang") === l)); });
     try { localStorage.setItem("nkt-lang", l); } catch(e){}
+    /* Guide pages exist in English (/x.html) and Hindi (/hi/x.html): point links at the reader's language. */
+    document.querySelectorAll('a[href]').forEach(function(a){
+      var h = a.getAttribute("href"), m = h.match(/^\/(hi\/)?((?:delhi-to-kainchi-dham|kainchi-dham-parking-shuttle|kainchi-dham-timings|nainital-kathgodam-to-kainchi-dham|kainchi-dham-for-elderly-and-families)\.html.*)$/);
+      if (m) a.setAttribute("href", (l === "hi" ? "/hi/" : "/") + m[2]);
+    });
     fillFrom(); render(); renderSaved();
   }
 
@@ -1682,7 +1687,7 @@ try {
   if (!window.requestAnimationFrame) return;
   function go(){
     var s = document.createElement("script");
-    s.async = true; s.src = "/fx.js?v=2026110502";
+    s.async = true; s.src = "/fx.js?v=2026110503";
     document.head.appendChild(s);
   }
   function later(){ if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else setTimeout(go, 1500); }

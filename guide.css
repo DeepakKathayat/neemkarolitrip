@@ -66,3 +66,8 @@ footer .linkbtn{background:none;border:0;color:#F4C766;font:inherit;text-decorat
 .post-act{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:0}
 .note{color:var(--muted);font-size:.92rem}
 .post .linkbtn{background:none;border:0;color:var(--accent);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer;padding:0;min-height:44px}
+
+/* Language switch on single-language guide pages (links between /x.html and /hi/x.html) */
+.lang a{display:inline-flex;align-items:center;color:#fff;text-decoration:none;font-weight:600;padding:4px 12px;border-radius:999px;min-height:36px}
+.lang a[aria-current="page"]{background:var(--marigold);color:#1B1505}
+html .bar .lang a[data-to-lang]{display:inline-flex !important}
