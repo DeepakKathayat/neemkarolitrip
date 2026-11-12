@@ -835,7 +835,7 @@ try {
   /* ---------- Ask the guide: answers only from this page's own facts ---------- */
   var KB = [
     {k:["regist","रजिस्ट्रेशन","पंजीकरण","panjikaran","permit","e-pass","epass"," pass ","token","slot","online","booking for darshan"], s:"#status", l:{en:"Latest rules", hi:"ताज़ा नियम"},
-     a:{en:"Not yet. As of 5 November 2026 no registration is needed. Officials plan weekend registration with a limit of about 20,000–25,000 visitors a day, but there is no start date. If it starts, register only on the official government portal.",
+     a:{en:"Not yet. As of 12 November 2026 no registration is needed. Officials plan weekend registration with a limit of about 20,000–25,000 visitors a day, but there is no start date. If it starts, register only on the official government portal.",
         hi:"अभी नहीं। 5 नवंबर 2026 तक रजिस्ट्रेशन की ज़रूरत नहीं है। अधिकारी वीकेंड के लिए रोज़ लगभग 20,000–25,000 श्रद्धालुओं की सीमा के साथ रजिस्ट्रेशन की योजना बना रहे हैं, पर शुरू होने की तारीख़ तय नहीं है। लागू होने पर केवल आधिकारिक सरकारी पोर्टल पर रजिस्टर करें।"}},
     {k:["parking","पार्किंग","park","पार्क","car","कार","gaadi","gadi","गाड़ी","गाडी","vehicle","वाहन","shuttle","शटल","bike","बाइक","scooty","taxi","टैक्सी","drive"], s:"#status", l:{en:"Latest rules", hi:"ताज़ा नियम"},
      a:{en:"On busy weekends police send cars to set parking: Vikas Bhawan in Bhimtal if you come via Bhimtal, or the Sanatorium in Bhowali if you come via Gethia or Nainital. A shuttle takes you to the temple. On quiet weekdays you can drive to the parking near the temple.",
@@ -1687,7 +1687,7 @@ try {
   if (!window.requestAnimationFrame) return;
   function go(){
     var s = document.createElement("script");
-    s.async = true; s.src = "/fx.js?v=2026110503";
+    s.async = true; s.src = "/fx.js?v=2026111201";
     document.head.appendChild(s);
   }
   function later(){ if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else setTimeout(go, 1500); }
